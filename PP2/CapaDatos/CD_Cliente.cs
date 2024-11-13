@@ -1,0 +1,107 @@
+﻿using CapaEntidad;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+
+namespace CapaDatos
+{
+    public class CD_Cliente
+    {
+        // Método para listar los Clientes desde la tabla "Cliente"
+        public static List<Cliente> Listar()
+        {
+            List<Cliente> lista = new List<Cliente>();
+
+            using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    oconexion.Open();
+
+                    string query = @"
+                        SELECT 
+                           IDCLIENTE,
+                           FECHACREACION,
+                           DOCUMENTO,
+                           NOMBRE,
+                           CORREO,
+                           ESTADO,
+                           LOCALIDAD,
+                           PROVINCIA
+                        FROM CLIENTE";
+
+                    using (SqlCommand command = new SqlCommand(query, oconexion))
+                    {
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Cliente cliente = new Cliente
+                            {
+                                IDCliente = reader["IDCLIENTE"] != DBNull.Value ? Convert.ToInt32(reader["IDCLIENTE"]) : 0,
+                                DOCUMENTO = reader["DOCUMENTO"] != DBNull.Value ? Convert.ToInt32(reader["DOCUMENTO"]) : 0,
+                                NOMBRE = reader["NOMBRE"].ToString() ?? string.Empty,
+                                CORREO = reader["CORREO"].ToString() ?? string.Empty,
+                                ESTADO = reader["ESTADO"].ToString() ?? string.Empty,
+                                LOCALIDAD = reader["LOCALIDAD"].ToString() ?? string.Empty,
+                                PROVINCIA = reader["PROVINCIA"].ToString() ?? string.Empty,
+                                FECHACREACION = reader["FECHACREACION"] != DBNull.Value ? Convert.ToDateTime(reader["FECHACREACION"]) : (DateTime?)null
+                            };
+
+                            lista.Add(cliente);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al listar los Clientes: " + ex.Message);
+                }
+            }
+
+            return lista;
+        }
+
+        // Método para insertar un Cliente en la base de datos utilizando el procedimiento almacenado
+        public static void Insertar(Cliente cliente)
+        {
+            using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    oconexion.Open();
+
+                    // Llamada al procedimiento almacenado InsertarCliente
+                    using (SqlCommand command = new SqlCommand("dbo.InsertarCliente", oconexion))
+                    {
+                        command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        // Añadir parámetros (sin FECHACREACION, ya que la base de datos lo establece automáticamente)
+                        command.Parameters.AddWithValue("@NOMBRE", cliente.NOMBRE ?? string.Empty);
+                        command.Parameters.AddWithValue("@DOCUMENTO", cliente.DOCUMENTO);
+                        command.Parameters.AddWithValue("@CORREO", cliente.CORREO ?? string.Empty);
+                        command.Parameters.AddWithValue("@ESTADO", cliente.ESTADO ?? "Activo");
+                        command.Parameters.AddWithValue("@LOCALIDAD", cliente.LOCALIDAD ?? string.Empty);
+                        command.Parameters.AddWithValue("@PROVINCIA", cliente.PROVINCIA ?? string.Empty);
+
+                        // Ejecutar el procedimiento y capturar el ID del cliente insertado (si es necesario)
+                        object result = command.ExecuteScalar();
+                        if (result != null)
+                        {
+                            cliente.IDCliente = Convert.ToInt32(result);  // Almacena el ID del cliente recién insertado
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    if (ex.Number == 50000)  // Código de error para RAISERROR
+                    {
+                        throw new Exception("Error al insertar el Cliente: " + ex.Message);
+                    }
+                    else
+                    {
+                        throw new Exception("Error al insertar el Cliente", ex);
+                    }
+                }
+            }
+        }
+    }
+}
