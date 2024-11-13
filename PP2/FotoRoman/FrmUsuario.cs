@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Data;
-using System.Data.SqlClient;
 using System.Windows.Forms;
-using System.Configuration;
+using CapaNegocio;
+using CapaEntidad;
 
 namespace FotoRoman
 {
@@ -11,50 +10,88 @@ namespace FotoRoman
         public FrmUsuario()
         {
             InitializeComponent();
-            CargarUsuarios(); // Llamar al método para cargar usuarios al abrir el formulario
+            CargarUsuarios();
         }
 
-        // Método para cargar los usuarios y sus roles desde la base de datos
+        // Método para cargar los usuarios y sus roles
         private void CargarUsuarios()
         {
-            // Obtener la cadena de conexión desde App.config
-            string connectionString = ConfigurationManager.ConnectionStrings["cadena_conexion"].ConnectionString;
+            CNUsuario cnUsuario = new CNUsuario();
+            dataGridViewUsuarios.DataSource = cnUsuario.Listar();
+        }
 
-            // Consulta SQL con un JOIN entre USUARIO y ROL
-            string query = @"
-                SELECT U.IDUSUARIO, U.NOMBRE, U.EMAIL, R.DESCRIPCION AS ROL
-                FROM USUARIO U
-                INNER JOIN ROL R ON U.IDROL = R.IDROL";
+        // Método para el botón Editar
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewUsuarios.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Por favor, selecciona un usuario para editar.");
+                return;
+            }
 
-            // Usar SqlConnection y SqlDataAdapter para conectarse y llenar los datos
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            // Verificar si la celda contiene el ID del usuario
+            if (dataGridViewUsuarios.SelectedRows[0].Cells["IDUSUARIO"].Value is null)
+            {
+                MessageBox.Show("No se pudo obtener el ID del usuario seleccionado.");
+                return;
+            }
+
+            int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["IDUSUARIO"].Value);
+            EditarUsuario(idUsuario);
+        }
+
+
+        // Método para editar un usuario
+        private void EditarUsuario(int idUsuario)
+        {
+            CNUsuario cnUsuario = new CNUsuario();
+
+            // Manejar el posible valor nulo con 'asignación nula'
+            Usuario usuario = cnUsuario.Listar().Find(u => u.IDUSUARIO == idUsuario) ?? new Usuario();
+
+            if (usuario.IDUSUARIO == 0)
+            {
+                MessageBox.Show("Usuario no encontrado.");
+                return;
+            }
+
+            FrmEditarUsuario frmEditarUsuario = new FrmEditarUsuario(usuario);
+            frmEditarUsuario.ShowDialog();
+
+            CargarUsuarios();
+        }
+
+
+        // Método para el botón Eliminar
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewUsuarios.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Por favor, selecciona un usuario para eliminar.");
+                return;
+            }
+
+            int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["IDUSUARIO"].Value);
+            EliminarUsuario(idUsuario);
+        }
+
+        // Método para eliminar un usuario
+        private void EliminarUsuario(int idUsuario)
+        {
+            if (MessageBox.Show("¿Estás seguro de eliminar este usuario?", "Confirmar eliminación", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 try
                 {
-                    // Abrir la conexión
-                    conn.Open();
-
-                    // Usar SqlDataAdapter para ejecutar la consulta y llenar los datos
-                    SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-                    DataTable dt = new DataTable();
-                    adapter.Fill(dt);
-
-                    // Asignar los datos al DataGridView
-                    dataGridViewUsuarios.DataSource = dt;
+                    CNUsuario cnUsuario = new CNUsuario();
+                    cnUsuario.Eliminar(idUsuario);
+                    MessageBox.Show("Usuario eliminado correctamente.");
+                    CargarUsuarios();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al cargar los usuarios y roles: " + ex.Message);
+                    MessageBox.Show("Error al eliminar el usuario: " + ex.Message);
                 }
             }
         }
-
-        private void dataGridViewUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // Aquí puedes manejar lo que ocurra cuando se haga clic en una celda
-        }
     }
 }
-
-
-

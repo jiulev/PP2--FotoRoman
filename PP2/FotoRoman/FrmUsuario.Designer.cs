@@ -2,15 +2,11 @@
 {
     partial class FrmUsuario
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private DataGridView dataGridViewUsuarios;
+        private Button btnEditar;
+        private Button btnEliminar;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,44 +16,57 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             dataGridViewUsuarios = new DataGridView();
+            btnEditar = new Button();
+            btnEliminar = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridViewUsuarios).BeginInit();
             SuspendLayout();
             // 
             // dataGridViewUsuarios
             // 
-            dataGridViewUsuarios.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridViewUsuarios.BackgroundColor = Color.Brown;
             dataGridViewUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewUsuarios.Location = new Point(145, 24);
+            dataGridViewUsuarios.Dock = DockStyle.Top;
+            dataGridViewUsuarios.Location = new Point(0, 0);
             dataGridViewUsuarios.Name = "dataGridViewUsuarios";
-            dataGridViewUsuarios.Size = new Size(449, 381);
+            dataGridViewUsuarios.Size = new Size(800, 350);
             dataGridViewUsuarios.TabIndex = 0;
-            dataGridViewUsuarios.CellContentClick += dataGridViewUsuarios_CellContentClick;
+            // 
+            // btnEditar
+            // 
+            btnEditar.Location = new Point(286, 380);
+            btnEditar.Name = "btnEditar";
+            btnEditar.Size = new Size(100, 30);
+            btnEditar.TabIndex = 0;
+            btnEditar.Text = "Editar";
+            btnEditar.UseVisualStyleBackColor = true;
+            btnEditar.Click += btnEditar_Click;
+            // 
+            // btnEliminar
+            // 
+            btnEliminar.Location = new Point(422, 380);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(100, 30);
+            btnEliminar.TabIndex = 1;
+            btnEliminar.Text = "Eliminar";
+            btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // FrmUsuario
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnEditar);
+            Controls.Add(btnEliminar);
             Controls.Add(dataGridViewUsuarios);
             Name = "FrmUsuario";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FrmUsuario";
+            Text = "Gestión de Usuarios";
             ((System.ComponentModel.ISupportInitialize)dataGridViewUsuarios).EndInit();
             ResumeLayout(false);
         }
-
-        #endregion
-
-        private DataGridView dataGridViewUsuarios;
     }
 }

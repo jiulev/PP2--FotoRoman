@@ -58,5 +58,10 @@ namespace FotoRoman
             // Mostrar el formulario como una ventana modal
             formCrearProducto.ShowDialog();
         }
+
+        private void iconMenuItem19_Click(object sender, EventArgs e)
+        {
+            //aca editamos un usuario//
+        }
     }
 }
