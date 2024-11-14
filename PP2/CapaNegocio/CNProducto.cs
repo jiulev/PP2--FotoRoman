@@ -46,5 +46,14 @@ namespace CapaNegocio
         {
             return CD_Producto.ObtenerDescripcionesCategorias();
         }
+
+        public static List<Producto> ListarPorCategoria(int idCategoria)
+        {
+            return CD_Producto.ListarPorCategoria(idCategoria);
+        }
+
+
+
+
     }
 }

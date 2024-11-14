@@ -26,30 +26,38 @@
             // 
             // dataGridViewUsuarios
             // 
-            dataGridViewUsuarios.BackgroundColor = Color.Brown;
+            dataGridViewUsuarios.AllowUserToAddRows = false;
+            dataGridViewUsuarios.AllowUserToResizeRows = false;
+            dataGridViewUsuarios.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewUsuarios.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewUsuarios.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewUsuarios.BackgroundColor = Color.Gainsboro;
             dataGridViewUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewUsuarios.Dock = DockStyle.Top;
-            dataGridViewUsuarios.Location = new Point(0, 0);
+            dataGridViewUsuarios.Location = new Point(10, 10);
+            dataGridViewUsuarios.MultiSelect = false;
             dataGridViewUsuarios.Name = "dataGridViewUsuarios";
-            dataGridViewUsuarios.Size = new Size(800, 350);
+            dataGridViewUsuarios.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewUsuarios.ScrollBars = ScrollBars.Both;
+            dataGridViewUsuarios.Size = new Size(780, 320);
             dataGridViewUsuarios.TabIndex = 0;
+            dataGridViewUsuarios.CellContentClick += dataGridViewUsuarios_CellContentClick;
             // 
             // btnEditar
             // 
-            btnEditar.Location = new Point(286, 380);
+            btnEditar.Location = new Point(250, 350);
             btnEditar.Name = "btnEditar";
-            btnEditar.Size = new Size(100, 30);
-            btnEditar.TabIndex = 0;
+            btnEditar.Size = new Size(120, 40);
+            btnEditar.TabIndex = 1;
             btnEditar.Text = "Editar";
             btnEditar.UseVisualStyleBackColor = true;
             btnEditar.Click += btnEditar_Click;
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(422, 380);
+            btnEliminar.Location = new Point(420, 350);
             btnEliminar.Name = "btnEliminar";
-            btnEliminar.Size = new Size(100, 30);
-            btnEliminar.TabIndex = 1;
+            btnEliminar.Size = new Size(120, 40);
+            btnEliminar.TabIndex = 2;
             btnEliminar.Text = "Eliminar";
             btnEliminar.UseVisualStyleBackColor = true;
             btnEliminar.Click += btnEliminar_Click;

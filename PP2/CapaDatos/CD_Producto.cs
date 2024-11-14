@@ -66,5 +66,47 @@ namespace CapaDatos
 
             return categorias;
         }
+
+        public static List<Producto> ListarPorCategoria(int idCategoria)
+        {
+            List<Producto> lista = new List<Producto>();
+
+            using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    oconexion.Open();
+                    string query = "SELECT IdProducto, Nombre, Precio FROM PRODUCTO WHERE IDCATEGORIA = @IDCATEGORIA ORDER BY Nombre";
+
+                    using (SqlCommand command = new SqlCommand(query, oconexion))
+                    {
+                        command.Parameters.AddWithValue("@IDCATEGORIA", idCategoria);
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Producto producto = new Producto
+                            {
+                                IdProducto = reader["IdProducto"] != DBNull.Value ? Convert.ToInt32(reader["IdProducto"]) : 0,
+                                Nombre = reader["Nombre"]?.ToString() ?? string.Empty,
+                                Precio = reader["Precio"] != DBNull.Value ? Convert.ToDecimal(reader["Precio"]) : 0m
+
+                            };
+                            lista.Add(producto);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al listar productos por categoría: " + ex.Message);
+                }
+            }
+
+            return lista;
+        }
+
+
+
+
+
     }
 }

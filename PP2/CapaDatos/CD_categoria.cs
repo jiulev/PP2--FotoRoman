@@ -35,5 +35,44 @@ namespace CapaDatos
                 }
             }
         }
+
+        public static List<Categoria> ListarDescripciones()
+        {
+            List<Categoria> lista = new List<Categoria>();
+
+            using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    oconexion.Open();
+                    string query = "SELECT IDCATEGORIA, DESCRIPCION FROM CATEGORIA ORDER BY DESCRIPCION";
+
+                    using (SqlCommand command = new SqlCommand(query, oconexion))
+                    {
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            Categoria categoria = new Categoria
+                            {
+                                IDCATEGORIA = Convert.ToInt32(reader["IDCATEGORIA"]),
+                                DESCRIPCION = reader["DESCRIPCION"]?.ToString() ?? string.Empty
+
+                            };
+                            lista.Add(categoria);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al listar las descripciones de categorías: " + ex.Message);
+                }
+            }
+
+            return lista;
+        }
+
+
+
     }
+
 }

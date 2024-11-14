@@ -10,5 +10,14 @@ namespace CapaNegocio
         {
             CD_Categoria.Insertar(categoria);  // Llamada a método estático en CD_Categoria
         }
+
+
+        public static List<Categoria> ListarDescripciones()
+        {
+            return CD_Categoria.ListarDescripciones();
+        }
+
+
+
     }
 }

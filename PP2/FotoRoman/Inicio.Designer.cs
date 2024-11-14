@@ -31,8 +31,6 @@
             menu = new MenuStrip();
             menuusuario = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem18 = new FontAwesome.Sharp.IconMenuItem();
-            iconMenuItem19 = new FontAwesome.Sharp.IconMenuItem();
-            iconMenuItem20 = new FontAwesome.Sharp.IconMenuItem();
             consultarVendedor = new FontAwesome.Sharp.IconMenuItem();
             menupedidos = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem1 = new FontAwesome.Sharp.IconMenuItem();
@@ -78,7 +76,7 @@
             // menuusuario
             // 
             menuusuario.AutoSize = false;
-            menuusuario.DropDownItems.AddRange(new ToolStripItem[] { iconMenuItem18, iconMenuItem19, iconMenuItem20, consultarVendedor });
+            menuusuario.DropDownItems.AddRange(new ToolStripItem[] { iconMenuItem18, consultarVendedor });
             menuusuario.IconChar = FontAwesome.Sharp.IconChar.Users;
             menuusuario.IconColor = Color.Black;
             menuusuario.IconFont = FontAwesome.Sharp.IconFont.Auto;
@@ -96,28 +94,9 @@
             iconMenuItem18.IconColor = Color.Black;
             iconMenuItem18.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem18.Name = "iconMenuItem18";
-            iconMenuItem18.Size = new Size(180, 22);
+            iconMenuItem18.Size = new Size(168, 22);
             iconMenuItem18.Text = "Registrar usuario";
             iconMenuItem18.Click += crearUsuario;
-            // 
-            // iconMenuItem19
-            // 
-            iconMenuItem19.IconChar = FontAwesome.Sharp.IconChar.None;
-            iconMenuItem19.IconColor = Color.Black;
-            iconMenuItem19.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconMenuItem19.Name = "iconMenuItem19";
-            iconMenuItem19.Size = new Size(180, 22);
-            iconMenuItem19.Text = "Modificar Usuario";
-            iconMenuItem19.Click += iconMenuItem19_Click;
-            // 
-            // iconMenuItem20
-            // 
-            iconMenuItem20.IconChar = FontAwesome.Sharp.IconChar.None;
-            iconMenuItem20.IconColor = Color.Black;
-            iconMenuItem20.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconMenuItem20.Name = "iconMenuItem20";
-            iconMenuItem20.Size = new Size(180, 22);
-            iconMenuItem20.Text = "Eliminar Usuario";
             // 
             // consultarVendedor
             // 
@@ -125,7 +104,7 @@
             consultarVendedor.IconColor = Color.Black;
             consultarVendedor.IconFont = FontAwesome.Sharp.IconFont.Auto;
             consultarVendedor.Name = "consultarVendedor";
-            consultarVendedor.Size = new Size(180, 22);
+            consultarVendedor.Size = new Size(168, 22);
             consultarVendedor.Text = "Consultar Usuario";
             consultarVendedor.Click += iconMenuItem21_Click;
             // 
@@ -149,8 +128,9 @@
             iconMenuItem1.IconColor = Color.Black;
             iconMenuItem1.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem1.Name = "iconMenuItem1";
-            iconMenuItem1.Size = new Size(157, 22);
+            iconMenuItem1.Size = new Size(180, 22);
             iconMenuItem1.Text = "Crear Pedido";
+            iconMenuItem1.Click += iconMenuItem1_Click;
             // 
             // iconMenuItem2
             // 
@@ -158,7 +138,7 @@
             iconMenuItem2.IconColor = Color.Black;
             iconMenuItem2.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem2.Name = "iconMenuItem2";
-            iconMenuItem2.Size = new Size(157, 22);
+            iconMenuItem2.Size = new Size(180, 22);
             iconMenuItem2.Text = "Editar Pedido";
             // 
             // iconMenuItem3
@@ -167,7 +147,7 @@
             iconMenuItem3.IconColor = Color.Black;
             iconMenuItem3.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem3.Name = "iconMenuItem3";
-            iconMenuItem3.Size = new Size(157, 22);
+            iconMenuItem3.Size = new Size(180, 22);
             iconMenuItem3.Text = "Eliminar Pedido";
             // 
             // iconMenuItem4
@@ -176,7 +156,7 @@
             iconMenuItem4.IconColor = Color.Black;
             iconMenuItem4.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem4.Name = "iconMenuItem4";
-            iconMenuItem4.Size = new Size(157, 22);
+            iconMenuItem4.Size = new Size(180, 22);
             iconMenuItem4.Text = "Ver Pedido";
             // 
             // menupagos
@@ -288,7 +268,7 @@
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(179, 22);
+            toolStripMenuItem1.Size = new Size(180, 22);
             toolStripMenuItem1.Text = "Registrar producto";
             toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
@@ -298,7 +278,7 @@
             iconMenuItem12.IconColor = Color.Black;
             iconMenuItem12.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem12.Name = "iconMenuItem12";
-            iconMenuItem12.Size = new Size(179, 22);
+            iconMenuItem12.Size = new Size(180, 22);
             iconMenuItem12.Text = "Modificar producto";
             // 
             // iconMenuItem13
@@ -307,7 +287,7 @@
             iconMenuItem13.IconColor = Color.Black;
             iconMenuItem13.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem13.Name = "iconMenuItem13";
-            iconMenuItem13.Size = new Size(179, 22);
+            iconMenuItem13.Size = new Size(180, 22);
             iconMenuItem13.Text = "Eliminar producto";
             // 
             // iconMenuItem14
@@ -316,7 +296,7 @@
             iconMenuItem14.IconColor = Color.Black;
             iconMenuItem14.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem14.Name = "iconMenuItem14";
-            iconMenuItem14.Size = new Size(179, 22);
+            iconMenuItem14.Size = new Size(180, 22);
             iconMenuItem14.Text = "Consultar producto";
             // 
             // iconMenuItem15
@@ -325,7 +305,7 @@
             iconMenuItem15.IconColor = Color.Black;
             iconMenuItem15.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem15.Name = "iconMenuItem15";
-            iconMenuItem15.Size = new Size(179, 22);
+            iconMenuItem15.Size = new Size(180, 22);
             iconMenuItem15.Text = "Registrar Categoria";
             iconMenuItem15.Click += iconMenuItem15_Click;
             // 
@@ -335,7 +315,7 @@
             iconMenuItem16.IconColor = Color.Black;
             iconMenuItem16.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem16.Name = "iconMenuItem16";
-            iconMenuItem16.Size = new Size(179, 22);
+            iconMenuItem16.Size = new Size(180, 22);
             iconMenuItem16.Text = "Modificar Categoria";
             // 
             // iconMenuItem17
@@ -344,7 +324,7 @@
             iconMenuItem17.IconColor = Color.Black;
             iconMenuItem17.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem17.Name = "iconMenuItem17";
-            iconMenuItem17.Size = new Size(179, 22);
+            iconMenuItem17.Size = new Size(180, 22);
             iconMenuItem17.Text = "Eliminar Categoria";
             // 
             // menureportes
@@ -472,8 +452,6 @@
         private FontAwesome.Sharp.IconMenuItem iconMenuItem16;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem17;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem18;
-        private FontAwesome.Sharp.IconMenuItem iconMenuItem19;
-        private FontAwesome.Sharp.IconMenuItem iconMenuItem20;
         private FontAwesome.Sharp.IconMenuItem consultarVendedor;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem22;
         private ToolStripMenuItem toolStripMenuItem2;

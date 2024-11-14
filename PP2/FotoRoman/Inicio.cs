@@ -63,5 +63,14 @@ namespace FotoRoman
         {
             //aca editamos un usuario//
         }
+
+        private void iconMenuItem1_Click(object sender, EventArgs e)
+        {
+            // Crear una instancia del formulario FormCrearPedido
+            FormCrearPedido formCrearPedido = new FormCrearPedido();
+
+            // Mostrar el formulario como ventana modal
+            formCrearPedido.ShowDialog();
+        }
     }
 }

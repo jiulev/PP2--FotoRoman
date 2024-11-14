@@ -17,7 +17,18 @@ namespace FotoRoman
         private void CargarUsuarios()
         {
             CNUsuario cnUsuario = new CNUsuario();
-            dataGridViewUsuarios.DataSource = cnUsuario.Listar();
+            var usuarios = cnUsuario.Listar().Select(u => new
+            {
+                IDUSUARIO = u.IDUSUARIO,
+                NOMBRE = u.NOMBRE,
+                DOCUMENTO = u.DOCUMENTO,
+                EMAIL = u.EMAIL,
+                PASSWORD = u.PASSWORD,
+                ROL = string.IsNullOrEmpty(u.oRol.DESCRIPCION) ? "Sin Rol" : u.oRol.DESCRIPCION,
+                FECHACREACION = u.FECHACREACION
+            }).ToList();
+
+            dataGridViewUsuarios.DataSource = usuarios;
         }
 
         // Método para el botón Editar
@@ -92,6 +103,11 @@ namespace FotoRoman
                     MessageBox.Show("Error al eliminar el usuario: " + ex.Message);
                 }
             }
+        }
+
+        private void dataGridViewUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -7,7 +7,7 @@ namespace CapaDatos
 {
     public class CD_Cliente
     {
-        // Método para listar los Clientes desde la tabla "Cliente"
+        // Método para listar todos los clientes desde la base de datos
         public static List<Cliente> Listar()
         {
             List<Cliente> lista = new List<Cliente>();
@@ -53,14 +53,14 @@ namespace CapaDatos
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error al listar los Clientes: " + ex.Message);
+                    throw new Exception("Error al listar los clientes: " + ex.Message);
                 }
             }
 
             return lista;
         }
 
-        // Método para insertar un Cliente en la base de datos utilizando el procedimiento almacenado
+        // Método para insertar un nuevo cliente usando el procedimiento almacenado
         public static void Insertar(Cliente cliente)
         {
             using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
@@ -69,12 +69,11 @@ namespace CapaDatos
                 {
                     oconexion.Open();
 
-                    // Llamada al procedimiento almacenado InsertarCliente
                     using (SqlCommand command = new SqlCommand("dbo.InsertarCliente", oconexion))
                     {
                         command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                        // Añadir parámetros (sin FECHACREACION, ya que la base de datos lo establece automáticamente)
+                        // Parámetros del procedimiento almacenado
                         command.Parameters.AddWithValue("@NOMBRE", cliente.NOMBRE ?? string.Empty);
                         command.Parameters.AddWithValue("@DOCUMENTO", cliente.DOCUMENTO);
                         command.Parameters.AddWithValue("@CORREO", cliente.CORREO ?? string.Empty);
@@ -82,26 +81,57 @@ namespace CapaDatos
                         command.Parameters.AddWithValue("@LOCALIDAD", cliente.LOCALIDAD ?? string.Empty);
                         command.Parameters.AddWithValue("@PROVINCIA", cliente.PROVINCIA ?? string.Empty);
 
-                        // Ejecutar el procedimiento y capturar el ID del cliente insertado (si es necesario)
+                        // Ejecutar el procedimiento y obtener el ID del cliente insertado
                         object result = command.ExecuteScalar();
                         if (result != null)
                         {
-                            cliente.IDCliente = Convert.ToInt32(result);  // Almacena el ID del cliente recién insertado
+                            cliente.IDCliente = Convert.ToInt32(result);
                         }
                     }
                 }
                 catch (SqlException ex)
                 {
-                    if (ex.Number == 50000)  // Código de error para RAISERROR
+                    if (ex.Number == 50000)
                     {
-                        throw new Exception("Error al insertar el Cliente: " + ex.Message);
+                        throw new Exception("Error al insertar el cliente: " + ex.Message);
                     }
                     else
                     {
-                        throw new Exception("Error al insertar el Cliente", ex);
+                        throw new Exception("Error al insertar el cliente", ex);
                     }
                 }
             }
+        }
+
+        // Método para obtener los nombres de los clientes para el ComboBox
+        public static List<string> ObtenerNombresClientes()
+        {
+            List<string> nombres = new List<string>();
+
+            using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    oconexion.Open();
+                    string query = "SELECT NOMBRE FROM CLIENTE";
+
+                    using (SqlCommand command = new SqlCommand(query, oconexion))
+                    {
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            string nombre = reader["NOMBRE"]?.ToString() ?? string.Empty;
+                            nombres.Add(nombre);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al obtener nombres de clientes: " + ex.Message);
+                }
+            }
+
+            return nombres;
         }
     }
 }
