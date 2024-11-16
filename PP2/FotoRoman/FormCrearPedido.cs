@@ -36,21 +36,26 @@ namespace FotoRoman
             }
         }
 
+        // Método para calcular el total del pedido
         private void CalcularTotal()
         {
             decimal totalSum = detallesPedido.Sum(d => d.SUBTOTAL);
             total.Text = $"Total: ${totalSum:F2}";
         }
 
+        // Evento para agregar un producto al pedido
         private void buttonAgregar_Click_1(object sender, EventArgs e)
         {
             try
             {
-                string productoNombre = comboProducto.Text;
+                // Obtener el nombre del producto del objeto seleccionado
+                string productoNombre = comboProducto.SelectedItem is Producto producto ? producto.Nombre : "Sin nombre";
+
                 decimal precio = Convert.ToDecimal(textPrecio1.Text);
                 int cantidad = Convert.ToInt32(textCantidad1.Text);
                 decimal subtotal = precio * cantidad;
 
+                // Validaciones
                 if (string.IsNullOrWhiteSpace(productoNombre) || precio <= 0 || cantidad <= 0)
                 {
                     MessageBox.Show("Ingrese datos válidos para el producto, precio y cantidad.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -64,6 +69,7 @@ namespace FotoRoman
                     return;
                 }
 
+                // Crear el detalle del pedido
                 DetallePedido detalle = new DetallePedido
                 {
                     oProducto = productoSeleccionado,
@@ -72,10 +78,12 @@ namespace FotoRoman
                     SUBTOTAL = subtotal
                 };
 
+                // Agregar el detalle a la lista y al DataGridView
                 detallesPedido.Add(detalle);
                 dataGridView1.Rows.Add(productoNombre, precio, subtotal);
                 CalcularTotal();
 
+                // Limpiar los campos
                 comboProducto.SelectedIndex = -1;
                 textPrecio1.Clear();
                 textCantidad1.Clear();
@@ -86,6 +94,8 @@ namespace FotoRoman
             }
         }
 
+
+        // Evento para eliminar un ítem del pedido
         private void eliminar1_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count > 0)
@@ -101,6 +111,7 @@ namespace FotoRoman
             }
         }
 
+        // Evento para crear el pedido
         private void crear1_Click(object sender, EventArgs e)
         {
             try
@@ -118,15 +129,12 @@ namespace FotoRoman
                 DateTime fechaPedido = DateTime.Now;
 
                 string mensaje;
-                bool resultado = CNPedido.ProcesarPedido(
-                    new Pedido
-                    {
-                        ocliente = new Cliente { IDCliente = idCliente },
-                        oUsuario = new Usuario { IDUSUARIO = idUsuario },
-                        TOTAL = totalPedido,
-                        ESTADO = estado,
-                        FECHAPEDIDO = fechaPedido.ToString("yyyy-MM-dd HH:mm:ss")
-                    },
+                bool resultado = CNPedido.InsertarPedido(
+                    idCliente,
+                    idUsuario,
+                    totalPedido,
+                    fechaPedido,
+                    estado,
                     detallesPedido,
                     out mensaje
                 );
@@ -153,14 +161,13 @@ namespace FotoRoman
             }
         }
 
+        // Cargar la lista de clientes
         private void CargarClientes()
         {
             try
             {
                 listaClientes = CNCliente.ListarClientes();
                 comboCliente.Items.Clear();
-                comboCliente.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                comboCliente.AutoCompleteSource = AutoCompleteSource.ListItems;
 
                 foreach (var cliente in listaClientes)
                 {
@@ -173,14 +180,13 @@ namespace FotoRoman
             }
         }
 
+        // Cargar la lista de categorías
         private void CargarCategorias()
         {
             try
             {
                 listaCategorias = CNCategoria.ListarDescripciones();
                 comboCategoria.Items.Clear();
-                comboCategoria.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                comboCategoria.AutoCompleteSource = AutoCompleteSource.ListItems;
 
                 foreach (var categoria in listaCategorias)
                 {
@@ -196,25 +202,7 @@ namespace FotoRoman
             }
         }
 
-        private void comboCliente_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                string clienteSeleccionado = comboCliente.Text;
-                var cliente = listaClientes.FirstOrDefault(c => c.NOMBRE == clienteSeleccionado);
-
-                if (cliente != null)
-                {
-                    textDni.Text = cliente.DOCUMENTO.ToString();
-                    textLocalidad.Text = cliente.LOCALIDAD;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al seleccionar cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
+        // Evento para seleccionar la categoría
         private void comboCategoria_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
@@ -232,6 +220,7 @@ namespace FotoRoman
             }
         }
 
+        // Cargar la lista de productos según la categoría seleccionada
         private void CargarProductos(int idCategoria)
         {
             try
@@ -241,13 +230,64 @@ namespace FotoRoman
 
                 foreach (var producto in listaProductos)
                 {
-                    comboProducto.Items.Add(producto.Nombre);
+                    comboProducto.Items.Add(producto);
                 }
+
+                comboProducto.DisplayMember = "Nombre";
+                comboProducto.ValueMember = "IdProducto";
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar productos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        // Evento para seleccionar un producto y mostrar su precio
+        private void comboProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (comboProducto.SelectedItem != null)
+                {
+                    var productoSeleccionado = (Producto)comboProducto.SelectedItem;
+                    textPrecio1.Text = productoSeleccionado.Precio.ToString("F2");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al seleccionar producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        private void comboCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // Obtener el nombre del cliente seleccionado
+                string clienteSeleccionado = comboCliente.Text;
+
+                // Buscar el cliente en la lista
+                var cliente = listaClientes.FirstOrDefault(c => c.NOMBRE == clienteSeleccionado);
+
+                // Si se encuentra el cliente, actualizar los campos de DNI y Localidad
+                if (cliente != null)
+                {
+                    textDni.Text = cliente.DOCUMENTO.ToString();
+                    textLocalidad.Text = cliente.LOCALIDAD;
+                }
+                else
+                {
+                    // Limpiar los campos si no se encuentra el cliente
+                    textDni.Clear();
+                    textLocalidad.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al seleccionar cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

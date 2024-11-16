@@ -1,26 +1,26 @@
-﻿using CapaDatos;
-using CapaEntidad;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using CapaDatos;
+using CapaEntidad;
 
 namespace CapaNegocio
 {
     public class CNPedido
     {
-        // Método para procesar un pedido y sus detalles
-        public static bool ProcesarPedido(Pedido pedido, List<DetallePedido> detalles, out string mensaje)
+        // Método para insertar un pedido y sus detalles
+        public static bool InsertarPedido(int idCliente, int idUsuario, decimal total, DateTime fechaPedido, string estado, List<DetallePedido> detalles, out string mensaje)
         {
             mensaje = string.Empty;
 
-            // Validar los datos del pedido
-            if (pedido.ocliente == null || pedido.ocliente.IDCliente <= 0)
+            // Validar datos del pedido
+            if (idCliente <= 0)
             {
-                mensaje = "El cliente es inválido.";
+                mensaje = "El ID del cliente es inválido.";
                 return false;
             }
-            if (pedido.oUsuario == null || pedido.oUsuario.IDUSUARIO <= 0)
+            if (idUsuario <= 0)
             {
-                mensaje = "El usuario es inválido.";
+                mensaje = "El ID del usuario es inválido.";
                 return false;
             }
             if (detalles == null || detalles.Count == 0)
@@ -31,23 +31,23 @@ namespace CapaNegocio
 
             try
             {
-                // Llamar al método de la capa de datos para insertar el pedido y sus detalles
-                bool resultado = CD_Pedido.InsertarPedido(pedido, detalles);
+                // Llamar al método de la capa de datos para insertar el pedido
+                bool resultado = CD_Pedido.InsertarPedido(idCliente, idUsuario, total, fechaPedido, estado, detalles);
 
                 if (resultado)
                 {
-                    mensaje = "Pedido procesado exitosamente.";
+                    mensaje = "Pedido insertado exitosamente.";
                     return true;
                 }
                 else
                 {
-                    mensaje = "Error al procesar el pedido en la capa de datos.";
+                    mensaje = "Error al insertar el pedido en la base de datos.";
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                mensaje = $"Error al procesar el pedido: {ex.Message}";
+                mensaje = $"Error al insertar el pedido: {ex.Message}";
                 return false;
             }
         }
@@ -57,8 +57,7 @@ namespace CapaNegocio
         {
             try
             {
-                int ultimoId = CD_Pedido.ObtenerUltimoIdPedido();
-                return ultimoId + 1;
+                return CD_Pedido.ObtenerUltimoIdPedido() + 1;
             }
             catch (Exception ex)
             {

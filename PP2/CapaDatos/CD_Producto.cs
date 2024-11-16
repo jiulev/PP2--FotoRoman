@@ -81,17 +81,18 @@ namespace CapaDatos
                     using (SqlCommand command = new SqlCommand(query, oconexion))
                     {
                         command.Parameters.AddWithValue("@IDCATEGORIA", idCategoria);
-                        SqlDataReader reader = command.ExecuteReader();
-                        while (reader.Read())
+                        using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            Producto producto = new Producto
+                            while (reader.Read())
                             {
-                                IdProducto = reader["IdProducto"] != DBNull.Value ? Convert.ToInt32(reader["IdProducto"]) : 0,
-                                Nombre = reader["Nombre"]?.ToString() ?? string.Empty,
-                                Precio = reader["Precio"] != DBNull.Value ? Convert.ToDecimal(reader["Precio"]) : 0m
-
-                            };
-                            lista.Add(producto);
+                                Producto producto = new Producto
+                                {
+                                    IdProducto = reader["IdProducto"] != DBNull.Value ? Convert.ToInt32(reader["IdProducto"]) : 0,
+                                    Nombre = reader["Nombre"]?.ToString() ?? string.Empty,
+                                    Precio = reader["Precio"] != DBNull.Value ? Convert.ToDecimal(reader["Precio"]) : 0m
+                                };
+                                lista.Add(producto);
+                            }
                         }
                     }
                 }
@@ -103,6 +104,7 @@ namespace CapaDatos
 
             return lista;
         }
+
 
 
 

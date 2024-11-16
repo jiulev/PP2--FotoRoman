@@ -97,7 +97,6 @@
             cliente.Size = new Size(77, 30);
             cliente.TabIndex = 3;
             cliente.Text = "Cliente";
-            //cliente.Click += cliente_Click;
             // 
             // label3
             // 
@@ -149,6 +148,7 @@
             comboCategoria.Name = "comboCategoria";
             comboCategoria.Size = new Size(312, 33);
             comboCategoria.TabIndex = 8;
+            comboCategoria.SelectedIndexChanged += comboCategoria_SelectedIndexChanged;
             // 
             // comboProducto
             // 
@@ -160,6 +160,7 @@
             comboProducto.Name = "comboProducto";
             comboProducto.Size = new Size(312, 33);
             comboProducto.TabIndex = 9;
+            comboProducto.SelectedIndexChanged += comboProducto_SelectedIndexChanged;
             // 
             // label2
             // 
@@ -296,7 +297,6 @@
             total.Size = new Size(83, 37);
             total.TabIndex = 21;
             total.Text = "$0.00";
-           //total.Click += total_Click;
             // 
             // eliminar1
             // 
@@ -324,7 +324,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1118, 540);
+            ClientSize = new Size(1168, 540);
             Controls.Add(crear1);
             Controls.Add(eliminar1);
             Controls.Add(total);
@@ -349,6 +349,7 @@
             Controls.Add(numero);
             Controls.Add(label1);
             Name = "FormCrearPedido";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Crear pedido";
             Load += FormCrearPedido_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
