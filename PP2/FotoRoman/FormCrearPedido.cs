@@ -13,6 +13,7 @@ namespace FotoRoman
         private List<Cliente> listaClientes = new List<Cliente>();
         private List<Categoria> listaCategorias = new List<Categoria>();
         private List<Producto> listaProductos = new List<Producto>();
+        private int idPedidoGenerado;
 
         public FormCrearPedido()
         {
@@ -29,6 +30,7 @@ namespace FotoRoman
                 // Mostrar el próximo número de pedido
                 int proximoNumeroPedido = CNPedido.ObtenerProximoNumeroPedido();
                 num.Text = proximoNumeroPedido.ToString();
+                buttonRegistrar.Enabled = false; // Deshabilitar botón de registrar pago hasta que se cree el pedido
             }
             catch (Exception ex)
             {
@@ -48,14 +50,11 @@ namespace FotoRoman
         {
             try
             {
-                // Obtener el nombre del producto del objeto seleccionado
                 string productoNombre = comboProducto.SelectedItem is Producto producto ? producto.Nombre : "Sin nombre";
-
                 decimal precio = Convert.ToDecimal(textPrecio1.Text);
                 int cantidad = Convert.ToInt32(textCantidad1.Text);
                 decimal subtotal = precio * cantidad;
 
-                // Validaciones
                 if (string.IsNullOrWhiteSpace(productoNombre) || precio <= 0 || cantidad <= 0)
                 {
                     MessageBox.Show("Ingrese datos válidos para el producto, precio y cantidad.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -69,7 +68,6 @@ namespace FotoRoman
                     return;
                 }
 
-                // Crear el detalle del pedido
                 DetallePedido detalle = new DetallePedido
                 {
                     oProducto = productoSeleccionado,
@@ -78,12 +76,10 @@ namespace FotoRoman
                     SUBTOTAL = subtotal
                 };
 
-                // Agregar el detalle a la lista y al DataGridView
                 detallesPedido.Add(detalle);
                 dataGridView1.Rows.Add(productoNombre, precio, subtotal);
                 CalcularTotal();
 
-                // Limpiar los campos
                 comboProducto.SelectedIndex = -1;
                 textPrecio1.Clear();
                 textCantidad1.Clear();
@@ -93,7 +89,6 @@ namespace FotoRoman
                 MessageBox.Show($"Error al agregar el producto: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         // Evento para eliminar un ítem del pedido
         private void eliminar1_Click(object sender, EventArgs e)
@@ -110,6 +105,25 @@ namespace FotoRoman
                 MessageBox.Show("Seleccione una fila para eliminar.", "Eliminar ítem", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+
+        private void RegistrarPago()
+        {
+            if (idPedidoGenerado > 0)
+            {
+                FormRegistrarPago formPago = new FormRegistrarPago
+                {
+                    TextNombre = comboCliente.Text,
+                    TextImporte = total.Text.Replace("Total: $", ""),
+                    TextNum = idPedidoGenerado.ToString()
+                };
+
+                formPago.ShowDialog();
+                LimpiarCampos();
+                RefrescarNumeroPedido();
+            }
+        }
+
 
         // Evento para crear el pedido
         private void crear1_Click(object sender, EventArgs e)
@@ -129,26 +143,22 @@ namespace FotoRoman
                 DateTime fechaPedido = DateTime.Now;
 
                 string mensaje;
-                bool resultado = CNPedido.InsertarPedido(
-                    idCliente,
-                    idUsuario,
-                    totalPedido,
-                    fechaPedido,
-                    estado,
-                    detallesPedido,
-                    out mensaje
-                );
+                bool resultado = CNPedido.InsertarPedido(idCliente, idUsuario, totalPedido, fechaPedido, estado, detallesPedido, out mensaje);
 
                 if (resultado)
                 {
-                    MessageBox.Show("Pedido creado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    detallesPedido.Clear();
-                    dataGridView1.Rows.Clear();
-                    CalcularTotal();
-                    comboCliente.SelectedIndex = -1;
-                    comboProducto.SelectedIndex = -1;
-                    textPrecio1.Clear();
-                    textCantidad1.Clear();
+                    idPedidoGenerado = CNPedido.ObtenerUltimoIdPedido();
+                    var respuesta = MessageBox.Show("Pedido creado exitosamente. ¿Desea registrar el pago?", "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                    if (respuesta == DialogResult.Yes)
+                    {
+                        buttonRegistrar.Enabled = true;
+                        RegistrarPago();
+                    }
+                    else
+                    {
+                        LimpiarCampos();
+                    }
                 }
                 else
                 {
@@ -160,6 +170,49 @@ namespace FotoRoman
                 MessageBox.Show($"Error al crear el pedido: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void LimpiarCampos()
+        {
+            comboCliente.SelectedIndex = -1;
+            comboCategoria.SelectedIndex = -1;
+            comboProducto.SelectedIndex = -1;
+            textDni.Clear();
+            textLocalidad.Clear();
+            textCantidad1.Clear();
+            textPrecio1.Clear();
+            total.Text = "$0.00";
+            detallesPedido.Clear();
+            dataGridView1.Rows.Clear();
+            buttonRegistrar.Enabled = false;
+        }
+
+
+        private void RefrescarNumeroPedido()
+        {
+            int proximoNumeroPedido = CNPedido.ObtenerProximoNumeroPedido();
+            num.Text = proximoNumeroPedido.ToString();
+        }
+
+        // Evento para registrar el pago
+        private void buttonRegistrar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (idPedidoGenerado > 0)
+                {
+                    RegistrarPago();
+                }
+                else
+                {
+                    MessageBox.Show("Primero debe crear un pedido antes de registrar el pago.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al abrir el formulario de registro de pago: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
 
         // Cargar la lista de clientes
         private void CargarClientes()
@@ -180,6 +233,7 @@ namespace FotoRoman
             }
         }
 
+
         // Cargar la lista de categorías
         private void CargarCategorias()
         {
@@ -195,6 +249,7 @@ namespace FotoRoman
 
                 comboCategoria.DisplayMember = "Text";
                 comboCategoria.ValueMember = "Value";
+                comboCategoria.SelectedIndexChanged += comboCategoria_SelectedIndexChanged;
             }
             catch (Exception ex)
             {
@@ -202,8 +257,8 @@ namespace FotoRoman
             }
         }
 
-        // Evento para seleccionar la categoría
-        private void comboCategoria_SelectedIndexChanged(object sender, EventArgs e)
+        // Evento para seleccionar una categoría y cargar productos
+        private void comboCategoria_SelectedIndexChanged(object? sender, EventArgs e)
         {
             try
             {
@@ -220,7 +275,7 @@ namespace FotoRoman
             }
         }
 
-        // Cargar la lista de productos según la categoría seleccionada
+        // Método para cargar productos según la categoría seleccionada
         private void CargarProductos(int idCategoria)
         {
             try
@@ -242,6 +297,32 @@ namespace FotoRoman
             }
         }
 
+        // Evento para seleccionar un cliente
+        private void comboCliente_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string clienteSeleccionado = comboCliente.Text;
+                var cliente = listaClientes.FirstOrDefault(c => c.NOMBRE == clienteSeleccionado);
+
+                if (cliente != null)
+                {
+                    textDni.Text = cliente.DOCUMENTO.ToString();
+                    textLocalidad.Text = cliente.LOCALIDAD;
+                }
+                else
+                {
+                    textDni.Clear();
+                    textLocalidad.Clear();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error al seleccionar cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
         // Evento para seleccionar un producto y mostrar su precio
         private void comboProducto_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -260,34 +341,7 @@ namespace FotoRoman
         }
 
 
-        private void comboCliente_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                // Obtener el nombre del cliente seleccionado
-                string clienteSeleccionado = comboCliente.Text;
 
-                // Buscar el cliente en la lista
-                var cliente = listaClientes.FirstOrDefault(c => c.NOMBRE == clienteSeleccionado);
-
-                // Si se encuentra el cliente, actualizar los campos de DNI y Localidad
-                if (cliente != null)
-                {
-                    textDni.Text = cliente.DOCUMENTO.ToString();
-                    textLocalidad.Text = cliente.LOCALIDAD;
-                }
-                else
-                {
-                    // Limpiar los campos si no se encuentra el cliente
-                    textDni.Clear();
-                    textLocalidad.Clear();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error al seleccionar cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
     }
 }

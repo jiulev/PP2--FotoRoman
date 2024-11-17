@@ -56,6 +56,8 @@
             total = new Label();
             eliminar1 = new Button();
             crear1 = new Button();
+            buttonRegistrar = new Button();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -148,7 +150,6 @@
             comboCategoria.Name = "comboCategoria";
             comboCategoria.Size = new Size(312, 33);
             comboCategoria.TabIndex = 8;
-            comboCategoria.SelectedIndexChanged += comboCategoria_SelectedIndexChanged;
             // 
             // comboProducto
             // 
@@ -270,7 +271,7 @@
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            dataGridView1.Size = new Size(638, 126);
+            dataGridView1.Size = new Size(638, 139);
             dataGridView1.TabIndex = 20;
             // 
             // productos1
@@ -292,7 +293,7 @@
             // 
             total.AutoSize = true;
             total.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            total.Location = new Point(950, 400);
+            total.Location = new Point(1023, 370);
             total.Name = "total";
             total.Size = new Size(83, 37);
             total.TabIndex = 21;
@@ -300,31 +301,61 @@
             // 
             // eliminar1
             // 
+            eliminar1.BackColor = SystemColors.ScrollBar;
+            eliminar1.FlatStyle = FlatStyle.Flat;
             eliminar1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            eliminar1.Location = new Point(779, 322);
+            eliminar1.Location = new Point(676, 257);
             eliminar1.Name = "eliminar1";
             eliminar1.Size = new Size(135, 32);
             eliminar1.TabIndex = 22;
             eliminar1.Text = "Eliminar Item";
-            eliminar1.UseVisualStyleBackColor = true;
+            eliminar1.UseVisualStyleBackColor = false;
             eliminar1.Click += eliminar1_Click;
             // 
             // crear1
             // 
+            crear1.BackColor = SystemColors.ControlDarkDark;
             crear1.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            crear1.Location = new Point(682, 448);
+            crear1.ForeColor = SystemColors.Control;
+            crear1.Location = new Point(967, 461);
             crear1.Name = "crear1";
-            crear1.Size = new Size(240, 80);
+            crear1.Size = new Size(240, 53);
             crear1.TabIndex = 23;
             crear1.Text = "Crear Pedido";
-            crear1.UseVisualStyleBackColor = true;
+            crear1.UseVisualStyleBackColor = false;
             crear1.Click += crear1_Click;
+            // 
+            // buttonRegistrar
+            // 
+            buttonRegistrar.BackColor = Color.Firebrick;
+            buttonRegistrar.Enabled = false;
+            buttonRegistrar.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            buttonRegistrar.ForeColor = SystemColors.Control;
+            buttonRegistrar.Location = new Point(967, 560);
+            buttonRegistrar.Name = "buttonRegistrar";
+            buttonRegistrar.Size = new Size(240, 53);
+            buttonRegistrar.TabIndex = 24;
+            buttonRegistrar.Text = "Registrar Pago";
+            buttonRegistrar.UseVisualStyleBackColor = false;
+            buttonRegistrar.Click += buttonRegistrar_Click;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Location = new Point(944, 370);
+            label4.Name = "label4";
+            label4.Size = new Size(74, 37);
+            label4.TabIndex = 25;
+            label4.Text = "Total";
             // 
             // FormCrearPedido
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1168, 540);
+            ClientSize = new Size(1278, 650);
+            Controls.Add(label4);
+            Controls.Add(buttonRegistrar);
             Controls.Add(crear1);
             Controls.Add(eliminar1);
             Controls.Add(total);
@@ -385,5 +416,7 @@
         private Label total;
         private Button eliminar1;
         private Button crear1;
+        private Button buttonRegistrar;
+        private Label label4;
     }
 }
