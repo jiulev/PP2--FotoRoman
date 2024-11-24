@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PVqdb7tZ8i4=",
+  "dgSpecHash": "jVzApqsyS0M=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaNegocio\\CapaNegocio.csproj",
+  "projectFilePath": "C:\\PP2--\\PP2\\CapaNegocio\\CapaNegocio.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Usuario\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",

@@ -39,32 +39,55 @@ namespace FotoRoman
         {
             try
             {
-                decimal totalImporte = Convert.ToDecimal(textImporte.Text);
+                // Validar que el importe total sea un número válido
+                if (!decimal.TryParse(textImporte.Text, out decimal totalImporte))
+                {
+                    MessageBox.Show("El importe total es inválido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 decimal sumaSubtotales = 0;
                 List<Pago> detallesPago = new List<Pago>();
 
                 // Recorrer los métodos de pago y subtotales (hasta 7 métodos)
                 for (int i = 1; i <= 7; i++)
                 {
-                    TextBox metodoPagoTextBox = this.Controls[$"textMetodoPago{i}"] as TextBox ?? new TextBox();
-                    TextBox subtotalTextBox = this.Controls[$"textSubtotal{i}"] as TextBox ?? new TextBox();
+                    // Obtener los textboxes dinámicamente
+                    TextBox? metodoPagoTextBox = this.Controls[$"textMetodoPago{i}"] as TextBox;
+                    TextBox? subtotalTextBox = this.Controls[$"textSubtotal{i}"] as TextBox;
 
-                    if (!string.IsNullOrWhiteSpace(metodoPagoTextBox.Text) && !string.IsNullOrWhiteSpace(subtotalTextBox.Text))
+                    // Verificar que los textboxes existen y no están vacíos
+                    if (metodoPagoTextBox != null && subtotalTextBox != null &&
+                        !string.IsNullOrWhiteSpace(metodoPagoTextBox.Text) &&
+                        !string.IsNullOrWhiteSpace(subtotalTextBox.Text))
                     {
-                        string metodoPago = metodoPagoTextBox.Text;
-                        decimal subtotal = Convert.ToDecimal(subtotalTextBox.Text);
+                        // Validar que el subtotal sea un número válido
+                        if (!decimal.TryParse(subtotalTextBox.Text, out decimal subtotal))
+                        {
+                            MessageBox.Show($"El subtotal en el campo {i} es inválido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
                         sumaSubtotales += subtotal;
 
+                        // Crear el objeto Pago y agregarlo a la lista
                         detallesPago.Add(new Pago
                         {
                             IDPEDIDO = Convert.ToInt32(textNum.Text),
-                            METODOPAGO = metodoPago,
+                            METODOPAGO = metodoPagoTextBox.Text,
                             MONTOPAGO = subtotal,
                         });
                     }
                 }
 
-                // Verificar que la suma de subtotales no exceda el importe total
+                // Verificar que se haya ingresado al menos un método de pago
+                if (detallesPago.Count == 0)
+                {
+                    MessageBox.Show("Debe ingresar al menos un método de pago válido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Verificar que la suma de los subtotales no exceda el importe total
                 if (sumaSubtotales > totalImporte)
                 {
                     MessageBox.Show("La suma de los subtotales excede el importe total del pedido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);

@@ -37,8 +37,8 @@
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
-            textSubtotal = new TextBox();
-            textMetodoPago = new TextBox();
+            textSubtotal1 = new TextBox();
+            textMetodoPago1 = new TextBox();
             textMetodoPago2 = new TextBox();
             textMetodoPago3 = new TextBox();
             textMetodoPago4 = new TextBox();
@@ -140,21 +140,21 @@
             label6.TabIndex = 9;
             label6.Text = "Total Pago";
             // 
-            // textSubtotal
+            // textSubtotal1
             // 
-            textSubtotal.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textSubtotal.Location = new Point(237, 285);
-            textSubtotal.Name = "textSubtotal";
-            textSubtotal.Size = new Size(172, 29);
-            textSubtotal.TabIndex = 11;
+            textSubtotal1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textSubtotal1.Location = new Point(237, 285);
+            textSubtotal1.Name = "textSubtotal1";
+            textSubtotal1.Size = new Size(172, 29);
+            textSubtotal1.TabIndex = 11;
             // 
-            // textMetodoPago
+            // textMetodoPago1
             // 
-            textMetodoPago.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textMetodoPago.Location = new Point(19, 285);
-            textMetodoPago.Name = "textMetodoPago";
-            textMetodoPago.Size = new Size(212, 29);
-            textMetodoPago.TabIndex = 12;
+            textMetodoPago1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            textMetodoPago1.Location = new Point(19, 285);
+            textMetodoPago1.Name = "textMetodoPago1";
+            textMetodoPago1.Size = new Size(212, 29);
+            textMetodoPago1.TabIndex = 12;
             // 
             // textMetodoPago2
             // 
@@ -302,8 +302,8 @@
             Controls.Add(textMetodoPago4);
             Controls.Add(textMetodoPago3);
             Controls.Add(textMetodoPago2);
-            Controls.Add(textMetodoPago);
-            Controls.Add(textSubtotal);
+            Controls.Add(textMetodoPago1);
+            Controls.Add(textSubtotal1);
             Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -316,7 +316,6 @@
             Name = "FormRegistrarPago";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Registrar Pagos";
-           // Load += FormRegistrarPago_Load_1;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -332,8 +331,8 @@
         private Label label4;
         private Label label5;
         private Label label6;
-        private TextBox textSubtotal;
-        private TextBox textMetodoPago;
+        private TextBox textSubtotal1;
+        private TextBox textMetodoPago1;
         private TextBox textMetodoPago2;
         private TextBox textMetodoPago3;
         private TextBox textMetodoPago4;

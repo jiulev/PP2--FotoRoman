@@ -72,5 +72,22 @@ namespace FotoRoman
             // Mostrar el formulario como ventana modal
             formCrearPedido.ShowDialog();
         }
+
+        private void iconMenuItem4_Click(object sender, EventArgs e)
+        {
+            FormVerPedido formVerPedido = new FormVerPedido();
+
+            // Mostrar el formulario de forma modal
+            formVerPedido.ShowDialog();
+
+        }
+
+        private void iconMenuItem7_Click(object sender, EventArgs e)
+        {
+            FormVerPago formVerPago = new FormVerPago();
+
+            // Mostrar el formulario de forma modal
+            formVerPago.ShowDialog();
+        }
     }
 }

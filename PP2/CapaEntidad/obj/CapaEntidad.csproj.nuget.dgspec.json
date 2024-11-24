@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj": {}
+    "C:\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj": {
+    "C:\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj",
+        "projectUniqueName": "C:\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj",
         "projectName": "CapaEntidad",
-        "projectPath": "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj",
+        "projectPath": "C:\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj",
         "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaEntidad\\obj\\",
+        "outputPath": "C:\\PP2--\\PP2\\CapaEntidad\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",

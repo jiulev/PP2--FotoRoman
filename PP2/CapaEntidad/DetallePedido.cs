@@ -10,9 +10,8 @@ namespace CapaEntidad
     {
 
         public int IDDETALLE { get; set; }
-        public Pedido oPedido { get; set; }
-
-        public Producto oProducto { get; set; }
+        public Pedido oPedido { get; set; } = new Pedido();
+        public Producto oProducto { get; set; } = new Producto(); // Inicializar aquí
 
         public int CANTIDAD { get; set; }
 

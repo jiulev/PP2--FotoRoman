@@ -659,11 +659,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaDatos\\CapaDatos.csproj",
+      "projectUniqueName": "C:\\PP2--\\PP2\\CapaDatos\\CapaDatos.csproj",
       "projectName": "CapaDatos",
-      "projectPath": "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaDatos\\CapaDatos.csproj",
+      "projectPath": "C:\\PP2--\\PP2\\CapaDatos\\CapaDatos.csproj",
       "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaDatos\\obj\\",
+      "outputPath": "C:\\PP2--\\PP2\\CapaDatos\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -680,8 +680,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj": {
-              "projectPath": "C:\\Users\\Usuario\\Desktop\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj"
+            "C:\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj": {
+              "projectPath": "C:\\PP2--\\PP2\\CapaEntidad\\CapaEntidad.csproj"
             }
           }
         }
