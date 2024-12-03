@@ -16,23 +16,52 @@ namespace FotoRoman
         {
             InitializeComponent();
             this.Load += FormRegistrarPago_Load;
-        }
+            textSubtotal1.TextChanged += (s, e) => CalcularSumaSubtotal();
+            textSubtotal2.TextChanged += (s, e) => CalcularSumaSubtotal();
+            textSubtotal3.TextChanged += (s, e) => CalcularSumaSubtotal();
+            textSubtotal4.TextChanged += (s, e) => CalcularSumaSubtotal();
+            textSubtotal5.TextChanged += (s, e) => CalcularSumaSubtotal();
+            textSubtotal6.TextChanged += (s, e) => CalcularSumaSubtotal();
+            textSubtotal7.TextChanged += (s, e) => CalcularSumaSubtotal();
 
+        }
+        private void CalcularSumaSubtotal()
+        {
+            decimal suma = 0;
+
+            for (int i = 1; i <= 7; i++)
+            {
+                // Obtén el TextBox correspondiente
+                TextBox? subtotalTextBox = this.Controls[$"textSubtotal{i}"] as TextBox;
+
+                if (subtotalTextBox != null && decimal.TryParse(subtotalTextBox.Text, out decimal valor))
+                {
+                    suma += valor;
+                }
+            }
+
+            // Actualiza el label con la suma
+            sumasubtotal.Text = suma > 0 ? suma.ToString("0.00") : "0.00";
+
+        }
         // Método para cargar el formulario de registrar pago
         private void FormRegistrarPago_Load(object? sender, EventArgs e)
         {
             try
             {
-                // Mostrar el nombre del cliente, el importe total y el número de pedido
                 textNombre.Text = TextNombre ?? string.Empty;
                 textImporte.Text = TextImporte ?? string.Empty;
                 textNum.Text = TextNum ?? string.Empty;
+
+                // Inicializar la suma al abrir el formulario
+                CalcularSumaSubtotal();
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar el formulario de pago: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         // Evento para registrar los pagos
         private void RegistrarPago1_Click(object sender, EventArgs e)
@@ -102,6 +131,7 @@ namespace FotoRoman
                 {
                     MessageBox.Show("Pago registrado exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
+                    LimpiarCampos(); // Método para limpiar campos
                 }
                 else
                 {
@@ -119,5 +149,17 @@ namespace FotoRoman
         {
             this.Close();
         }
+
+        private void LimpiarCampos()
+        {
+            foreach (Control control in this.Controls)
+            {
+                if (control is TextBox textBox)
+                {
+                    textBox.Clear();
+                }
+            }
+        }
+
     }
 }

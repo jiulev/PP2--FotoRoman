@@ -156,7 +156,7 @@
             // 
             cmbRol.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             cmbRol.FormattingEnabled = true;
-            cmbRol.Items.AddRange(new object[] { "Vendedor", "Director" });
+            cmbRol.Items.AddRange(new object[] { "Director", "Vendedor" });
             cmbRol.Location = new Point(348, 299);
             cmbRol.Name = "cmbRol";
             cmbRol.Size = new Size(134, 29);
@@ -215,7 +215,6 @@
             Controls.Add(Nombre);
             Name = "FormCrearUsuario";
             Text = "FormCrearUsuario";
-        
             ResumeLayout(false);
             PerformLayout();
         }

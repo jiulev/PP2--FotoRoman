@@ -61,6 +61,7 @@
             menutitulo = new MenuStrip();
             label1 = new Label();
             contenedor = new Panel();
+            buttonCerrarSesion = new Button();
             menu.SuspendLayout();
             SuspendLayout();
             // 
@@ -180,7 +181,7 @@
             iconMenuItem5.IconColor = Color.Black;
             iconMenuItem5.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem5.Name = "iconMenuItem5";
-            iconMenuItem5.Size = new Size(180, 22);
+            iconMenuItem5.Size = new Size(155, 22);
             iconMenuItem5.Text = "Registrar Pago";
             // 
             // iconMenuItem6
@@ -189,7 +190,7 @@
             iconMenuItem6.IconColor = Color.Black;
             iconMenuItem6.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem6.Name = "iconMenuItem6";
-            iconMenuItem6.Size = new Size(180, 22);
+            iconMenuItem6.Size = new Size(155, 22);
             iconMenuItem6.Text = "Editar Pago";
             // 
             // iconMenuItem7
@@ -198,7 +199,7 @@
             iconMenuItem7.IconColor = Color.Black;
             iconMenuItem7.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem7.Name = "iconMenuItem7";
-            iconMenuItem7.Size = new Size(180, 22);
+            iconMenuItem7.Size = new Size(155, 22);
             iconMenuItem7.Text = "Consultar Pago";
             iconMenuItem7.Click += iconMenuItem7_Click;
             // 
@@ -351,6 +352,7 @@
             iconMenuItem22.Name = "iconMenuItem22";
             iconMenuItem22.Size = new Size(207, 22);
             iconMenuItem22.Text = "Emitir Reportes de Ventas";
+            iconMenuItem22.Click += iconMenuItem22_Click;
             // 
             // menuacercade
             // 
@@ -403,11 +405,23 @@
             contenedor.Size = new Size(800, 318);
             contenedor.TabIndex = 3;
             // 
+            // buttonCerrarSesion
+            // 
+            buttonCerrarSesion.FlatStyle = FlatStyle.Popup;
+            buttonCerrarSesion.Location = new Point(680, 24);
+            buttonCerrarSesion.Name = "buttonCerrarSesion";
+            buttonCerrarSesion.Size = new Size(108, 32);
+            buttonCerrarSesion.TabIndex = 4;
+            buttonCerrarSesion.Text = "Cerrar Sesión ";
+            buttonCerrarSesion.UseVisualStyleBackColor = true;
+            buttonCerrarSesion.Click += btnCerrarSesion_Click;
+            // 
             // Inicio
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(buttonCerrarSesion);
             Controls.Add(contenedor);
             Controls.Add(label1);
             Controls.Add(menu);
@@ -415,7 +429,7 @@
             MainMenuStrip = menu;
             Name = "Inicio";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
+            Text = "Menu Principal";
             menu.ResumeLayout(false);
             menu.PerformLayout();
             ResumeLayout(false);
@@ -457,5 +471,6 @@
         private FontAwesome.Sharp.IconMenuItem consultarVendedor;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem22;
         private ToolStripMenuItem toolStripMenuItem2;
+        private Button buttonCerrarSesion;
     }
 }

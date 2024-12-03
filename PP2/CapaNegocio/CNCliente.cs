@@ -2,6 +2,7 @@
 using CapaEntidad;
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace CapaNegocio
 {
@@ -18,19 +19,29 @@ namespace CapaNegocio
         {
             mensaje = string.Empty;
 
-            if (cliente.DOCUMENTO == 0)
+            // Validación del documento
+            if (cliente.DOCUMENTO <= 0)
             {
-                mensaje = "El documento es obligatorio.";
+                mensaje = "El documento debe ser un número válido.";
                 return false;
             }
+
+            // Validación del nombre
             if (string.IsNullOrWhiteSpace(cliente.NOMBRE))
             {
                 mensaje = "El nombre es obligatorio.";
                 return false;
             }
+
+            // Validación del correo
             if (string.IsNullOrWhiteSpace(cliente.CORREO))
             {
                 mensaje = "El correo es obligatorio.";
+                return false;
+            }
+            else if (!EsCorreoValido(cliente.CORREO))
+            {
+                mensaje = "El correo no tiene un formato válido.";
                 return false;
             }
 
@@ -45,6 +56,13 @@ namespace CapaNegocio
                 mensaje = "Error al insertar el cliente: " + ex.Message;
                 return false;
             }
+        }
+
+        // Método auxiliar para validar formato de correo
+        private static bool EsCorreoValido(string correo)
+        {
+            string patronCorreo = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return Regex.IsMatch(correo, patronCorreo);
         }
 
         // Obtener nombres de clientes para autocompletado

@@ -164,5 +164,13 @@ namespace CapaNegocio
         }
 
 
+
+        public static List<Pedido> ObtenerPedidosPorUsuarioYFechas(int idUsuario, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            return new CD_Pedido().ObtenerPedidosPorUsuarioYFechas(idUsuario, fechaDesde, fechaHasta);
+        }
+
+
+
     }
 }

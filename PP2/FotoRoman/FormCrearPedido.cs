@@ -30,7 +30,10 @@ namespace FotoRoman
                 // Mostrar el próximo número de pedido
                 int proximoNumeroPedido = CNPedido.ObtenerProximoNumeroPedido();
                 num.Text = proximoNumeroPedido.ToString();
-                buttonRegistrar.Enabled = false; // Deshabilitar botón de registrar pago hasta que se cree el pedido
+
+                // Configurar el DataGridView para mostrar 5 filas por defecto
+                ConfigurarDataGridView();
+
             }
             catch (Exception ex)
             {
@@ -38,6 +41,25 @@ namespace FotoRoman
             }
         }
 
+
+        private void ConfigurarDataGridView()
+        {
+            // Ajustar altura según las filas, con un máximo de 5 visibles
+            ActualizarAlturaDataGridView();
+
+            // Habilitar barra de desplazamiento vertical
+            dataGridView1.ScrollBars = ScrollBars.Vertical;
+        }
+        private void ActualizarAlturaDataGridView()
+        {
+            // Calcular la altura del DataGridView según la cantidad de filas, con un máximo de 5 filas visibles
+            int filasVisibles = Math.Min(dataGridView1.Rows.Count, 5); // Mostrar máximo 5 filas
+            int alturaFila = dataGridView1.RowTemplate.Height;
+            int alturaCabecera = dataGridView1.ColumnHeadersHeight;
+
+            // Ajustar la altura del DataGridView
+            dataGridView1.Height = (alturaFila * filasVisibles) + alturaCabecera;
+        }
         // Método para calcular el total del pedido
         private void CalcularTotal()
         {
@@ -80,6 +102,9 @@ namespace FotoRoman
                 dataGridView1.Rows.Add(productoNombre, precio, subtotal);
                 CalcularTotal();
 
+                // Actualizar la altura del DataGridView
+                ActualizarAlturaDataGridView();
+
                 comboProducto.SelectedIndex = -1;
                 textPrecio1.Clear();
                 textCantidad1.Clear();
@@ -90,6 +115,7 @@ namespace FotoRoman
             }
         }
 
+
         // Evento para eliminar un ítem del pedido
         private void eliminar1_Click(object sender, EventArgs e)
         {
@@ -99,12 +125,16 @@ namespace FotoRoman
                 detallesPedido.RemoveAt(index);
                 dataGridView1.Rows.RemoveAt(index);
                 CalcularTotal();
+
+                // Actualizar la altura del DataGridView
+                ActualizarAlturaDataGridView();
             }
             else
             {
                 MessageBox.Show("Seleccione una fila para eliminar.", "Eliminar ítem", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
 
 
         private void RegistrarPago()
@@ -137,7 +167,7 @@ namespace FotoRoman
                 }
 
                 int idCliente = comboCliente.SelectedIndex + 1;
-                int idUsuario = 1;
+                int idUsuario = UsuarioActual.Usuario.IDUSUARIO; // Usar el ID del usuario autenticado
                 decimal totalPedido = detallesPedido.Sum(d => d.SUBTOTAL);
                 string estado = "Pendiente";
                 DateTime fechaPedido = DateTime.Now;
@@ -152,7 +182,7 @@ namespace FotoRoman
 
                     if (respuesta == DialogResult.Yes)
                     {
-                        buttonRegistrar.Enabled = true;
+
                         RegistrarPago();
                     }
                     else
@@ -170,6 +200,7 @@ namespace FotoRoman
                 MessageBox.Show($"Error al crear el pedido: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void LimpiarCampos()
         {
             comboCliente.SelectedIndex = -1;
@@ -182,7 +213,7 @@ namespace FotoRoman
             total.Text = "$0.00";
             detallesPedido.Clear();
             dataGridView1.Rows.Clear();
-            buttonRegistrar.Enabled = false;
+
         }
 
 
@@ -340,8 +371,29 @@ namespace FotoRoman
             }
         }
 
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
 
+        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
+        {
 
+        }
+
+        private void precio4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

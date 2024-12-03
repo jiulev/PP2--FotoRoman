@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Text;
 using System.IO;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
 
 
 
@@ -28,26 +30,28 @@ namespace FotoRoman
                     return;
                 }
 
+                // Asignar datos al TextBox del ID de pedido
                 textBoxIdPedido.Text = pedido.IDPEDIDO.ToString();
+
+                // Asignar datos al ComboBox de clientes
                 comboBoxClientes.Text = pedido.oCliente.NOMBRE;
 
-                textBoxDatosCliente.Font = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
-                textBoxDatosCliente.Text = $"Correo: {pedido.oCliente.CORREO}\n" +
-                                           $"Localidad: {pedido.oCliente.LOCALIDAD}\n" +
-                                           $"Provincia: {pedido.oCliente.PROVINCIA}";
+                // Asignar datos a los TextBox individuales
+                textBoxDatosCliente.Text = pedido.oCliente.NOMBRE; // Apellido y Nombre
+                textBoxCorreo.Text = pedido.oCliente.CORREO ?? "Sin Correo"; // Correo
+                textBoxLocalidad.Text = pedido.oCliente.LOCALIDAD ?? "Sin Localidad"; // Localidad
+                textBoxProvincia.Text = pedido.oCliente.PROVINCIA ?? "Sin Provincia"; // Provincia
 
+                // Asignar datos al DataGridView de detalles del pedido
                 var detalles = CNPedido.ObtenerDetallesDelPedido(pedido.IDPEDIDO);
-
-                // Transformar datos a una lista plana
                 var detallesPlano = detalles.Select(detalle => new
                 {
-                    Producto = detalle.oProducto.Nombre, // Acceder directamente al nombre del producto
+                    Producto = detalle.oProducto.Nombre, // Nombre del producto
                     Cantidad = detalle.CANTIDAD,
                     PrecioUnitario = detalle.PRECIOUNITARIO,
                     Subtotal = detalle.SUBTOTAL
                 }).ToList();
 
-                // Asignar datos al DataGridView
                 dataGridViewDetallePedido.DataSource = detallesPlano;
 
                 // Configuración de pagos
@@ -63,52 +67,72 @@ namespace FotoRoman
 
 
 
-
         private void buttonBuscar_Click(object sender, EventArgs e)
         {
             try
             {
                 if (!string.IsNullOrWhiteSpace(textBoxIdPedido.Text))
                 {
-                    int idPedido = Convert.ToInt32(textBoxIdPedido.Text);
-                    Pedido? pedido = CNPedido.BuscarPedidoPorId(idPedido);
-
-                    if (pedido != null)
+                    // Buscar por ID de pedido si el campo no está vacío
+                    if (int.TryParse(textBoxIdPedido.Text, out int idPedido))
                     {
-                        MostrarPedido(pedido);
+                        Pedido? pedido = CNPedido.BuscarPedidoPorId(idPedido);
+
+                        if (pedido != null)
+                        {
+                            // Si se encuentra el pedido, mostrarlo
+                            MostrarPedido(pedido);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontró un pedido con este ID.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("No se encontró el pedido.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("El ID de pedido debe ser un número válido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 else if (!string.IsNullOrWhiteSpace(comboBoxClientes.Text))
                 {
+                    // Si se ingresó un nombre de cliente, buscar por cliente
                     List<Pedido> pedidos = CNPedido.BuscarPedidosPorNombreCliente(comboBoxClientes.Text);
 
                     if (pedidos.Count == 1)
                     {
+                        // Si hay un solo pedido, mostrar directamente
                         MostrarPedido(pedidos[0]);
                     }
                     else if (pedidos.Count > 1)
                     {
-                        MessageBox.Show("Hay múltiples coincidencias. Por favor, ingrese el ID del pedido para detalles específicos.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        // Si hay múltiples pedidos, abrir el formulario de selección
+                        using (var formSeleccionar = new FormSeleccionarPedido(pedidos))
+                        {
+                            if (formSeleccionar.ShowDialog() == DialogResult.OK)
+                            {
+                                // Cargar el pedido seleccionado
+                                Pedido pedidoSeleccionado = formSeleccionar.PedidoSeleccionado;
+                                MostrarPedido(pedidoSeleccionado);
+                            }
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("No se encontraron coincidencias.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("No se encontraron pedidos para este cliente.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Ingrese el ID del pedido o seleccione un cliente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Por favor, ingrese un ID de pedido o un nombre de cliente.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al buscar el pedido: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al buscar pedidos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+
         private void buttonImprimir_Click(object sender, EventArgs e)
         {
             try
@@ -128,54 +152,126 @@ namespace FotoRoman
                     return;
                 }
 
-                // Definir la ruta del archivo CSV
-                string rutaCSV = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"Pedido_{idPedido}.csv");
+                // Definir la ruta del archivo PDF
+                string rutaPDF = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"Pedido_{idPedido}.pdf");
 
-                // Crear el contenido del archivo CSV
-                var sb = new StringBuilder();
-
-                // Encabezados de cliente
-                sb.AppendLine("Detalle del Pedido");
-                sb.AppendLine($"Cliente,{pedido.oCliente?.NOMBRE ?? "Sin Nombre"}");
-                sb.AppendLine($"Correo,{pedido.oCliente?.CORREO ?? "Sin Correo"}");
-                sb.AppendLine($"Localidad,{pedido.oCliente?.LOCALIDAD ?? "Sin Localidad"}");
-                sb.AppendLine($"Provincia,{pedido.oCliente?.PROVINCIA ?? "Sin Provincia"}");
-
-                sb.AppendLine(); // Línea vacía
-
-                // Encabezados de tabla de productos
-                sb.AppendLine("Producto,Cantidad,Precio Unitario,Subtotal");
-
-                // Detalles del pedido
-                foreach (var detalle in CNPedido.ObtenerDetallesDelPedido(pedido.IDPEDIDO))
+                // Crear el documento PDF
+                using (Document documento = new Document(PageSize.A4, 36, 36, 36, 36))
                 {
-                    string producto = detalle.oProducto?.Nombre ?? "Sin Nombre";
-                    int cantidad = detalle.CANTIDAD;
-                    decimal precioUnitario = detalle.PRECIOUNITARIO;
-                    decimal subtotal = detalle.SUBTOTAL;
+                    PdfWriter.GetInstance(documento, new FileStream(rutaPDF, FileMode.Create));
+                    documento.Open();
 
-                    sb.AppendLine($"{producto},{cantidad},{precioUnitario:F2},{subtotal:F2}");
-                }
+                    // Agregar logo a la derecha
+                    string logoPath = @"C:\Users\Usuario\Desktop\ISSD\2022 SEGUNDO SEMESTRE\PP1\imagens\roman.png";
+                    if (File.Exists(logoPath))
+                    {
+                        iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(logoPath);
+                        logo.Alignment = Element.ALIGN_RIGHT; // Alineación del logo a la derecha
+                        float width = 230; // Ancho máximo
+                        float height = 150; // Alto máximo
+                        logo.ScaleToFit(width, height); // Escalar el logo manteniendo la relación de aspecto
+                        float marginRight = 10; // Margen derecho
+                        float marginTop = 20; // Margen superior
+                        logo.SetAbsolutePosition(documento.PageSize.Width - width - marginRight, documento.PageSize.Height - height - marginTop);
+                        documento.Add(logo);
+                    }
 
-                // Total del pedido
-                sb.AppendLine();
-                sb.AppendLine($"Total,,,{pedido.TOTAL:F2}");
+                    // Espacio entre logo y contenido
+                    documento.Add(new Paragraph("\n"));
 
-                // Guardar el archivo CSV
-                File.WriteAllText(rutaCSV, sb.ToString(), Encoding.UTF8);
+                    // Encabezado principal
+                    documento.Add(new Paragraph("Detalle del Pedido\n", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14)));
+                    documento.Add(new Paragraph("\n"));
 
-                // Mostrar mensaje de éxito
-                MessageBox.Show($"Archivo generado exitosamente en:\n{rutaCSV}", "Archivo Generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    // Tabla de datos del cliente
+                    PdfPTable tablaCliente = new PdfPTable(2); // 2 columnas
+                    tablaCliente.WidthPercentage = 50; // Ajustar el ancho de la tabla al 50% del ancho de la página
+                    tablaCliente.HorizontalAlignment = Element.ALIGN_LEFT; // Alineación a la izquierda
+                    tablaCliente.SpacingBefore = 10f;
+
+                    // Filas de datos del cliente
+                    tablaCliente.AddCell(CrearCelda("ID Pedido:", true));
+                    tablaCliente.AddCell(CrearCelda(pedido.IDPEDIDO.ToString()));
+
+                    tablaCliente.AddCell(CrearCelda("Cliente:", true));
+                    tablaCliente.AddCell(CrearCelda(pedido.oCliente?.NOMBRE ?? "Sin Nombre"));
+
+                    tablaCliente.AddCell(CrearCelda("Correo:", true));
+                    tablaCliente.AddCell(CrearCelda(pedido.oCliente?.CORREO ?? "Sin Correo"));
+
+                    tablaCliente.AddCell(CrearCelda("Localidad:", true));
+                    tablaCliente.AddCell(CrearCelda(pedido.oCliente?.LOCALIDAD ?? "Sin Localidad"));
+
+                    tablaCliente.AddCell(CrearCelda("Provincia:", true));
+                    tablaCliente.AddCell(CrearCelda(pedido.oCliente?.PROVINCIA ?? "Sin Provincia"));
+
+                    documento.Add(tablaCliente);
+
+                    // Espacio entre tablas
+                    documento.Add(new Paragraph("\n"));
+
+                    // Tabla de productos
+                    documento.Add(new Paragraph("Detalle de Productos\n", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14)));
+
+                    PdfPTable tablaProductos = new PdfPTable(4); // 4 columnas
+                    tablaProductos.WidthPercentage = 100; // Ancho de la tabla
+                    tablaProductos.SpacingBefore = 10f;
+
+                    // Encabezados de la tabla
+                    tablaProductos.AddCell(CrearCelda("Producto", true));
+                    tablaProductos.AddCell(CrearCelda("Cantidad", true));
+                    tablaProductos.AddCell(CrearCelda("Precio Unitario", true));
+                    tablaProductos.AddCell(CrearCelda("Subtotal", true));
+
+                    // Detalles de los productos
+                    var detalles = CNPedido.ObtenerDetallesDelPedido(pedido.IDPEDIDO);
+                    foreach (var detalle in detalles)
+                    {
+                        tablaProductos.AddCell(CrearCelda(detalle.oProducto?.Nombre ?? "Sin Nombre"));
+                        tablaProductos.AddCell(CrearCelda(detalle.CANTIDAD.ToString()));
+                        tablaProductos.AddCell(CrearCelda(detalle.PRECIOUNITARIO.ToString("F2")));
+                        tablaProductos.AddCell(CrearCelda(detalle.SUBTOTAL.ToString("F2")));
+                    }
+
+                    documento.Add(tablaProductos);
+
+                    // Total del pedido
+                    documento.Add(new Paragraph("\n"));
+
+                    Paragraph totalParagraph = new Paragraph($"Total del Pedido: ${pedido.TOTAL:F2}", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14))
+                    {
+                        Alignment = Element.ALIGN_RIGHT // Alinear a la derecha
+                    };
+
+                    documento.Add(totalParagraph);
+
+
+                    // Mostrar mensaje de éxito
+                    MessageBox.Show($"Archivo PDF generado exitosamente en:\n{rutaPDF}", "Archivo Generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
-                    FileName = rutaCSV,
+                    FileName = rutaPDF,
                     UseShellExecute = true
                 });
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al generar el archivo : {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al generar el archivo PDF: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // Método auxiliar para crear celdas
+        private PdfPCell CrearCelda(string texto, bool esEncabezado = false)
+        {
+            var fuente = esEncabezado ? FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12) : FontFactory.GetFont(FontFactory.HELVETICA, 12);
+            var celda = new PdfPCell(new Phrase(texto, fuente))
+            {
+                Border = PdfPCell.BOX,
+                Padding = 5,
+                HorizontalAlignment = Element.ALIGN_LEFT
+            };
+            return celda;
         }
 
 
@@ -187,6 +283,9 @@ namespace FotoRoman
                 textBoxIdPedido.Clear();
                 comboBoxClientes.SelectedIndex = -1;
                 textBoxDatosCliente.Clear();
+                textBoxCorreo.Clear();
+                textBoxLocalidad.Clear();
+                textBoxProvincia.Clear();
                 dataGridViewDetallePedido.DataSource = null;
                 dataGridViewPagos.DataSource = null;
 
@@ -197,7 +296,8 @@ namespace FotoRoman
                 MessageBox.Show($"Error al limpiar el formulario: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-      
+
+
 
 
         private void buttonCerrar_Click(object sender, EventArgs e)

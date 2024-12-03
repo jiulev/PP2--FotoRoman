@@ -72,6 +72,29 @@ namespace FotoRoman
             CargarUsuarios();
         }
 
+        private void txtBuscar_TextChanged(object sender, EventArgs e)
+        {
+            // Obtener el texto ingresado en el TextBox
+            string filtro = txtBuscar.Text.ToLower();
+
+            // Aplicar el filtro a los datos del DataGridView
+            var usuariosFiltrados = new CNUsuario().Listar()
+                .Where(u => u.NOMBRE.ToLower().Contains(filtro))
+                .Select(u => new
+                {
+                    IDUSUARIO = u.IDUSUARIO,
+                    NOMBRE = u.NOMBRE,
+                    DOCUMENTO = u.DOCUMENTO,
+                    EMAIL = u.EMAIL,
+                    PASSWORD = u.PASSWORD,
+                    ROL = string.IsNullOrEmpty(u.oRol.DESCRIPCION) ? "Sin Rol" : u.oRol.DESCRIPCION,
+                    FECHACREACION = u.FECHACREACION
+                })
+                .ToList();
+
+            // Asignar los datos filtrados al DataGridView
+            dataGridViewUsuarios.DataSource = usuariosFiltrados;
+        }
 
         // Método para el botón Eliminar
         private void btnEliminar_Click(object sender, EventArgs e)
