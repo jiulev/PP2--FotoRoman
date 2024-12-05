@@ -133,5 +133,67 @@ namespace CapaDatos
 
             return nombres;
         }
+
+
+        public static void Actualizar(Cliente cliente)
+        {
+            using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    oconexion.Open();
+                    string query = @"
+                UPDATE CLIENTE
+                SET NOMBRE = @NOMBRE,
+                    CORREO = @CORREO,
+                    ESTADO = @ESTADO,
+                    LOCALIDAD = @LOCALIDAD,
+                    PROVINCIA = @PROVINCIA
+                WHERE IDCLIENTE = @IDCLIENTE";
+
+                    using (SqlCommand command = new SqlCommand(query, oconexion))
+                    {
+                        command.Parameters.AddWithValue("@NOMBRE", cliente.NOMBRE);
+                        command.Parameters.AddWithValue("@CORREO", cliente.CORREO);
+                        command.Parameters.AddWithValue("@ESTADO", cliente.ESTADO);
+                        command.Parameters.AddWithValue("@LOCALIDAD", cliente.LOCALIDAD);
+                        command.Parameters.AddWithValue("@PROVINCIA", cliente.PROVINCIA);
+                        command.Parameters.AddWithValue("@IDCLIENTE", cliente.IDCliente);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al actualizar el cliente: " + ex.Message);
+                }
+            }
+        }
+
+
+
+
+        public static void Eliminar(int idCliente)
+        {
+            using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    oconexion.Open();
+                    string query = "DELETE FROM CLIENTE WHERE IDCLIENTE = @IDCLIENTE";
+
+                    using (SqlCommand command = new SqlCommand(query, oconexion))
+                    {
+                        command.Parameters.AddWithValue("@IDCLIENTE", idCliente);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al eliminar el cliente: " + ex.Message);
+                }
+            }
+        }
+
     }
 }

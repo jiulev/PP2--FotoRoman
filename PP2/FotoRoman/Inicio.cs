@@ -153,5 +153,43 @@ namespace FotoRoman
             // Mostrar el formulario de login nuevamente
             new Login().Show();
         }
+
+        private void iconMenuItem11_Click(object sender, EventArgs e)
+        {
+
+            // Verifica si ya está abierto
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm.GetType() == typeof(FrmVerCliente))
+                {
+                    frm.BringToFront();
+                    return;
+                }
+            }
+
+            // Si no está abierto, crea una nueva instancia y muéstrala
+            FrmVerCliente frmVerCliente = new FrmVerCliente();
+            frmVerCliente.Show();
+
+
+        }
+
+        private void VerCategoria_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Crear una nueva instancia del formulario de categorías
+                FormVerCategoria formVerCategoria = new FormVerCategoria();
+
+                // Mostrar el formulario de manera modal
+                formVerCategoria.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                // Mostrar un mensaje de error en caso de que ocurra una excepción
+                MessageBox.Show($"Ocurrió un error al intentar abrir el formulario de categorías: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

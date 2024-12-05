@@ -172,5 +172,31 @@ namespace CapaNegocio
 
 
 
+
+
+
+        public static (decimal TotalVentas, decimal VentasUsuario, decimal Porcentaje) CalcularEstadisticas(int idUsuario, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            try
+            {
+                // Obtener las ventas del usuario
+                var pedidosUsuario = new CD_Pedido().ObtenerPedidosPorUsuarioYFechas(idUsuario, fechaDesde, fechaHasta);
+                decimal ventasUsuario = pedidosUsuario.Sum(p => p.TOTAL);
+
+                // Obtener el total de ventas en el rango
+                decimal totalVentas = CD_Pedido.ObtenerTotalVentasPorFechas(fechaDesde, fechaHasta);
+
+                // Calcular el porcentaje
+                decimal porcentaje = totalVentas > 0 ? (ventasUsuario / totalVentas) * 100 : 0;
+
+                return (totalVentas, ventasUsuario, porcentaje);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al calcular estadísticas: " + ex.Message);
+            }
+        }
+
+
     }
 }

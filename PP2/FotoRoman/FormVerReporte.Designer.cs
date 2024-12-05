@@ -19,7 +19,6 @@ namespace FotoRoman
         Label lblFechaDesde;
         Label lblFechaHasta;
         DataGridView dataGridViewPedidos;
-        Label lblTotal;
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -54,14 +53,14 @@ namespace FotoRoman
             dtpFechaDesde = new DateTimePicker();
             dtpFechaHasta = new DateTimePicker();
             dataGridViewPedidos = new DataGridView();
-            lblTotal = new Label();
             buttonImprimir = new Button();
+            lblTotal = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPedidos).BeginInit();
             SuspendLayout();
             // 
             // textBox1
             // 
-            textBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
+            textBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox1.Location = new Point(220, 121);
             textBox1.Name = "textBox1";
@@ -89,7 +88,7 @@ namespace FotoRoman
             // buttonGenerar
             // 
             buttonGenerar.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonGenerar.Location = new Point(62, 509);
+            buttonGenerar.Location = new Point(273, 489);
             buttonGenerar.Name = "buttonGenerar";
             buttonGenerar.Size = new Size(103, 43);
             buttonGenerar.TabIndex = 4;
@@ -152,19 +151,10 @@ namespace FotoRoman
             dataGridViewPedidos.Size = new Size(530, 150);
             dataGridViewPedidos.TabIndex = 0;
             // 
-            // lblTotal
-            // 
-            lblTotal.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblTotal.Location = new Point(273, 427);
-            lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(103, 30);
-            lblTotal.TabIndex = 1;
-            lblTotal.Text = "Total: $0.00";
-            // 
             // buttonImprimir
             // 
             buttonImprimir.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            buttonImprimir.Location = new Point(220, 509);
+            buttonImprimir.Location = new Point(427, 489);
             buttonImprimir.Name = "buttonImprimir";
             buttonImprimir.Size = new Size(103, 43);
             buttonImprimir.TabIndex = 6;
@@ -172,14 +162,21 @@ namespace FotoRoman
             buttonImprimir.UseVisualStyleBackColor = true;
             buttonImprimir.Click += buttonImprimir_Click;
             // 
+            // lblTotal
+            // 
+            lblTotal.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            lblTotal.Location = new Point(437, 381);
+            lblTotal.Name = "lblTotal";
+            lblTotal.Size = new Size(103, 30);
+            lblTotal.TabIndex = 1;
+            lblTotal.Text = "Total: $0.00";
+            // 
             // FormVerReporte
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(565, 651);
             Controls.Add(buttonImprimir);
-            Controls.Add(dataGridViewPedidos);
-            Controls.Add(lblTotal);
             Controls.Add(lblFechaDesde);
             Controls.Add(dtpFechaDesde);
             Controls.Add(lblFechaHasta);
@@ -189,6 +186,8 @@ namespace FotoRoman
             Controls.Add(fechaHoy);
             Controls.Add(label1);
             Controls.Add(textBox1);
+            Controls.Add(dataGridViewPedidos);
+            Controls.Add(lblTotal);
             Name = "FormVerReporte";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "GenerarReporte";
@@ -207,5 +206,6 @@ namespace FotoRoman
         private Button buttonGenerar;
         private Button buttonCancelar;
         private Button buttonImprimir;
+        private Label lblTotal;
     }
 }

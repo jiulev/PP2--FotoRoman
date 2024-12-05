@@ -48,12 +48,9 @@
             iconMenuItem11 = new FontAwesome.Sharp.IconMenuItem();
             menuproductos = new FontAwesome.Sharp.IconMenuItem();
             toolStripMenuItem1 = new ToolStripMenuItem();
-            iconMenuItem12 = new FontAwesome.Sharp.IconMenuItem();
-            iconMenuItem13 = new FontAwesome.Sharp.IconMenuItem();
-            iconMenuItem14 = new FontAwesome.Sharp.IconMenuItem();
+            toolStripMenuItem3 = new ToolStripMenuItem();
             iconMenuItem15 = new FontAwesome.Sharp.IconMenuItem();
-            iconMenuItem16 = new FontAwesome.Sharp.IconMenuItem();
-            iconMenuItem17 = new FontAwesome.Sharp.IconMenuItem();
+            toolStripMenuItem4 = new ToolStripMenuItem();
             menureportes = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem22 = new FontAwesome.Sharp.IconMenuItem();
             menuacercade = new FontAwesome.Sharp.IconMenuItem();
@@ -253,82 +250,53 @@
             iconMenuItem11.Name = "iconMenuItem11";
             iconMenuItem11.Size = new Size(165, 22);
             iconMenuItem11.Text = "Consultar Cliente";
+            iconMenuItem11.Click += iconMenuItem11_Click;
             // 
             // menuproductos
             // 
             menuproductos.AutoSize = false;
-            menuproductos.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem1, iconMenuItem12, iconMenuItem13, iconMenuItem14, iconMenuItem15, iconMenuItem16, iconMenuItem17 });
+            menuproductos.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem1, iconMenuItem15 });
             menuproductos.IconChar = FontAwesome.Sharp.IconChar.ProductHunt;
             menuproductos.IconColor = Color.Black;
             menuproductos.IconFont = FontAwesome.Sharp.IconFont.Auto;
             menuproductos.IconSize = 50;
             menuproductos.ImageScaling = ToolStripItemImageScaling.None;
             menuproductos.Name = "menuproductos";
-            menuproductos.Size = new Size(80, 69);
+            menuproductos.Size = new Size(122, 69);
             menuproductos.Text = "Productos";
             menuproductos.TextImageRelation = TextImageRelation.ImageAboveText;
             // 
             // toolStripMenuItem1
             // 
+            toolStripMenuItem1.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem3 });
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(179, 22);
+            toolStripMenuItem1.Size = new Size(180, 22);
             toolStripMenuItem1.Text = "Registrar producto";
             toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
-            // iconMenuItem12
+            // toolStripMenuItem3
             // 
-            iconMenuItem12.IconChar = FontAwesome.Sharp.IconChar.None;
-            iconMenuItem12.IconColor = Color.Black;
-            iconMenuItem12.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconMenuItem12.Name = "iconMenuItem12";
-            iconMenuItem12.Size = new Size(179, 22);
-            iconMenuItem12.Text = "Modificar producto";
-            // 
-            // iconMenuItem13
-            // 
-            iconMenuItem13.IconChar = FontAwesome.Sharp.IconChar.None;
-            iconMenuItem13.IconColor = Color.Black;
-            iconMenuItem13.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconMenuItem13.Name = "iconMenuItem13";
-            iconMenuItem13.Size = new Size(179, 22);
-            iconMenuItem13.Text = "Eliminar producto";
-            // 
-            // iconMenuItem14
-            // 
-            iconMenuItem14.IconChar = FontAwesome.Sharp.IconChar.None;
-            iconMenuItem14.IconColor = Color.Black;
-            iconMenuItem14.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconMenuItem14.Name = "iconMenuItem14";
-            iconMenuItem14.Size = new Size(179, 22);
-            iconMenuItem14.Text = "Consultar producto";
+            toolStripMenuItem3.Name = "toolStripMenuItem3";
+            toolStripMenuItem3.Size = new Size(147, 22);
+            toolStripMenuItem3.Text = "Ver productos";
             // 
             // iconMenuItem15
             // 
+            iconMenuItem15.DropDownItems.AddRange(new ToolStripItem[] { toolStripMenuItem4 });
             iconMenuItem15.IconChar = FontAwesome.Sharp.IconChar.None;
             iconMenuItem15.IconColor = Color.Black;
             iconMenuItem15.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem15.Name = "iconMenuItem15";
-            iconMenuItem15.Size = new Size(179, 22);
+            iconMenuItem15.Size = new Size(180, 22);
             iconMenuItem15.Text = "Registrar Categoria";
             iconMenuItem15.Click += iconMenuItem15_Click;
             // 
-            // iconMenuItem16
+            // toolStripMenuItem4
             // 
-            iconMenuItem16.IconChar = FontAwesome.Sharp.IconChar.None;
-            iconMenuItem16.IconColor = Color.Black;
-            iconMenuItem16.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconMenuItem16.Name = "iconMenuItem16";
-            iconMenuItem16.Size = new Size(179, 22);
-            iconMenuItem16.Text = "Modificar Categoria";
-            // 
-            // iconMenuItem17
-            // 
-            iconMenuItem17.IconChar = FontAwesome.Sharp.IconChar.None;
-            iconMenuItem17.IconColor = Color.Black;
-            iconMenuItem17.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            iconMenuItem17.Name = "iconMenuItem17";
-            iconMenuItem17.Size = new Size(179, 22);
-            iconMenuItem17.Text = "Eliminar Categoria";
+            toolStripMenuItem4.Name = "toolStripMenuItem4";
+            toolStripMenuItem4.Size = new Size(180, 22);
+            toolStripMenuItem4.Text = "Ver Categoria";
+            toolStripMenuItem4.Click += VerCategoria_Click;
             // 
             // menureportes
             // 
@@ -461,16 +429,13 @@
         private FontAwesome.Sharp.IconMenuItem iconMenuItem10;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem11;
         private ToolStripMenuItem toolStripMenuItem1;
-        private FontAwesome.Sharp.IconMenuItem iconMenuItem12;
-        private FontAwesome.Sharp.IconMenuItem iconMenuItem13;
-        private FontAwesome.Sharp.IconMenuItem iconMenuItem14;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem15;
-        private FontAwesome.Sharp.IconMenuItem iconMenuItem16;
-        private FontAwesome.Sharp.IconMenuItem iconMenuItem17;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem18;
         private FontAwesome.Sharp.IconMenuItem consultarVendedor;
         private FontAwesome.Sharp.IconMenuItem iconMenuItem22;
         private ToolStripMenuItem toolStripMenuItem2;
         private Button buttonCerrarSesion;
+        private ToolStripMenuItem toolStripMenuItem3;
+        private ToolStripMenuItem toolStripMenuItem4;
     }
 }

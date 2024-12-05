@@ -58,12 +58,86 @@ namespace CapaNegocio
             }
         }
 
-        // Método auxiliar para validar formato de correo
+        public static bool ActualizarCliente(Cliente cliente, out string mensaje)
+        {
+            mensaje = string.Empty;
+
+            // Validación del nombre
+            if (string.IsNullOrWhiteSpace(cliente.NOMBRE))
+            {
+                mensaje = "El nombre es obligatorio.";
+                return false;
+            }
+
+            // Validación del correo
+            if (string.IsNullOrWhiteSpace(cliente.CORREO))
+            {
+                mensaje = "El correo es obligatorio.";
+                return false;
+            }
+            else if (!EsCorreoValido(cliente.CORREO))
+            {
+                mensaje = "El correo no tiene un formato válido.";
+                return false;
+            }
+
+            // Validación de la localidad
+            if (string.IsNullOrWhiteSpace(cliente.LOCALIDAD))
+            {
+                mensaje = "La localidad es obligatoria.";
+                return false;
+            }
+
+            // Validación de la provincia
+            if (string.IsNullOrWhiteSpace(cliente.PROVINCIA))
+            {
+                mensaje = "La provincia es obligatoria.";
+                return false;
+            }
+
+            try
+            {
+                CD_Cliente.Actualizar(cliente); // Llama al método de la capa de datos
+                mensaje = "Cliente actualizado correctamente.";
+                return true;
+            }
+            catch (Exception ex)
+            {
+                mensaje = "Error al actualizar el cliente: " + ex.Message;
+                return false;
+            }
+        }
+
+
+        // Método auxiliar para validar correos
         private static bool EsCorreoValido(string correo)
         {
             string patronCorreo = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-            return Regex.IsMatch(correo, patronCorreo);
+            return System.Text.RegularExpressions.Regex.IsMatch(correo, patronCorreo);
         }
+
+
+
+        // Método para eliminar un cliente
+        public static bool EliminarCliente(int idCliente, out string mensaje)
+        {
+            mensaje = string.Empty;
+
+            try
+            {
+                CD_Cliente.Eliminar(idCliente);
+                mensaje = "Cliente eliminado correctamente.";
+                return true;
+            }
+            catch (Exception ex)
+            {
+                mensaje = "Error al eliminar el cliente: " + ex.Message;
+                return false;
+            }
+        }
+
+        // Método auxiliar para validar formato de correo
+     
 
         // Obtener nombres de clientes para autocompletado
         public static List<string> ObtenerNombresClientes()

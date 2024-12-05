@@ -308,7 +308,7 @@ namespace CapaDatos
                 using (SqlConnection connection = new SqlConnection(Conexion.ObtenerCadenaConexion()))
                 {
                     connection.Open();
-                    string query = "SELECT NOMBRE FROM CLIENTE";
+                    string query = "SELECT NOMBRE FROM CLIENTE WHERE ESTADO = 'Activo'";
                     SqlCommand command = new SqlCommand(query, connection);
                     SqlDataReader reader = command.ExecuteReader();
 
@@ -430,6 +430,40 @@ namespace CapaDatos
             return listaPedidos;
         }
 
+
+        public static decimal ObtenerTotalVentasPorFechas(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            decimal totalVentas = 0;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    conexion.Open();
+
+                    string query = @"
+                SELECT SUM(TOTAL) AS TotalVentas
+                FROM PEDIDO
+                WHERE CAST(FECHAPEDIDO AS DATE) >= CAST(@FechaDesde AS DATE)
+                  AND CAST(FECHAPEDIDO AS DATE) <= CAST(@FechaHasta AS DATE)";
+
+                    using (SqlCommand comando = new SqlCommand(query, conexion))
+                    {
+                        comando.Parameters.AddWithValue("@FechaDesde", fechaDesde);
+                        comando.Parameters.AddWithValue("@FechaHasta", fechaHasta);
+
+                        object result = comando.ExecuteScalar();
+                        totalVentas = result != DBNull.Value ? Convert.ToDecimal(result) : 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al obtener el total de ventas: " + ex.Message);
+                }
+            }
+
+            return totalVentas;
+        }
 
 
 
