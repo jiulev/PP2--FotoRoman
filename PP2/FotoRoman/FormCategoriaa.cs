@@ -26,20 +26,31 @@ namespace FotoRoman
         {
 
         }
+
         private void CrearCategoria_Click(object sender, EventArgs e)
         {
             try
             {
-                // Crear instancia de Categoria y asignar la descripción desde comboBoxCategoria
+                // Validar que el usuario haya ingresado una descripción
+                if (string.IsNullOrWhiteSpace(textBoxCategoria.Text))
+                {
+                    MessageBox.Show("Por favor, ingrese una descripción para la categoría.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Crear instancia de Categoria y asignar la descripción desde textBoxCategoria
                 Categoria categoria = new Categoria
                 {
-                    DESCRIPCION = comboBoxCategoria.Text.Trim()
+                    DESCRIPCION = textBoxCategoria.Text.Trim()
                 };
 
                 // Llamar al método estático InsertarCategoria en CNCategoria
                 CNCategoria.InsertarCategoria(categoria);
 
                 MessageBox.Show("Categoría registrada exitosamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Limpiar el TextBox después de registrar la categoría
+                textBoxCategoria.Clear();
             }
             catch (Exception ex)
             {
@@ -47,11 +58,9 @@ namespace FotoRoman
             }
         }
 
-
-
         private void CancelarCategoria_Click(object sender, EventArgs e)
         {
-
+            this.Close();
         }
     }
 }

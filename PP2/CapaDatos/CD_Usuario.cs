@@ -19,16 +19,17 @@ namespace CapaDatos
                     oconexion.Open();
 
                     string query = @"
-                SELECT 
-                    U.IDUSUARIO, 
-                    U.NOMBRE, 
-                    U.DOCUMENTO, 
-                    U.EMAIL, 
-                    U.PASSWORD, 
-                    U.FECHACREACION,
-                    R.DESCRIPCION AS ROL_DESCRIPCION
-                FROM Usuario U
-                INNER JOIN Rol R ON U.IDROL = R.IDROL";
+            SELECT 
+                U.IDUSUARIO, 
+                U.NOMBRE, 
+                U.DOCUMENTO, 
+                U.EMAIL, 
+                U.PASSWORD, 
+                U.FECHACREACION,
+                U.IDROL, -- Incluimos el IDROL aquí
+                R.DESCRIPCION AS ROL_DESCRIPCION
+            FROM Usuario U
+            INNER JOIN Rol R ON U.IDROL = R.IDROL";
 
                     using (SqlCommand command = new SqlCommand(query, oconexion))
                     {
@@ -45,6 +46,7 @@ namespace CapaDatos
                                 FECHACREACION = reader["FECHACREACION"] != DBNull.Value ? Convert.ToDateTime(reader["FECHACREACION"]) : (DateTime?)null,
                                 oRol = new Rol
                                 {
+                                    IDROL = reader["IDROL"] != DBNull.Value ? Convert.ToInt32(reader["IDROL"]) : 0, // Asignamos el IDROL
                                     DESCRIPCION = reader["ROL_DESCRIPCION"].ToString() ?? string.Empty
                                 }
                             };
@@ -61,6 +63,7 @@ namespace CapaDatos
 
             return lista;
         }
+
 
 
         // Método para insertar un usuario en la base de datos

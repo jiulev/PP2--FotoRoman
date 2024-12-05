@@ -1,3 +1,7 @@
+using System;
+using System.Windows.Forms;
+using CapaEntidad;
+
 namespace FotoRoman
 {
     public partial class Inicio : Form
@@ -5,6 +9,44 @@ namespace FotoRoman
         public Inicio()
         {
             InitializeComponent();
+
+            // Configurar visibilidad de menús según el rol del usuario
+            if (UsuarioActual.Usuario == null)
+            {
+                MessageBox.Show("No se ha iniciado sesión correctamente. Se cerrará la aplicación.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+                return;
+            }
+
+            ConfigurarMenusPorRol();
+        }
+
+        /// <summary>
+        /// Configurar los menús visibles según el rol del usuario actual.
+        /// </summary>
+        private void ConfigurarMenusPorRol()
+        {
+            // Obtener el rol del usuario actual
+            int idRol = UsuarioActual.Usuario.oRol.IDROL;
+
+            // Configurar menús según el rol
+            if (idRol == 2) // Vendedor
+            {
+                // Ocultar el menú de reportes
+                iconMenuItem22.Visible = false;
+
+                // Ocultar el menú de usuarios
+                menuusuario.Visible = false;
+            }
+            else if (idRol == 1) // Director
+            {
+                // No se oculta nada, tiene acceso completo
+            }
+            else
+            {
+                MessageBox.Show("Rol no reconocido. Contacte al administrador.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
         }
 
         private void abrirFormulario(object sender, EventArgs e)
@@ -61,7 +103,7 @@ namespace FotoRoman
 
         private void iconMenuItem19_Click(object sender, EventArgs e)
         {
-            //aca editamos un usuario//
+            // Aquí puedes agregar lógica para editar un usuario
         }
 
         private void iconMenuItem1_Click(object sender, EventArgs e)
@@ -79,7 +121,6 @@ namespace FotoRoman
 
             // Mostrar el formulario de forma modal
             formVerPedido.ShowDialog();
-
         }
 
         private void iconMenuItem7_Click(object sender, EventArgs e)
@@ -89,5 +130,66 @@ namespace FotoRoman
             // Mostrar el formulario de forma modal
             formVerPago.ShowDialog();
         }
+
+        private void iconMenuItem22_Click(object sender, EventArgs e)
+        {
+            FormVerReporte formVerReporte = new FormVerReporte();
+
+            // Mostrar el formulario de reportes de forma modal
+            formVerReporte.ShowDialog();
+        }
+
+        /// <summary>
+        /// Evento para cerrar la sesión del usuario actual.
+        /// </summary>
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            // Cerrar la sesión del usuario actual
+            UsuarioActual.CerrarSesion();
+
+            // Cerrar el formulario actual
+            this.Close();
+
+            // Mostrar el formulario de login nuevamente
+            new Login().Show();
+        }
+
+        private void iconMenuItem11_Click(object sender, EventArgs e)
+        {
+
+            // Verifica si ya está abierto
+            foreach (Form frm in Application.OpenForms)
+            {
+                if (frm.GetType() == typeof(FrmVerCliente))
+                {
+                    frm.BringToFront();
+                    return;
+                }
+            }
+
+            // Si no está abierto, crea una nueva instancia y muéstrala
+            FrmVerCliente frmVerCliente = new FrmVerCliente();
+            frmVerCliente.Show();
+
+
+        }
+
+        private void VerCategoria_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Crear una nueva instancia del formulario de categorías
+                FormVerCategoria formVerCategoria = new FormVerCategoria();
+
+                // Mostrar el formulario de manera modal
+                formVerCategoria.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                // Mostrar un mensaje de error en caso de que ocurra una excepción
+                MessageBox.Show($"Ocurrió un error al intentar abrir el formulario de categorías: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

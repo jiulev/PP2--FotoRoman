@@ -34,6 +34,9 @@
             dataGridViewDetallePedido = new DataGridView();
             groupBoxPagos = new GroupBox();
             dataGridViewPagos = new DataGridView();
+            textBoxCorreo = new TextBox();
+            textBoxLocalidad = new TextBox();
+            textBoxProvincia = new TextBox();
             groupBoxCliente.SuspendLayout();
             groupBoxDetallePedido.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewDetallePedido).BeginInit();
@@ -75,42 +78,49 @@
             // 
             // buttonBuscar
             // 
-            buttonBuscar.Location = new Point(400, 20);
+            buttonBuscar.Font = new Font("Segoe UI", 12F);
+            buttonBuscar.Location = new Point(400, 9);
             buttonBuscar.Name = "buttonBuscar";
-            buttonBuscar.Size = new Size(75, 23);
+            buttonBuscar.Size = new Size(83, 34);
             buttonBuscar.TabIndex = 4;
             buttonBuscar.Text = "Buscar";
             buttonBuscar.Click += buttonBuscar_Click;
             // 
             // buttonLimpiar
             // 
-            buttonLimpiar.Location = new Point(400, 60);
+            buttonLimpiar.Font = new Font("Segoe UI", 12F);
+            buttonLimpiar.Location = new Point(400, 51);
             buttonLimpiar.Name = "buttonLimpiar";
-            buttonLimpiar.Size = new Size(75, 23);
+            buttonLimpiar.Size = new Size(83, 34);
             buttonLimpiar.TabIndex = 5;
             buttonLimpiar.Text = "Limpiar";
             buttonLimpiar.Click += buttonLimpiar_Click;
             // 
             // buttonImprimir
             // 
+            buttonImprimir.Font = new Font("Segoe UI", 12F);
             buttonImprimir.Location = new Point(634, 624);
             buttonImprimir.Name = "buttonImprimir";
-            buttonImprimir.Size = new Size(75, 23);
+            buttonImprimir.Size = new Size(83, 34);
             buttonImprimir.TabIndex = 6;
             buttonImprimir.Text = "Imprimir";
             buttonImprimir.Click += buttonImprimir_Click;
             // 
             // buttonCerrar
             // 
-            buttonCerrar.Location = new Point(764, 624);
+            buttonCerrar.Font = new Font("Segoe UI", 12F);
+            buttonCerrar.Location = new Point(739, 624);
             buttonCerrar.Name = "buttonCerrar";
-            buttonCerrar.Size = new Size(75, 23);
+            buttonCerrar.Size = new Size(83, 34);
             buttonCerrar.TabIndex = 7;
             buttonCerrar.Text = "Cerrar";
             buttonCerrar.Click += buttonCerrar_Click;
             // 
             // groupBoxCliente
             // 
+            groupBoxCliente.Controls.Add(textBoxProvincia);
+            groupBoxCliente.Controls.Add(textBoxLocalidad);
+            groupBoxCliente.Controls.Add(textBoxCorreo);
             groupBoxCliente.Controls.Add(textBoxDatosCliente);
             groupBoxCliente.Location = new Point(20, 100);
             groupBoxCliente.Name = "groupBoxCliente";
@@ -121,12 +131,12 @@
             // 
             // textBoxDatosCliente
             // 
-            textBoxDatosCliente.Location = new Point(10, 20);
+            textBoxDatosCliente.Location = new Point(344, 22);
             textBoxDatosCliente.Multiline = true;
             textBoxDatosCliente.Name = "textBoxDatosCliente";
             textBoxDatosCliente.ReadOnly = true;
             textBoxDatosCliente.ScrollBars = ScrollBars.Vertical;
-            textBoxDatosCliente.Size = new Size(548, 124);
+            textBoxDatosCliente.Size = new Size(261, 25);
             textBoxDatosCliente.TabIndex = 0;
             // 
             // groupBoxDetallePedido
@@ -169,6 +179,36 @@
             dataGridViewPagos.Size = new Size(800, 127);
             dataGridViewPagos.TabIndex = 0;
             // 
+            // textBoxCorreo
+            // 
+            textBoxCorreo.Location = new Point(344, 53);
+            textBoxCorreo.Multiline = true;
+            textBoxCorreo.Name = "textBoxCorreo";
+            textBoxCorreo.ReadOnly = true;
+            textBoxCorreo.ScrollBars = ScrollBars.Vertical;
+            textBoxCorreo.Size = new Size(261, 25);
+            textBoxCorreo.TabIndex = 1;
+            // 
+            // textBoxLocalidad
+            // 
+            textBoxLocalidad.Location = new Point(344, 84);
+            textBoxLocalidad.Multiline = true;
+            textBoxLocalidad.Name = "textBoxLocalidad";
+            textBoxLocalidad.ReadOnly = true;
+            textBoxLocalidad.ScrollBars = ScrollBars.Vertical;
+            textBoxLocalidad.Size = new Size(261, 25);
+            textBoxLocalidad.TabIndex = 2;
+            // 
+            // textBoxProvincia
+            // 
+            textBoxProvincia.Location = new Point(344, 119);
+            textBoxProvincia.Multiline = true;
+            textBoxProvincia.Name = "textBoxProvincia";
+            textBoxProvincia.ReadOnly = true;
+            textBoxProvincia.ScrollBars = ScrollBars.Vertical;
+            textBoxProvincia.Size = new Size(261, 25);
+            textBoxProvincia.TabIndex = 3;
+            // 
             // FormVerPedido
             // 
             ClientSize = new Size(900, 670);
@@ -195,5 +235,9 @@
             ResumeLayout(false);
             PerformLayout();
         }
+
+        private TextBox textBoxLocalidad;
+        private TextBox textBoxCorreo;
+        private TextBox textBoxProvincia;
     }
 }

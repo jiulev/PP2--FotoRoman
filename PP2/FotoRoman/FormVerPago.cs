@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace FotoRoman
 {
@@ -29,13 +31,17 @@ namespace FotoRoman
                     return;
                 }
 
+                // Asignar datos al TextBox del ID de pedido
                 textBoxIdPedido.Text = pedido.IDPEDIDO.ToString();
+
+                // Asignar datos al ComboBox de clientes
                 comboBoxClientes.Text = pedido.oCliente.NOMBRE;
 
-                textBoxDatosCliente.Font = new System.Drawing.Font("Arial", 12, FontStyle.Bold);
-                textBoxDatosCliente.Text = $"Correo: {pedido.oCliente.CORREO}\n" +
-                                           $"Localidad: {pedido.oCliente.LOCALIDAD}\n" +
-                                           $"Provincia: {pedido.oCliente.PROVINCIA}";
+                // Asignar datos a los TextBox individuales
+                textBoxDatosCliente.Text = pedido.oCliente.NOMBRE; // Apellido y Nombre
+                textBoxCorreo.Text = pedido.oCliente.CORREO ?? "Sin Correo"; // Correo
+                textBoxLocalidad.Text = pedido.oCliente.LOCALIDAD ?? "Sin Localidad"; // Localidad
+                textBox1.Text = pedido.oCliente.PROVINCIA ?? "Sin Provincia"; // Provincia
 
                 // Asignar datos al DataGridView de pagos
                 dataGridViewPagos.DataSource = CNPedido.ObtenerPagosDelPedido(pedido.IDPEDIDO);
@@ -47,6 +53,7 @@ namespace FotoRoman
                 MessageBox.Show($"Error al mostrar el pedido: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
 
@@ -116,35 +123,74 @@ namespace FotoRoman
                     return;
                 }
 
-                // Definir la ruta del archivo CSV
-                string rutaCSV = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"Pagos_Pedido_{idPedido}.csv");
+                // Definir la ruta del archivo PDF
+                string rutaPDF = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"Pagos_Pedido_{idPedido}.pdf");
 
-                // Crear el contenido del archivo CSV
-                var sb = new StringBuilder();
-                sb.AppendLine("IDPago,Monto,Fecha,MetodoPago");
-
-                foreach (var pago in CNPedido.ObtenerPagosDelPedido(pedido.IDPEDIDO))
+                // Crear el documento PDF
+                using (Document documento = new Document())
                 {
-                    sb.AppendLine($"{pago.IDPAGO},{pago.MONTOPAGO:F2},{pago.FECHAPAGO},{pago.METODOPAGO}");
+                    PdfWriter.GetInstance(documento, new FileStream(rutaPDF, FileMode.Create));
+                    documento.Open();
+
+                    // Información del cliente
+                    documento.Add(new Paragraph("Detalle del Cliente\n", iTextSharp.text.FontFactory.GetFont(iTextSharp.text.FontFactory.HELVETICA_BOLD, 14)));
+                    documento.Add(new Paragraph($"ID Pedido: {pedido.IDPEDIDO}", FontFactory.GetFont(FontFactory.HELVETICA, 12)));
+                    documento.Add(new Paragraph($"Cliente: {pedido.oCliente?.NOMBRE ?? "Sin Nombre"}", FontFactory.GetFont(FontFactory.HELVETICA, 12)));
+                    documento.Add(new Paragraph($"Correo: {textBoxCorreo.Text}", FontFactory.GetFont(FontFactory.HELVETICA, 12)));
+                    documento.Add(new Paragraph($"Localidad: {textBoxLocalidad.Text}", FontFactory.GetFont(FontFactory.HELVETICA, 12)));
+                    documento.Add(new Paragraph($"Provincia: {textBox1.Text}\n\n", FontFactory.GetFont(FontFactory.HELVETICA, 12)));
+
+                    // Tabla de pagos
+                    documento.Add(new Paragraph("Detalle de Pagos\n", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14)));
+
+                    PdfPTable tabla = new PdfPTable(4); // 4 columnas
+                    tabla.WidthPercentage = 100;
+
+                    // Encabezados
+                    tabla.AddCell("ID Pago");
+                    tabla.AddCell("Monto");
+                    tabla.AddCell("Fecha");
+                    tabla.AddCell("Método de Pago");
+
+                    // Detalles de pagos
+                    var pagos = CNPedido.ObtenerPagosDelPedido(pedido.IDPEDIDO);
+                    if (pagos.Count > 0)
+                    {
+                        foreach (var pago in pagos)
+                        {
+                            tabla.AddCell(pago.IDPAGO.ToString());
+                            tabla.AddCell(pago.MONTOPAGO.ToString("F2"));
+                            tabla.AddCell(pago.FECHAPAGO.ToShortDateString());
+                            tabla.AddCell(pago.METODOPAGO);
+                        }
+                    }
+                    else
+                    {
+                        PdfPCell celdaSinDatos = new PdfPCell(new Phrase("Sin pagos registrados"))
+                        {
+                            Colspan = 4,
+                            HorizontalAlignment = Element.ALIGN_CENTER
+                        };
+                        tabla.AddCell(celdaSinDatos);
+                    }
+
+                    documento.Add(tabla);
+                    documento.Close();
                 }
 
-                // Guardar el archivo CSV
-                File.WriteAllText(rutaCSV, sb.ToString(), Encoding.UTF8);
-
                 // Mostrar mensaje de éxito
-                MessageBox.Show($"Archivo generado exitosamente en:\n{rutaCSV}", "Archivo Generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"Archivo PDF generado exitosamente en:\n{rutaPDF}", "Archivo Generado", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
-                    FileName = rutaCSV,
+                    FileName = rutaPDF,
                     UseShellExecute = true
                 });
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al generar el archivo: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al generar el archivo PDF: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
 
         private void buttonLimpiar_Click(object sender, EventArgs e)
         {
@@ -189,6 +235,16 @@ namespace FotoRoman
             {
                 MessageBox.Show($"Error al cargar la lista de clientes: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

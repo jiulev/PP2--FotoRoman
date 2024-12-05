@@ -308,7 +308,7 @@ namespace CapaDatos
                 using (SqlConnection connection = new SqlConnection(Conexion.ObtenerCadenaConexion()))
                 {
                     connection.Open();
-                    string query = "SELECT NOMBRE FROM CLIENTE";
+                    string query = "SELECT NOMBRE FROM CLIENTE WHERE ESTADO = 'Activo'";
                     SqlCommand command = new SqlCommand(query, connection);
                     SqlDataReader reader = command.ExecuteReader();
 
@@ -377,5 +377,99 @@ namespace CapaDatos
 
             return listaPagos;
         }
+
+        public List<Pedido> ObtenerPedidosPorUsuarioYFechas(int idUsuario, DateTime fechaDesde, DateTime fechaHasta)
+        {
+            List<Pedido> listaPedidos = new List<Pedido>();
+
+            using (SqlConnection conexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    conexion.Open();
+
+                    // Log de las fechas antes de ejecutar el query
+                    string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "log.txt");
+                   
+                    File.AppendAllText(logPath, $"IDUsuario: {idUsuario}, Fecha Desde: {fechaDesde:yyyy-MM-dd HH:mm:ss}, Fecha Hasta: {fechaHasta:yyyy-MM-dd HH:mm:ss}{Environment.NewLine}");
+
+
+                    string query = @"
+            SELECT IDPEDIDO, TOTAL, FECHAPEDIDO
+            FROM PEDIDO
+            WHERE IDUSUARIO = @IDUsuario
+              AND CAST(FECHAPEDIDO AS DATE) >= CAST(@FechaDesde AS DATE)
+              AND CAST(FECHAPEDIDO AS DATE) <= CAST(@FechaHasta AS DATE)";
+
+                    using (SqlCommand comando = new SqlCommand(query, conexion))
+                    {
+                        comando.Parameters.AddWithValue("@IDUsuario", idUsuario);
+                        comando.Parameters.AddWithValue("@FechaDesde", fechaDesde);
+                        comando.Parameters.AddWithValue("@FechaHasta", fechaHasta);
+
+                        using (SqlDataReader reader = comando.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                listaPedidos.Add(new Pedido
+                                {
+                                    IDPEDIDO = reader.GetInt32(0),
+                                    TOTAL = reader.GetDecimal(1),
+                                    FECHAPEDIDO = reader.GetDateTime(2)
+                                });
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al obtener pedidos: " + ex.Message);
+                }
+            }
+
+            return listaPedidos;
+        }
+
+
+        public static decimal ObtenerTotalVentasPorFechas(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            decimal totalVentas = 0;
+
+            using (SqlConnection conexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    conexion.Open();
+
+                    string query = @"
+                SELECT SUM(TOTAL) AS TotalVentas
+                FROM PEDIDO
+                WHERE CAST(FECHAPEDIDO AS DATE) >= CAST(@FechaDesde AS DATE)
+                  AND CAST(FECHAPEDIDO AS DATE) <= CAST(@FechaHasta AS DATE)";
+
+                    using (SqlCommand comando = new SqlCommand(query, conexion))
+                    {
+                        comando.Parameters.AddWithValue("@FechaDesde", fechaDesde);
+                        comando.Parameters.AddWithValue("@FechaHasta", fechaHasta);
+
+                        object result = comando.ExecuteScalar();
+                        totalVentas = result != DBNull.Value ? Convert.ToDecimal(result) : 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al obtener el total de ventas: " + ex.Message);
+                }
+            }
+
+            return totalVentas;
+        }
+
+
+
+
+
+
+
     }
 }

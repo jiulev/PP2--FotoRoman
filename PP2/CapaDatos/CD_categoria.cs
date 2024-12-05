@@ -70,6 +70,51 @@ namespace CapaDatos
 
             return lista;
         }
+        public static void EditarCategoria(Categoria categoria)
+        {
+            using (SqlConnection connection = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "UPDATE CATEGORIA SET DESCRIPCION = @Descripcion WHERE IDCATEGORIA = @IdCategoria";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Descripcion", categoria.DESCRIPCION);
+                        command.Parameters.AddWithValue("@IdCategoria", categoria.IDCATEGORIA);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al editar la categoría: " + ex.Message);
+                }
+            }
+        }
+        public static void EliminarCategoria(int idCategoria)
+        {
+            using (SqlConnection connection = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "DELETE FROM CATEGORIA WHERE IDCATEGORIA = @IdCategoria";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@IdCategoria", idCategoria);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al eliminar la categoría: " + ex.Message);
+                }
+            }
+        }
 
 
 

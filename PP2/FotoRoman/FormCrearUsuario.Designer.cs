@@ -23,216 +23,202 @@
         #region Windows Form Designer generated code
 
         /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
+        /// Required method for Designer support - do not modify the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            Nombre = new Label();
-            Documento = new Label();
-            Email = new Label();
-            Contraseña = new Label();
-            textNombre = new TextBox();
-            textDocumento = new TextBox();
-            textEmail = new TextBox();
-            textPassword = new TextBox();
-            Rol = new Label();
-            cmbRol = new ComboBox();
-            label1 = new Label();
-            aceptarCrearUsuario = new Button();
-            cancelarCrearUsuario = new Button();
-            SuspendLayout();
+            this.labelTitulo = new Label();
+            this.Nombre = new Label();
+            this.Documento = new Label();
+            this.Email = new Label();
+            this.Contraseña = new Label();
+            this.Rol = new Label();
+            this.textNombre = new TextBox();
+            this.textDocumento = new TextBox();
+            this.textEmail = new TextBox();
+            this.textPassword = new TextBox();
+            this.cmbRol = new ComboBox();
+            this.aceptarCrearUsuario = new Button();
+            this.cancelarCrearUsuario = new Button();
+            this.SuspendLayout();
+
+            // 
+            // labelTitulo
+            // 
+            this.labelTitulo.AutoSize = true;
+            this.labelTitulo.Font = new Font("Segoe UI", 16F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            this.labelTitulo.Location = new Point(200, 20);
+            this.labelTitulo.Name = "labelTitulo";
+            this.labelTitulo.Size = new Size(200, 30);
+            this.labelTitulo.TabIndex = 0;
+            this.labelTitulo.Text = "Registrar Usuario";
+            this.labelTitulo.TextAlign = ContentAlignment.MiddleCenter;
+
             // 
             // Nombre
             // 
-            Nombre.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            Nombre.AutoSize = true;
-            Nombre.BackColor = SystemColors.ControlLight;
-            Nombre.BorderStyle = BorderStyle.FixedSingle;
-            Nombre.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Nombre.ForeColor = Color.Maroon;
-            Nombre.Location = new Point(113, 49);
-            Nombre.Margin = new Padding(10);
-            Nombre.Name = "Nombre";
-            Nombre.Size = new Size(215, 34);
-            Nombre.TabIndex = 0;
-            Nombre.Text = "Nombre y apellido";
-            Nombre.Click += Label1_Click;
+            this.Nombre.AutoSize = true;
+            this.Nombre.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.Nombre.Location = new Point(50, 80);
+            this.Nombre.Name = "Nombre";
+            this.Nombre.Size = new Size(140, 21);
+            this.Nombre.TabIndex = 1;
+            this.Nombre.Text = "Nombre y Apellido:";
+
             // 
             // Documento
             // 
-            Documento.AutoSize = true;
-            Documento.BackColor = SystemColors.ControlLight;
-            Documento.BorderStyle = BorderStyle.FixedSingle;
-            Documento.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Documento.ForeColor = Color.Maroon;
-            Documento.Location = new Point(186, 110);
-            Documento.Margin = new Padding(10);
-            Documento.Name = "Documento";
-            Documento.Size = new Size(142, 34);
-            Documento.TabIndex = 1;
-            Documento.Text = "Documento";
-            Documento.Click += Label2_Click;
+            this.Documento.AutoSize = true;
+            this.Documento.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.Documento.Location = new Point(50, 130);
+            this.Documento.Name = "Documento";
+            this.Documento.Size = new Size(92, 21);
+            this.Documento.TabIndex = 2;
+            this.Documento.Text = "Documento:";
+
             // 
             // Email
             // 
-            Email.AutoSize = true;
-            Email.BackColor = SystemColors.ControlLight;
-            Email.BorderStyle = BorderStyle.FixedSingle;
-            Email.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Email.ForeColor = Color.Maroon;
-            Email.Location = new Point(255, 174);
-            Email.Margin = new Padding(10);
-            Email.Name = "Email";
-            Email.Size = new Size(73, 34);
-            Email.TabIndex = 2;
-            Email.Text = "Email";
-            Email.Click += Label3_Click;
+            this.Email.AutoSize = true;
+            this.Email.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.Email.Location = new Point(50, 180);
+            this.Email.Name = "Email";
+            this.Email.Size = new Size(51, 21);
+            this.Email.TabIndex = 3;
+            this.Email.Text = "Email:";
+
             // 
             // Contraseña
             // 
-            Contraseña.AutoSize = true;
-            Contraseña.BackColor = SystemColors.ControlLight;
-            Contraseña.BorderStyle = BorderStyle.FixedSingle;
-            Contraseña.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Contraseña.ForeColor = Color.Maroon;
-            Contraseña.Location = new Point(192, 240);
-            Contraseña.Margin = new Padding(10);
-            Contraseña.Name = "Contraseña";
-            Contraseña.Size = new Size(136, 34);
-            Contraseña.TabIndex = 3;
-            Contraseña.Text = "Contraseña";
-            Contraseña.Click += Label4_Click;
-            // 
-            // textNombre
-            // 
-            textNombre.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textNombre.Location = new Point(348, 54);
-            textNombre.Name = "textNombre";
-            textNombre.Size = new Size(134, 29);
-            textNombre.TabIndex = 4;
-            textNombre.TextChanged += textBox1_TextChanged;
-            // 
-            // textDocumento
-            // 
-            textDocumento.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textDocumento.Location = new Point(348, 110);
-            textDocumento.Name = "textDocumento";
-            textDocumento.Size = new Size(134, 29);
-            textDocumento.TabIndex = 5;
-            // 
-            // textEmail
-            // 
-            textEmail.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textEmail.Location = new Point(348, 174);
-            textEmail.Name = "textEmail";
-            textEmail.Size = new Size(134, 29);
-            textEmail.TabIndex = 6;
-            // 
-            // textPassword
-            // 
-            textPassword.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            textPassword.Location = new Point(348, 240);
-            textPassword.Name = "textPassword";
-            textPassword.Size = new Size(134, 29);
-            textPassword.TabIndex = 7;
+            this.Contraseña.AutoSize = true;
+            this.Contraseña.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.Contraseña.Location = new Point(50, 230);
+            this.Contraseña.Name = "Contraseña";
+            this.Contraseña.Size = new Size(92, 21);
+            this.Contraseña.TabIndex = 4;
+            this.Contraseña.Text = "Contraseña:";
+
             // 
             // Rol
             // 
-            Rol.AutoSize = true;
-            Rol.BackColor = SystemColors.ControlLight;
-            Rol.BorderStyle = BorderStyle.FixedSingle;
-            Rol.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            Rol.ForeColor = Color.Maroon;
-            Rol.Location = new Point(269, 299);
-            Rol.Margin = new Padding(10);
-            Rol.Name = "Rol";
-            Rol.Size = new Size(59, 34);
-            Rol.TabIndex = 8;
-            Rol.Text = "ROL";
-            Rol.Click += Rol_Click;
+            this.Rol.AutoSize = true;
+            this.Rol.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.Rol.Location = new Point(50, 280);
+            this.Rol.Name = "Rol";
+            this.Rol.Size = new Size(36, 21);
+            this.Rol.TabIndex = 5;
+            this.Rol.Text = "Rol:";
+
+            // 
+            // textNombre
+            // 
+            this.textNombre.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.textNombre.Location = new Point(200, 80);
+            this.textNombre.Name = "textNombre";
+            this.textNombre.Size = new Size(250, 29);
+            this.textNombre.TabIndex = 6;
+
+            // 
+            // textDocumento
+            // 
+            this.textDocumento.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.textDocumento.Location = new Point(200, 130);
+            this.textDocumento.Name = "textDocumento";
+            this.textDocumento.Size = new Size(250, 29);
+            this.textDocumento.TabIndex = 7;
+
+            // 
+            // textEmail
+            // 
+            this.textEmail.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.textEmail.Location = new Point(200, 180);
+            this.textEmail.Name = "textEmail";
+            this.textEmail.Size = new Size(250, 29);
+            this.textEmail.TabIndex = 8;
+
+            // 
+            // textPassword
+            // 
+            this.textPassword.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.textPassword.Location = new Point(200, 230);
+            this.textPassword.Name = "textPassword";
+            this.textPassword.Size = new Size(250, 29);
+            this.textPassword.TabIndex = 9;
+            this.textPassword.UseSystemPasswordChar = true;
+
             // 
             // cmbRol
             // 
-            cmbRol.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            cmbRol.FormattingEnabled = true;
-            cmbRol.Items.AddRange(new object[] { "Vendedor", "Director" });
-            cmbRol.Location = new Point(348, 299);
-            cmbRol.Name = "cmbRol";
-            cmbRol.Size = new Size(134, 29);
-            cmbRol.TabIndex = 9;
-            cmbRol.SelectedIndexChanged += cmbRol_SelectedIndexChanged;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI Emoji", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.ForeColor = SystemColors.ControlDarkDark;
-            label1.Location = new Point(651, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(137, 20);
-            label1.TabIndex = 10;
-            label1.Text = "Registrar usuario";
-            label1.Click += Label1_Click;
+            this.cmbRol.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.cmbRol.FormattingEnabled = true;
+            this.cmbRol.Items.AddRange(new object[] { "Director", "Vendedor" });
+            this.cmbRol.Location = new Point(200, 280);
+            this.cmbRol.Name = "cmbRol";
+            this.cmbRol.Size = new Size(250, 29);
+            this.cmbRol.TabIndex = 10;
+
             // 
             // aceptarCrearUsuario
             // 
-            aceptarCrearUsuario.Location = new Point(437, 362);
-            aceptarCrearUsuario.Name = "aceptarCrearUsuario";
-            aceptarCrearUsuario.Size = new Size(110, 37);
-            aceptarCrearUsuario.TabIndex = 11;
-            aceptarCrearUsuario.Text = "Aceptar";
-            aceptarCrearUsuario.UseVisualStyleBackColor = true;
-            aceptarCrearUsuario.Click += aceptar_Click;
+            this.aceptarCrearUsuario.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.aceptarCrearUsuario.Location = new Point(200, 340);
+            this.aceptarCrearUsuario.Name = "aceptarCrearUsuario";
+            this.aceptarCrearUsuario.Size = new Size(100, 35);
+            this.aceptarCrearUsuario.TabIndex = 11;
+            this.aceptarCrearUsuario.Text = "Aceptar";
+            this.aceptarCrearUsuario.UseVisualStyleBackColor = true;
+            this.aceptarCrearUsuario.Click += new System.EventHandler(this.aceptar_Click);
+
             // 
             // cancelarCrearUsuario
             // 
-            cancelarCrearUsuario.Location = new Point(610, 362);
-            cancelarCrearUsuario.Name = "cancelarCrearUsuario";
-            cancelarCrearUsuario.Size = new Size(110, 37);
-            cancelarCrearUsuario.TabIndex = 12;
-            cancelarCrearUsuario.Text = "Cancelar";
-            cancelarCrearUsuario.UseVisualStyleBackColor = true;
-            cancelarCrearUsuario.Click += cancelar_click;
+            this.cancelarCrearUsuario.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            this.cancelarCrearUsuario.Location = new Point(350, 340);
+            this.cancelarCrearUsuario.Name = "cancelarCrearUsuario";
+            this.cancelarCrearUsuario.Size = new Size(100, 35);
+            this.cancelarCrearUsuario.TabIndex = 12;
+            this.cancelarCrearUsuario.Text = "Cancelar";
+            this.cancelarCrearUsuario.UseVisualStyleBackColor = true;
+            this.cancelarCrearUsuario.Click += new System.EventHandler(this.cancelar_click);
+
             // 
             // FormCrearUsuario
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(cancelarCrearUsuario);
-            Controls.Add(aceptarCrearUsuario);
-            Controls.Add(label1);
-            Controls.Add(cmbRol);
-            Controls.Add(Rol);
-            Controls.Add(textPassword);
-            Controls.Add(textEmail);
-            Controls.Add(textDocumento);
-            Controls.Add(textNombre);
-            Controls.Add(Contraseña);
-            Controls.Add(Email);
-            Controls.Add(Documento);
-            Controls.Add(Nombre);
-            Name = "FormCrearUsuario";
-            Text = "FormCrearUsuario";
-        
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new SizeF(7F, 15F);
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.ClientSize = new Size(600, 450);
+            this.Controls.Add(this.labelTitulo);
+            this.Controls.Add(this.Nombre);
+            this.Controls.Add(this.textNombre);
+            this.Controls.Add(this.Documento);
+            this.Controls.Add(this.textDocumento);
+            this.Controls.Add(this.Email);
+            this.Controls.Add(this.textEmail);
+            this.Controls.Add(this.Contraseña);
+            this.Controls.Add(this.textPassword);
+            this.Controls.Add(this.Rol);
+            this.Controls.Add(this.cmbRol);
+            this.Controls.Add(this.aceptarCrearUsuario);
+            this.Controls.Add(this.cancelarCrearUsuario);
+            this.Name = "FormCrearUsuario";
+            this.Text = "Registrar Usuario";
+            this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
         #endregion
 
+        private Label labelTitulo;
         private Label Nombre;
         private Label Documento;
         private Label Email;
         private Label Contraseña;
+        private Label Rol;
         private TextBox textNombre;
         private TextBox textDocumento;
         private TextBox textEmail;
         private TextBox textPassword;
-        private Label Rol;
         private ComboBox cmbRol;
-        private Label label1;
         private Button aceptarCrearUsuario;
         private Button cancelarCrearUsuario;
     }

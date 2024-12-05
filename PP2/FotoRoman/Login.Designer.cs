@@ -83,7 +83,6 @@
             txtdocumento.Name = "txtdocumento";
             txtdocumento.Size = new Size(235, 23);
             txtdocumento.TabIndex = 3;
-            txtdocumento.Text = "2700";
             txtdocumento.TextChanged += textBox1_TextChanged;
             // 
             // txtclave

@@ -64,5 +64,32 @@ namespace FotoRoman
         {
 
         }
+
+        private void Nombre_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CancelarCliente_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Limpiar los campos del formulario
+                textNombre.Clear();
+                textDocumento.Clear();
+                textCorreo.Clear();
+                textLocalidad.Clear();
+                textProvincia.Clear();
+
+                // Opcional: Mostrar un mensaje de confirmación
+                MessageBox.Show("Los campos han sido limpiados.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier error que ocurra al limpiar los campos
+                MessageBox.Show($"Error al limpiar los campos: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

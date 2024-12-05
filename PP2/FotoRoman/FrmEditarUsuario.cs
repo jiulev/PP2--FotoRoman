@@ -17,13 +17,41 @@ namespace FotoRoman
 
             // Cargar datos del usuario en los controles del formulario
             textNombre.Text = usuario.NOMBRE;
-            textDocumento.Text = usuario.DOCUMENTO; // Solo para mostrar, no se puede editar
+            textDocumento.Text = usuario.DOCUMENTO;
             textDocumento.ReadOnly = true;
             textEmail.Text = usuario.EMAIL;
             textPassword.Text = usuario.PASSWORD;
+
+            // Configurar el ComboBox dinámicamente
+            var roles = new List<Rol>
+    {
+        new Rol { IDROL = 1, DESCRIPCION = "Vendedor" },
+        new Rol { IDROL = 2, DESCRIPCION = "Director" }
+    };
+
+            cmbRol.DataSource = roles;
+            cmbRol.DisplayMember = "DESCRIPCION";
+            cmbRol.ValueMember = "IDROL";
+
+            // Seleccionar el rol actual del usuario
+            if (usuario.oRol?.IDROL > 0)
+            {
+                cmbRol.SelectedValue = usuario.oRol.IDROL;
+            }
+            else
+            {
+                cmbRol.SelectedValue = 1; // Valor predeterminado
+            }
+
+            // Depuración: Verificar valores
+            foreach (var rol in roles)
+            {
+                Console.WriteLine($"IDROL: {rol.IDROL}, DESCRIPCION: {rol.DESCRIPCION}");
+            }
+            Console.WriteLine($"Rol seleccionado: {cmbRol.SelectedValue}");
         }
 
-        // Evento para el botón Guardar
+
         private void btnGuardar_Click(object sender, EventArgs e)
         {
             try
@@ -32,6 +60,11 @@ namespace FotoRoman
                 usuario.NOMBRE = textNombre.Text ?? string.Empty;
                 usuario.EMAIL = textEmail.Text ?? string.Empty;
                 usuario.PASSWORD = textPassword.Text ?? string.Empty;
+
+                // Actualizar el IDROL seleccionado en el ComboBox
+                usuario.oRol.IDROL = cmbRol.SelectedValue != null ? (int)cmbRol.SelectedValue : 0;
+
+
 
                 // Llamar al método de la capa de negocio para actualizar el usuario
                 CNUsuario cnUsuario = new CNUsuario();
@@ -46,6 +79,13 @@ namespace FotoRoman
             }
         }
 
+
+        // Clase Rol para manejar el ComboBox
+        public class Rol
+        {
+            public int IDROL { get; set; }
+            public string DESCRIPCION { get; set; }
+        }
         // Evento para el botón Cancelar
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -77,6 +117,11 @@ namespace FotoRoman
         // Evento para el TextBox Documento (aunque es de solo lectura)
         private void textDocumento_TextChanged(object sender, EventArgs e)
         {
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

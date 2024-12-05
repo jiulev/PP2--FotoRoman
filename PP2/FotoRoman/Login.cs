@@ -40,39 +40,64 @@ namespace FotoRoman
             this.Close();
         }
 
-
-
-
-        private void iconButton1_Click(object sender, EventArgs e) // Botón de ingresar
+        private void FrmClosing(object sender, FormClosingEventArgs e)
         {
-            // Obtener la lista de usuarios
-            List<Usuario> usuarios = new CNUsuario().Listar();
+            // Limpiar los campos del formulario de inicio de sesión
+            txtdocumento.Text = string.Empty;
+            txtclave.Text = string.Empty;
 
-            // Buscar el usuario con el documento y clave ingresados
-            Usuario ousuario = usuarios
-                  .Where(u => u.DOCUMENTO == txtdocumento.Text && u.PASSWORD.Equals(txtclave.Text, StringComparison.OrdinalIgnoreCase))
-    .FirstOrDefault();
+            // Mostrar el formulario actual (Login)
+            this.Show();
+        }
 
-            // Verificar si se encontró el usuario
-            if (ousuario != null)
+
+
+        private void iconButton1_Click(object sender, EventArgs e)
+        {
+            try
             {
-                // Usuario encontrado
-                MessageBox.Show("Usuario encontrado. Bienvenido, " + ousuario.NOMBRE);
+                // Obtener la lista de usuarios
+                List<Usuario> usuarios = new CNUsuario().Listar();
 
-                // Mostrar el formulario Inicio
-                Inicio form = new Inicio();
-                form.Show();
+                // Buscar el usuario con el documento y clave ingresados
+                Usuario? usuarioEncontrado = usuarios
+                    .FirstOrDefault(u => u.DOCUMENTO == txtdocumento.Text &&
+                                         u.PASSWORD.Equals(txtclave.Text, StringComparison.OrdinalIgnoreCase));
 
-                // Ocultar el formulario actual
-                this.Hide();
+                if (usuarioEncontrado != null)
+                {
+                    // Verificar que tenga un rol válido asignado
+                    if (usuarioEncontrado.oRol != null && usuarioEncontrado.oRol.IDROL > 0)
+                    {
+                        // Guardar la información del usuario en UsuarioActual
+                        UsuarioActual.IniciarSesion(usuarioEncontrado);
 
-                // Suscribirse al evento FormClosing del formulario Inicio
-                form.FormClosing += frm_closing; // Este evento debe estar definido
+                        // Mostrar mensaje de bienvenida
+                        MessageBox.Show($"Bienvenido, {usuarioEncontrado.NOMBRE}", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Mostrar el formulario Inicio
+                        Inicio form = new Inicio();
+                        form.Show();
+
+                        // Ocultar el formulario actual
+                        this.Hide();
+
+                        // Suscribirse al evento FormClosing del formulario Inicio
+                        form.FormClosing += FrmClosing;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Este usuario no tiene un rol asignado. Contacte al administrador.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Documento o clave incorrectos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                // Usuario no encontrado
-                MessageBox.Show("Documento o clave incorrectos.");
+                MessageBox.Show($"Error al iniciar sesión: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

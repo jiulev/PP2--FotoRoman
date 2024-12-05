@@ -7,11 +7,12 @@ namespace CapaNegocio
     public class CNUsuario
     {
         // Instancia de la capa de datos
-        private CD_Usuario objcd_usuario = new CD_Usuario();
+        private readonly CD_Usuario objcd_usuario = new CD_Usuario();
 
         // Método para listar los usuarios
         public List<Usuario> Listar()
         {
+            CD_Usuario objcd_usuario = new CD_Usuario();
             return objcd_usuario.Listar();
         }
 
@@ -35,7 +36,7 @@ namespace CapaNegocio
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al editar el usuario en la capa de negocio", ex);
+                throw new System.Exception("Error al editar el usuario en la capa de negocio", ex);
             }
         }
 
@@ -52,5 +53,3 @@ namespace CapaNegocio
         }
     }
 }
-
-

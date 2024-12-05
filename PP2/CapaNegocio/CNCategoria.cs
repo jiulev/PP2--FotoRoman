@@ -18,6 +18,16 @@ namespace CapaNegocio
         }
 
 
+        public static void EditarCategoria(Categoria categoria)
+        {
+            CD_Categoria.EditarCategoria(categoria);
+        }
+        public static void EliminarCategoria(int idCategoria)
+        {
+            CD_Categoria.EliminarCategoria(idCategoria);
+        }
+
+
 
     }
 }
