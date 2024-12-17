@@ -19,16 +19,17 @@ namespace CapaDatos
                     oconexion.Open();
 
                     string query = @"
-                        SELECT 
-                           IDCLIENTE,
-                           FECHACREACION,
-                           DOCUMENTO,
-                           NOMBRE,
-                           CORREO,
-                           ESTADO,
-                           LOCALIDAD,
-                           PROVINCIA
-                        FROM CLIENTE";
+                SELECT 
+                   IDCLIENTE,
+                   FECHACREACION,
+                   DOCUMENTO,
+                   NOMBRE,
+                   CORREO,
+                   ESTADO,
+                   LOCALIDAD,
+                   PROVINCIA
+                FROM CLIENTE
+                WHERE ESTADO = 'Activo'"; // Filtro para clientes activos
 
                     using (SqlCommand command = new SqlCommand(query, oconexion))
                     {
@@ -59,6 +60,7 @@ namespace CapaDatos
 
             return lista;
         }
+
 
         // Método para insertar un nuevo cliente usando el procedimiento almacenado
         public static void Insertar(Cliente cliente)
@@ -171,8 +173,6 @@ namespace CapaDatos
         }
 
 
-
-
         public static void Eliminar(int idCliente)
         {
             using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
@@ -180,7 +180,9 @@ namespace CapaDatos
                 try
                 {
                     oconexion.Open();
-                    string query = "DELETE FROM CLIENTE WHERE IDCLIENTE = @IDCLIENTE";
+
+                    // Cambiar la consulta para actualizar el estado a 'Bloqueado'
+                    string query = "UPDATE CLIENTE SET ESTADO = 'Bloqueado' WHERE IDCLIENTE = @IDCLIENTE";
 
                     using (SqlCommand command = new SqlCommand(query, oconexion))
                     {
@@ -190,10 +192,11 @@ namespace CapaDatos
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception("Error al eliminar el cliente: " + ex.Message);
+                    throw new Exception("Error al bloquear el cliente: " + ex.Message);
                 }
             }
         }
+
 
     }
 }

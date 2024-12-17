@@ -166,7 +166,13 @@ namespace FotoRoman
                     return;
                 }
 
-                int idCliente = comboCliente.SelectedIndex + 1;
+                if (comboCliente.SelectedIndex < 0)
+                {
+                    MessageBox.Show("Seleccione un cliente válido antes de crear el pedido.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int idCliente = listaClientes[comboCliente.SelectedIndex].IDCliente; // Mapear correctamente el IDCLIENTE
                 int idUsuario = UsuarioActual.Usuario.IDUSUARIO; // Usar el ID del usuario autenticado
                 decimal totalPedido = detallesPedido.Sum(d => d.SUBTOTAL);
                 string estado = "Pendiente";
@@ -182,7 +188,6 @@ namespace FotoRoman
 
                     if (respuesta == DialogResult.Yes)
                     {
-
                         RegistrarPago();
                     }
                     else
@@ -200,6 +205,7 @@ namespace FotoRoman
                 MessageBox.Show($"Error al crear el pedido: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void LimpiarCampos()
         {
@@ -257,12 +263,18 @@ namespace FotoRoman
                 {
                     comboCliente.Items.Add(cliente.NOMBRE);
                 }
+
+                if (comboCliente.Items.Count > 0)
+                {
+                    comboCliente.SelectedIndex = 0; // Seleccionar el primer cliente por defecto
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error al cargar clientes: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
 
         // Cargar la lista de categorías
@@ -333,6 +345,10 @@ namespace FotoRoman
         {
             try
             {
+                // Limpiar los productos e ítems cargados al cambiar de cliente
+                LimpiarProductosYDetalles();
+
+                // Obtener el cliente seleccionado
                 string clienteSeleccionado = comboCliente.Text;
                 var cliente = listaClientes.FirstOrDefault(c => c.NOMBRE == clienteSeleccionado);
 
@@ -352,6 +368,27 @@ namespace FotoRoman
                 MessageBox.Show($"Error al seleccionar cliente: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        private void LimpiarProductosYDetalles()
+        {
+            // Limpiar la lista de detalles del pedido
+            detallesPedido.Clear();
+
+            // Limpiar el contenido del DataGridView
+            dataGridView1.Rows.Clear();
+
+            // Restablecer el total a cero
+            CalcularTotal();
+
+            // Restablecer los campos relacionados con productos
+            comboCategoria.SelectedIndex = -1;
+            comboProducto.SelectedIndex = -1;
+            textCantidad1.Clear();
+            textPrecio1.Clear();
+
+            // Actualizar la altura del DataGridView
+            ActualizarAlturaDataGridView();
+        }
+
 
 
         // Evento para seleccionar un producto y mostrar su precio

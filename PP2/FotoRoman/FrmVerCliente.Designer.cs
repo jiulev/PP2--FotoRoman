@@ -41,6 +41,8 @@
             dataGridViewClientes.AllowUserToDeleteRows = false;
             dataGridViewClientes.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridViewClientes.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewClientes.BackgroundColor = SystemColors.Control;
+            dataGridViewClientes.BorderStyle = BorderStyle.None;
             dataGridViewClientes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewClientes.Location = new Point(10, 10);
             dataGridViewClientes.Name = "dataGridViewClientes";
@@ -59,7 +61,7 @@
             // 
             // btnEliminar
             // 
-            btnEliminar.Location = new Point(250, 330);
+            btnEliminar.Location = new Point(274, 330);
             btnEliminar.Name = "btnEliminar";
             btnEliminar.Size = new Size(100, 30);
             btnEliminar.TabIndex = 2;
@@ -69,7 +71,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(443, 330);
+            button1.Location = new Point(413, 330);
             button1.Name = "button1";
             button1.Size = new Size(100, 30);
             button1.TabIndex = 3;

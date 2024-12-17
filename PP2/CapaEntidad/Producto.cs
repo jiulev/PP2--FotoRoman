@@ -9,6 +9,9 @@ namespace CapaEntidad
         public decimal Precio { get; set; }  // Precio del producto
         public string DescripcionCategoria { get; set; } = string.Empty; // Descripción de la categoría seleccionada por el usuario
         public DateTime FechaCreacion { get; set; }  // Fecha de creación, se define en la base de datos
+                                                     // Propiedades para el reporte de productos más vendidos
+        public string Mes { get; set; } = string.Empty; // Mes (yyyy-MM)
+        public int CantidadVendida { get; set; } // Cantidad total vendida del producto
     }
 }
 

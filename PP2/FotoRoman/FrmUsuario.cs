@@ -128,6 +128,39 @@ namespace FotoRoman
             }
         }
 
+        private void btnBloquear_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewUsuarios.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Por favor, selecciona un usuario para Eliminar.");
+                return;
+            }
+
+            int idUsuario = Convert.ToInt32(dataGridViewUsuarios.SelectedRows[0].Cells["IDUSUARIO"].Value);
+
+            if (MessageBox.Show("¿Estás seguro de eliminar este usuario?", "Confirmar Eliminación", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                try
+                {
+                    // Instancia de CNUsuario
+                    CNUsuario cnUsuario = new CNUsuario();
+
+                    // Llamada al método Bloquear
+                    cnUsuario.Bloquear(idUsuario);
+
+                    MessageBox.Show("Usuario Eliminado correctamente.");
+                    CargarUsuarios();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al Eliminar el usuario: " + ex.Message);
+                }
+            }
+        }
+
+
+    
+
         private void dataGridViewUsuarios_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 

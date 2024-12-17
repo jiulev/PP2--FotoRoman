@@ -59,17 +59,17 @@ namespace FotoRoman
         {
             if (dataGridViewClientes.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Por favor, selecciona un cliente para eliminar.");
+                MessageBox.Show("Por favor, selecciona un cliente para Eliminar.");
                 return;
             }
 
             int idCliente = Convert.ToInt32(dataGridViewClientes.SelectedRows[0].Cells["IDCliente"].Value);
 
-            if (MessageBox.Show("¿Estás seguro de eliminar este cliente?", "Confirmar eliminación", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("¿Estás seguro de Eliminar este cliente?", "Confirmar Eliminación", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 string mensaje;
 
-                if (CNCliente.EliminarCliente(idCliente, out mensaje))
+                if (CNCliente.EliminarCliente(idCliente, out mensaje)) // Reutiliza EliminarCliente
                 {
                     MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CargarClientes(); // Refresca el DataGridView
@@ -80,6 +80,7 @@ namespace FotoRoman
                 }
             }
         }
+
 
 
         private void dataGridViewClientes_CellContentClick(object sender, DataGridViewCellEventArgs e)

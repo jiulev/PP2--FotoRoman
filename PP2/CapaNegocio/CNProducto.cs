@@ -41,18 +41,23 @@ namespace CapaNegocio
             }
         }
 
+        public static List<(string NombreProducto, int CantidadVendida)> ObtenerTop10ProductosPorMes(int mes)
+        {
+            // Llamar a la capa de datos y pasar el mes como parámetro
+            return CD_Producto.ObtenerTop10ProductosPorMes(mes);
+        }
+
         // Método para obtener las descripciones de categorías
         public List<string> ObtenerDescripcionesCategorias()
         {
             return CD_Producto.ObtenerDescripcionesCategorias();
         }
 
+        // Método para listar productos por categoría
         public static List<Producto> ListarPorCategoria(int idCategoria)
         {
             return CD_Producto.ListarPorCategoria(idCategoria);
         }
-
-
 
 
     }

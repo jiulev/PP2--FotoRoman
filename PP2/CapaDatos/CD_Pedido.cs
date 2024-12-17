@@ -430,7 +430,57 @@ namespace CapaDatos
             return listaPedidos;
         }
 
+        // Método para obtener el Top 10 de productos más vendidos por mes
+        public static List<Producto> ObtenerTop10ProductosPorMes()
+        {
+            var listaProductos = new List<Producto>();
 
+            using (SqlConnection connection = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    connection.Open();
+
+                    string query = @"
+                        SELECT 
+                            FORMAT(P.FECHAPEDIDO, 'yyyy-MM') AS Mes,
+                            PR.NOMBRE AS Producto,
+                            SUM(DP.CANTIDAD) AS CantidadVendida
+                        FROM 
+                            DETALLE_PEDIDO DP
+                        INNER JOIN 
+                            PRODUCTO PR ON DP.IDPRODUCTO = PR.IDPRODUCTO
+                        INNER JOIN 
+                            PEDIDO P ON DP.IDPEDIDO = P.IDPEDIDO
+                        GROUP BY 
+                            FORMAT(P.FECHAPEDIDO, 'yyyy-MM'), PR.NOMBRE
+                        ORDER BY 
+                            FORMAT(P.FECHAPEDIDO, 'yyyy-MM'), CantidadVendida DESC";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                listaProductos.Add(new Producto
+                                {
+                                    Mes = reader["Mes"].ToString(),
+                                    Nombre = reader["Producto"].ToString(),
+                                    CantidadVendida = Convert.ToInt32(reader["CantidadVendida"])
+                                });
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al obtener los productos más vendidos: " + ex.Message);
+                }
+            }
+
+            return listaProductos;
+        }
         public static decimal ObtenerTotalVentasPorFechas(DateTime fechaDesde, DateTime fechaHasta)
         {
             decimal totalVentas = 0;

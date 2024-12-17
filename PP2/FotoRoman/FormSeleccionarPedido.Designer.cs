@@ -28,66 +28,65 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridViewPedidos = new System.Windows.Forms.DataGridView();
-            this.IDPedido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FechaPedido = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.buttonSeleccionar = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPedidos)).BeginInit();
-            this.SuspendLayout();
+            dataGridViewPedidos = new DataGridView();
+            IDPedido = new DataGridViewTextBoxColumn();
+            FechaPedido = new DataGridViewTextBoxColumn();
+            buttonSeleccionar = new Button();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewPedidos).BeginInit();
+            SuspendLayout();
             // 
             // dataGridViewPedidos
             // 
-            this.dataGridViewPedidos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewPedidos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dataGridViewPedidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewPedidos.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.IDPedido,
-            this.FechaPedido});
-            this.dataGridViewPedidos.Location = new System.Drawing.Point(50, 50);
-            this.dataGridViewPedidos.Name = "dataGridViewPedidos";
-            this.dataGridViewPedidos.ReadOnly = true; // Hacer que las filas sean de solo lectura
-            this.dataGridViewPedidos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewPedidos.MultiSelect = false;
-            this.dataGridViewPedidos.Size = new System.Drawing.Size(400, 250);
-            this.dataGridViewPedidos.TabIndex = 0;
+            dataGridViewPedidos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewPedidos.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewPedidos.BackgroundColor = SystemColors.Control;
+            dataGridViewPedidos.BorderStyle = BorderStyle.None;
+            dataGridViewPedidos.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewPedidos.Columns.AddRange(new DataGridViewColumn[] { IDPedido, FechaPedido });
+            dataGridViewPedidos.Location = new Point(50, 50);
+            dataGridViewPedidos.MultiSelect = false;
+            dataGridViewPedidos.Name = "dataGridViewPedidos";
+            dataGridViewPedidos.ReadOnly = true;
+            dataGridViewPedidos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewPedidos.Size = new Size(400, 250);
+            dataGridViewPedidos.TabIndex = 0;
             // 
             // IDPedido
             // 
-            this.IDPedido.HeaderText = "ID Pedido";
-            this.IDPedido.Name = "IDPedido";
-            this.IDPedido.DataPropertyName = "IDPedido"; // Asegurar el mapeo de la propiedad
-            this.IDPedido.ReadOnly = true;
+            IDPedido.DataPropertyName = "IDPedido";
+            IDPedido.HeaderText = "ID Pedido";
+            IDPedido.Name = "IDPedido";
+            IDPedido.ReadOnly = true;
             // 
             // FechaPedido
             // 
-            this.FechaPedido.HeaderText = "Fecha";
-            this.FechaPedido.Name = "FechaPedido";
-            this.FechaPedido.DataPropertyName = "FechaPedido"; // Asegurar el mapeo de la propiedad
-            this.FechaPedido.ReadOnly = true;
+            FechaPedido.DataPropertyName = "FechaPedido";
+            FechaPedido.HeaderText = "Fecha";
+            FechaPedido.Name = "FechaPedido";
+            FechaPedido.ReadOnly = true;
             // 
             // buttonSeleccionar
             // 
-            this.buttonSeleccionar.Location = new System.Drawing.Point(375, 320);
-            this.buttonSeleccionar.Name = "buttonSeleccionar";
-            this.buttonSeleccionar.Size = new System.Drawing.Size(75, 30);
-            this.buttonSeleccionar.TabIndex = 1;
-            this.buttonSeleccionar.Text = "Seleccionar";
-            this.buttonSeleccionar.UseVisualStyleBackColor = true;
-            this.buttonSeleccionar.Click += new System.EventHandler(this.buttonSeleccionar_Click);
+            buttonSeleccionar.Location = new Point(375, 320);
+            buttonSeleccionar.Name = "buttonSeleccionar";
+            buttonSeleccionar.Size = new Size(75, 30);
+            buttonSeleccionar.TabIndex = 1;
+            buttonSeleccionar.Text = "Seleccionar";
+            buttonSeleccionar.UseVisualStyleBackColor = true;
+            buttonSeleccionar.Click += buttonSeleccionar_Click;
             // 
             // FormSeleccionarPedido
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(500, 400);
-            this.Controls.Add(this.buttonSeleccionar);
-            this.Controls.Add(this.dataGridViewPedidos);
-            this.Name = "FormSeleccionarPedido";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Seleccionar un Pedido";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewPedidos)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(500, 400);
+            Controls.Add(buttonSeleccionar);
+            Controls.Add(dataGridViewPedidos);
+            Name = "FormSeleccionarPedido";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Seleccionar un Pedido";
+            ((System.ComponentModel.ISupportInitialize)dataGridViewPedidos).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion

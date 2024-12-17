@@ -94,38 +94,31 @@ namespace FotoRoman
         {
             try
             {
-                // Instancia de CNUsuario para obtener la lista de usuarios
+                // Instancia de la capa de negocios
                 CNUsuario cnUsuario = new CNUsuario();
-                List<Usuario> usuarios = cnUsuario.Listar();
+                List<string> nombres = cnUsuario.ListarNombres();
 
-                // Validar si hay usuarios en la base de datos
-                if (usuarios == null || usuarios.Count == 0)
+                if (nombres == null || nombres.Count == 0)
                 {
                     MessageBox.Show("No se encontraron usuarios en la base de datos.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
-                // Crear el objeto AutoCompleteStringCollection
+                // Crear la instancia de AutoCompleteStringCollection
+             
                 AutoCompleteStringCollection autoCompleteUsuarios = new AutoCompleteStringCollection();
+                autoCompleteUsuarios.AddRange(nombres.ToArray());
+           
 
-                // Llenar AutoCompleteStringCollection con los nombres de usuario
-                foreach (var usuario in usuarios)
-                {
-                    autoCompleteUsuarios.Add(usuario.NOMBRE);
-                }
-
-                // Configurar las propiedades de autocompletado del textBox1
                 textBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
                 textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
                 textBox1.AutoCompleteCustomSource = autoCompleteUsuarios;
-
-                MessageBox.Show("Autocompletado configurado correctamente.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al cargar los usuarios: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al cargar los nombres de usuarios: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void buttonImprimir_Click(object sender, EventArgs e)
         {

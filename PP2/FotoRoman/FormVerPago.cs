@@ -246,6 +246,11 @@ namespace FotoRoman
         {
 
         }
+
+        private void comboBoxClientes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

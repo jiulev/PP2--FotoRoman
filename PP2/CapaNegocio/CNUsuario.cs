@@ -15,10 +15,36 @@ namespace CapaNegocio
             CD_Usuario objcd_usuario = new CD_Usuario();
             return objcd_usuario.Listar();
         }
+    
+
+
+        private CD_Usuario cdUsuario = new CD_Usuario();
+
+        // Método para obtener solo los nombres de los usuarios
+        public List<string> ListarNombres()
+        {
+            // Aquí puedes agregar cualquier lógica adicional si es necesaria.
+            return cdUsuario.ListarNombres();
+        }
+
+        public void Bloquear(int idUsuario)
+        {
+            if (idUsuario <= 0)
+            {
+                throw new ArgumentException("ID de usuario inválido.");
+            }
+
+            objcd_usuario.Bloquear(idUsuario); // Llama al método de la capa de datos
+        }
 
         // Método para insertar un usuario
         public void Insertar(Usuario usuario)
         {
+            if (string.IsNullOrWhiteSpace(usuario.NOMBRE))
+            {
+                throw new ArgumentException("El nombre del usuario no puede estar vacío.");
+            }
+
             objcd_usuario.Insertar(usuario);
         }
 

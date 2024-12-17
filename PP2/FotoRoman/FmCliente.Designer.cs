@@ -18,6 +18,8 @@
         private void InitializeComponent()
         {
             groupBoxCliente = new GroupBox();
+            comboBoxLocalidad = new ComboBox();
+            comboBoxProvincia = new ComboBox();
             labelNombre = new Label();
             textNombre = new TextBox();
             labelDocumento = new Label();
@@ -25,9 +27,7 @@
             labelCorreo = new Label();
             textCorreo = new TextBox();
             labelLocalidad = new Label();
-            textLocalidad = new TextBox();
             labelProvincia = new Label();
-            textProvincia = new TextBox();
             RegistrarCliente = new Button();
             CancelarCliente = new Button();
             groupBoxCliente.SuspendLayout();
@@ -35,6 +35,8 @@
             // 
             // groupBoxCliente
             // 
+            groupBoxCliente.Controls.Add(comboBoxLocalidad);
+            groupBoxCliente.Controls.Add(comboBoxProvincia);
             groupBoxCliente.Controls.Add(labelNombre);
             groupBoxCliente.Controls.Add(textNombre);
             groupBoxCliente.Controls.Add(labelDocumento);
@@ -42,9 +44,7 @@
             groupBoxCliente.Controls.Add(labelCorreo);
             groupBoxCliente.Controls.Add(textCorreo);
             groupBoxCliente.Controls.Add(labelLocalidad);
-            groupBoxCliente.Controls.Add(textLocalidad);
             groupBoxCliente.Controls.Add(labelProvincia);
-            groupBoxCliente.Controls.Add(textProvincia);
             groupBoxCliente.Controls.Add(RegistrarCliente);
             groupBoxCliente.Controls.Add(CancelarCliente);
             groupBoxCliente.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
@@ -54,6 +54,30 @@
             groupBoxCliente.TabIndex = 0;
             groupBoxCliente.TabStop = false;
             groupBoxCliente.Text = "Datos del Cliente";
+            // 
+            // comboBoxLocalidad
+            // 
+            comboBoxLocalidad.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxLocalidad.FormattingEnabled = true;
+            comboBoxLocalidad.Location = new Point(180, 209);
+            comboBoxLocalidad.Name = "comboBoxLocalidad";
+            comboBoxLocalidad.Size = new Size(280, 29);
+            comboBoxLocalidad.TabIndex = 13;
+            comboBoxLocalidad.SelectedIndexChanged += comboBoxLocalidad_SelectedIndexChanged;
+            // 
+            // comboBoxProvincia
+            // 
+            comboBoxProvincia.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            comboBoxProvincia.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBoxProvincia.DisplayMember = "Nombre";
+            comboBoxProvincia.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxProvincia.FormattingEnabled = true;
+            comboBoxProvincia.Location = new Point(180, 160);
+            comboBoxProvincia.Name = "comboBoxProvincia";
+            comboBoxProvincia.Size = new Size(280, 29);
+            comboBoxProvincia.TabIndex = 12;
+            comboBoxProvincia.ValueMember = "IDProvincia";
+            comboBoxProvincia.SelectedIndexChanged += comboBoxProvincia_SelectedIndexChanged;
             // 
             // labelNombre
             // 
@@ -109,36 +133,20 @@
             // labelLocalidad
             // 
             labelLocalidad.Font = new Font("Segoe UI", 10F);
-            labelLocalidad.Location = new Point(20, 160);
+            labelLocalidad.Location = new Point(20, 215);
             labelLocalidad.Name = "labelLocalidad";
             labelLocalidad.Size = new Size(150, 25);
             labelLocalidad.TabIndex = 6;
             labelLocalidad.Text = "Localidad:";
             // 
-            // textLocalidad
-            // 
-            textLocalidad.Font = new Font("Segoe UI", 10F);
-            textLocalidad.Location = new Point(180, 160);
-            textLocalidad.Name = "textLocalidad";
-            textLocalidad.Size = new Size(280, 25);
-            textLocalidad.TabIndex = 7;
-            // 
             // labelProvincia
             // 
             labelProvincia.Font = new Font("Segoe UI", 10F);
-            labelProvincia.Location = new Point(20, 200);
+            labelProvincia.Location = new Point(20, 175);
             labelProvincia.Name = "labelProvincia";
             labelProvincia.Size = new Size(150, 25);
             labelProvincia.TabIndex = 8;
             labelProvincia.Text = "Provincia:";
-            // 
-            // textProvincia
-            // 
-            textProvincia.Font = new Font("Segoe UI", 10F);
-            textProvincia.Location = new Point(180, 200);
-            textProvincia.Name = "textProvincia";
-            textProvincia.Size = new Size(280, 25);
-            textProvincia.TabIndex = 9;
             // 
             // RegistrarCliente
             // 
@@ -173,6 +181,7 @@
             Name = "FmCliente";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Gestión de Clientes";
+            Load += FmCliente_Load;
             groupBoxCliente.ResumeLayout(false);
             groupBoxCliente.PerformLayout();
             ResumeLayout(false);
@@ -183,8 +192,6 @@
         private TextBox textNombre;
         private TextBox textDocumento;
         private TextBox textCorreo;
-        private TextBox textLocalidad;
-        private TextBox textProvincia;
         private Button RegistrarCliente;
         private Button CancelarCliente;
         private GroupBox groupBoxCliente;
@@ -193,5 +200,7 @@
         private Label labelCorreo;
         private Label labelLocalidad;
         private Label labelProvincia;
+        private ComboBox comboBoxLocalidad;
+        private ComboBox comboBoxProvincia;
     }
 }

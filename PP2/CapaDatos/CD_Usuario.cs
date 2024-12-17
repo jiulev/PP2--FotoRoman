@@ -19,17 +19,19 @@ namespace CapaDatos
                     oconexion.Open();
 
                     string query = @"
-            SELECT 
-                U.IDUSUARIO, 
-                U.NOMBRE, 
-                U.DOCUMENTO, 
-                U.EMAIL, 
-                U.PASSWORD, 
-                U.FECHACREACION,
-                U.IDROL, -- Incluimos el IDROL aquí
-                R.DESCRIPCION AS ROL_DESCRIPCION
-            FROM Usuario U
-            INNER JOIN Rol R ON U.IDROL = R.IDROL";
+           SELECT 
+        U.IDUSUARIO, 
+        U.NOMBRE, 
+        U.DOCUMENTO, 
+        U.EMAIL, 
+        U.PASSWORD, 
+        U.FECHACREACION,
+        U.IDROL,
+        U.ESTADO,
+        R.DESCRIPCION AS ROL_DESCRIPCION
+    FROM Usuario U
+    INNER JOIN Rol R ON U.IDROL = R.IDROL
+    WHERE U.ESTADO = 'Activo'";
 
                     using (SqlCommand command = new SqlCommand(query, oconexion))
                     {
@@ -64,6 +66,64 @@ namespace CapaDatos
             return lista;
         }
 
+        public void Bloquear(int idUsuario)
+        {
+            using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    oconexion.Open();
+
+                    string query = "UPDATE Usuario SET Estado = 'Bloqueado' WHERE IDUSUARIO = @IDUsuario";
+
+                    using (SqlCommand command = new SqlCommand(query, oconexion))
+                    {
+                        command.Parameters.AddWithValue("@IDUsuario", idUsuario);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al bloquear el usuario", ex);
+                }
+            }
+        }
+
+
+        //listar eb reporte
+        public List<string> ListarNombres()
+        {
+            List<string> nombres = new List<string>();
+
+            using (SqlConnection oconexion = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    oconexion.Open();
+
+                    string query = "SELECT NOMBRE FROM Usuario";
+
+                    using (SqlCommand command = new SqlCommand(query, oconexion))
+                    {
+                        SqlDataReader reader = command.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            string nombre = reader["NOMBRE"].ToString();
+                            if (!string.IsNullOrEmpty(nombre))
+                            {
+                                nombres.Add(nombre);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error al listar los nombres de usuarios: " + ex.Message);
+                }
+            }
+
+            return nombres;
+        }
 
 
         // Método para insertar un usuario en la base de datos
@@ -75,8 +135,9 @@ namespace CapaDatos
                 {
                     oconexion.Open();
 
-                    string query = "INSERT INTO Usuario (NOMBRE, EMAIL, PASSWORD, IDROL, FECHACREACION, DOCUMENTO) " +
-                                   "VALUES (@Nombre, @Email, @Password, @IDROL, GETDATE(), @Documento)";
+                    string query = @"
+                INSERT INTO Usuario (NOMBRE, EMAIL, PASSWORD, IDROL, FECHACREACION, DOCUMENTO, ESTADO) 
+                VALUES (@Nombre, @Email, @Password, @IDROL, GETDATE(), @Documento, 'Activo')";
 
                     using (SqlCommand command = new SqlCommand(query, oconexion))
                     {
@@ -95,6 +156,7 @@ namespace CapaDatos
                 }
             }
         }
+
 
         // Método para editar un usuario existente
         public void Editar(Usuario usuario)

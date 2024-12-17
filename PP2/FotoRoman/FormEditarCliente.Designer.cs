@@ -21,119 +21,104 @@
 
         private void InitializeComponent()
         {
-            this.textBoxNombre = new System.Windows.Forms.TextBox();
-            this.textBoxCorreo = new System.Windows.Forms.TextBox();
-            this.comboBoxEstado = new System.Windows.Forms.ComboBox();
-            this.textBoxLocalidad = new System.Windows.Forms.TextBox();
-            this.textBoxProvincia = new System.Windows.Forms.TextBox();
-            this.textBoxDocumento = new System.Windows.Forms.TextBox();
-            this.buttonGuardar = new System.Windows.Forms.Button();
-            this.buttonCancelar = new System.Windows.Forms.Button();
-            this.SuspendLayout();
-
+            textBoxNombre = new TextBox();
+            textBoxCorreo = new TextBox();
+            comboBoxEstado = new ComboBox();
+            textBoxLocalidad = new TextBox();
+            textBoxProvincia = new TextBox();
+            textBoxDocumento = new TextBox();
+            buttonGuardar = new Button();
+            buttonCancelar = new Button();
+            SuspendLayout();
             // 
             // textBoxNombre
             // 
-            this.textBoxNombre.Location = new System.Drawing.Point(50, 30);
-            this.textBoxNombre.Name = "textBoxNombre";
-            this.textBoxNombre.Size = new System.Drawing.Size(300, 25);
-            this.textBoxNombre.TabIndex = 0;
-            this.textBoxNombre.PlaceholderText = "Nombre";
-
+            textBoxNombre.Location = new Point(50, 30);
+            textBoxNombre.Name = "textBoxNombre";
+            textBoxNombre.PlaceholderText = "Apellido y Nombre";
+            textBoxNombre.Size = new Size(300, 23);
+            textBoxNombre.TabIndex = 0;
             // 
             // textBoxCorreo
             // 
-            this.textBoxCorreo.Location = new System.Drawing.Point(50, 70);
-            this.textBoxCorreo.Name = "textBoxCorreo";
-            this.textBoxCorreo.Size = new System.Drawing.Size(300, 25);
-            this.textBoxCorreo.TabIndex = 1;
-            this.textBoxCorreo.PlaceholderText = "Correo";
-
+            textBoxCorreo.Location = new Point(50, 70);
+            textBoxCorreo.Name = "textBoxCorreo";
+            textBoxCorreo.PlaceholderText = "Correo";
+            textBoxCorreo.Size = new Size(300, 23);
+            textBoxCorreo.TabIndex = 1;
             // 
             // comboBoxEstado
             // 
-            this.comboBoxEstado.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxEstado.FormattingEnabled = true;
-            this.comboBoxEstado.Items.AddRange(new object[] {
-            "Activo",
-            "Inactivo"});
-            this.comboBoxEstado.Location = new System.Drawing.Point(50, 110);
-            this.comboBoxEstado.Name = "comboBoxEstado";
-            this.comboBoxEstado.Size = new System.Drawing.Size(300, 25);
-            this.comboBoxEstado.TabIndex = 2;
-
+            comboBoxEstado.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxEstado.FormattingEnabled = true;
+            comboBoxEstado.Items.AddRange(new object[] { "Activo", "Inactivo" });
+            comboBoxEstado.Location = new Point(50, 110);
+            comboBoxEstado.Name = "comboBoxEstado";
+            comboBoxEstado.Size = new Size(300, 23);
+            comboBoxEstado.TabIndex = 2;
             // 
             // textBoxLocalidad
             // 
-            this.textBoxLocalidad.Location = new System.Drawing.Point(50, 150);
-            this.textBoxLocalidad.Name = "textBoxLocalidad";
-            this.textBoxLocalidad.Size = new System.Drawing.Size(300, 25);
-            this.textBoxLocalidad.TabIndex = 3;
-            this.textBoxLocalidad.PlaceholderText = "Localidad";
-            this.textBoxLocalidad.ReadOnly = false; // Asegúrate de que sea false
-            this.textBoxLocalidad.Enabled = true;  // Asegúrate de que sea true
-
+            textBoxLocalidad.Location = new Point(50, 150);
+            textBoxLocalidad.Name = "textBoxLocalidad";
+            textBoxLocalidad.PlaceholderText = "Localidad";
+            textBoxLocalidad.Size = new Size(300, 23);
+            textBoxLocalidad.TabIndex = 3;
             // 
             // textBoxProvincia
             // 
-            this.textBoxProvincia.Location = new System.Drawing.Point(50, 190);
-            this.textBoxProvincia.Name = "textBoxProvincia";
-            this.textBoxProvincia.Size = new System.Drawing.Size(300, 25);
-            this.textBoxProvincia.TabIndex = 4;
-            this.textBoxProvincia.PlaceholderText = "Provincia";
-            this.textBoxProvincia.ReadOnly = false; // Asegúrate de que sea false
-            this.textBoxProvincia.Enabled = true;  // Asegúrate de que sea true
-
+            textBoxProvincia.Location = new Point(50, 190);
+            textBoxProvincia.Name = "textBoxProvincia";
+            textBoxProvincia.PlaceholderText = "Provincia";
+            textBoxProvincia.Size = new Size(300, 23);
+            textBoxProvincia.TabIndex = 4;
             // 
             // textBoxDocumento
             // 
-            this.textBoxDocumento.Location = new System.Drawing.Point(50, 230);
-            this.textBoxDocumento.Name = "textBoxDocumento";
-            this.textBoxDocumento.ReadOnly = true;
-            this.textBoxDocumento.Size = new System.Drawing.Size(300, 25);
-            this.textBoxDocumento.TabIndex = 5;
-
+            textBoxDocumento.Location = new Point(50, 230);
+            textBoxDocumento.Name = "textBoxDocumento";
+            textBoxDocumento.ReadOnly = true;
+            textBoxDocumento.Size = new Size(300, 23);
+            textBoxDocumento.TabIndex = 5;
             // 
             // buttonGuardar
             // 
-            this.buttonGuardar.Location = new System.Drawing.Point(50, 280);
-            this.buttonGuardar.Name = "buttonGuardar";
-            this.buttonGuardar.Size = new System.Drawing.Size(120, 40);
-            this.buttonGuardar.TabIndex = 6;
-            this.buttonGuardar.Text = "Guardar";
-            this.buttonGuardar.UseVisualStyleBackColor = true;
-            this.buttonGuardar.Click += new System.EventHandler(this.buttonGuardar_Click);
-
+            buttonGuardar.Location = new Point(50, 280);
+            buttonGuardar.Name = "buttonGuardar";
+            buttonGuardar.Size = new Size(120, 40);
+            buttonGuardar.TabIndex = 6;
+            buttonGuardar.Text = "Guardar";
+            buttonGuardar.UseVisualStyleBackColor = true;
+            buttonGuardar.Click += buttonGuardar_Click;
             // 
             // buttonCancelar
             // 
-            this.buttonCancelar.Location = new System.Drawing.Point(230, 280);
-            this.buttonCancelar.Name = "buttonCancelar";
-            this.buttonCancelar.Size = new System.Drawing.Size(120, 40);
-            this.buttonCancelar.TabIndex = 7;
-            this.buttonCancelar.Text = "Cancelar";
-            this.buttonCancelar.UseVisualStyleBackColor = true;
-            this.buttonCancelar.Click += new System.EventHandler(this.buttonCancelar_Click);
-
+            buttonCancelar.Location = new Point(230, 280);
+            buttonCancelar.Name = "buttonCancelar";
+            buttonCancelar.Size = new Size(120, 40);
+            buttonCancelar.TabIndex = 7;
+            buttonCancelar.Text = "Cancelar";
+            buttonCancelar.UseVisualStyleBackColor = true;
+            buttonCancelar.Click += buttonCancelar_Click;
             // 
             // FormEditarCliente
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 350);
-            this.Controls.Add(this.textBoxNombre);
-            this.Controls.Add(this.textBoxCorreo);
-            this.Controls.Add(this.comboBoxEstado);
-            this.Controls.Add(this.textBoxLocalidad);
-            this.Controls.Add(this.textBoxProvincia);
-            this.Controls.Add(this.textBoxDocumento);
-            this.Controls.Add(this.buttonGuardar);
-            this.Controls.Add(this.buttonCancelar);
-            this.Name = "FormEditarCliente";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Editar Cliente";
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(400, 350);
+            Controls.Add(textBoxNombre);
+            Controls.Add(textBoxCorreo);
+            Controls.Add(comboBoxEstado);
+            Controls.Add(textBoxLocalidad);
+            Controls.Add(textBoxProvincia);
+            Controls.Add(textBoxDocumento);
+            Controls.Add(buttonGuardar);
+            Controls.Add(buttonCancelar);
+            Name = "FormEditarCliente";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Editar Cliente";
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

@@ -1,9 +1,4 @@
-﻿
-
-
-
-
-namespace FotoRoman
+﻿namespace FotoRoman
 
 
 
@@ -60,13 +55,16 @@ namespace FotoRoman
             // 
             // textBox1
             // 
-            textBox1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            textBox1.AutoCompleteMode = AutoCompleteMode.Suggest;
             textBox1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             textBox1.Location = new Point(220, 121);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(300, 29);
             textBox1.TabIndex = 0;
             textBox1.TextChanged += textBox1_TextChanged;
+           
+            textBox1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
             // 
             // label1
             // 

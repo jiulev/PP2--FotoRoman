@@ -125,19 +125,20 @@ namespace CapaNegocio
 
             try
             {
-                CD_Cliente.Eliminar(idCliente);
-                mensaje = "Cliente eliminado correctamente.";
+                CD_Cliente.Eliminar(idCliente); // Ahora bloquea el cliente
+                mensaje = "Cliente bloqueado correctamente.";
                 return true;
             }
             catch (Exception ex)
             {
-                mensaje = "Error al eliminar el cliente: " + ex.Message;
+                mensaje = "Error al bloquear el cliente: " + ex.Message;
                 return false;
             }
         }
 
+
         // Método auxiliar para validar formato de correo
-     
+
 
         // Obtener nombres de clientes para autocompletado
         public static List<string> ObtenerNombresClientes()

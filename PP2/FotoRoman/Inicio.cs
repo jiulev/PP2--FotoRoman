@@ -125,18 +125,33 @@ namespace FotoRoman
 
         private void iconMenuItem7_Click(object sender, EventArgs e)
         {
-            FormVerPago formVerPago = new FormVerPago();
 
-            // Mostrar el formulario de forma modal
-            formVerPago.ShowDialog();
+            FormConsultarPagos formPagos = new FormConsultarPagos();
+            formPagos.Show(); // O usar ShowDialog() si es modal
+
+            // FormVerPago formVerPago = new FormVerPago();
+
+
+            // formVerPago.ShowDialog();
         }
 
         private void iconMenuItem22_Click(object sender, EventArgs e)
         {
-            FormVerReporte formVerReporte = new FormVerReporte();
+
+
+            // Instanciar el formulario
+            FormReporteVendedor formReporteVendedor = new FormReporteVendedor();
+
+            // Mostrar el formulario como una ventana modal
+            formReporteVendedor.ShowDialog();
+
+
+
+
+            //FormVerReporte formVerReporte = new FormVerReporte();
 
             // Mostrar el formulario de reportes de forma modal
-            formVerReporte.ShowDialog();
+            //formVerReporte.ShowDialog();
         }
 
         /// <summary>
@@ -189,6 +204,36 @@ namespace FotoRoman
                 // Mostrar un mensaje de error en caso de que ocurra una excepción
                 MessageBox.Show($"Ocurrió un error al intentar abrir el formulario de categorías: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            // Instanciar el formulario
+            FormAcercaDe formAcercaDe = new FormAcercaDe();
+
+            // Mostrar el formulario como una ventana modal
+            formAcercaDe.ShowDialog();
+
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void iconMenuItem6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void reporteProducto_Click(object sender, EventArgs e)
+        {
+            // Crear una instancia del formulario
+            FormReporteProducto formReporte = new FormReporteProducto();
+
+            // Mostrar el formulario
+            formReporte.Show(); // Usa Show() si quieres que el formulario se abra de forma no modal
+                                // formReporte.ShowDialog(); // Usa ShowDialog() si quieres que sea modal (bloquea otros formularios)
         }
 
     }

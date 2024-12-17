@@ -10,13 +10,15 @@ namespace CapaEntidad
     public class Usuario
     {
         public int IDUSUARIO { get; set; }
-        public string NOMBRE { get; set; } = string.Empty; // Inicializa con cadena vacía
-        public string DOCUMENTO { get; set; } = string.Empty; // Inicializa con cadena vacía
-        public string EMAIL { get; set; } = string.Empty; // Inicializa con cadena vacía
-        public string PASSWORD { get; set; } = string.Empty; // Inicializa con cadena vacía
-        public Rol oRol { get; set; } = new Rol(); // Inicializa con un nuevo objeto Rol
-        public DateTime? FECHACREACION { get; set; } = null; // Permitir null como valor predeterminado
+        public string NOMBRE { get; set; } = string.Empty;
+        public string DOCUMENTO { get; set; } = string.Empty;
+        public string EMAIL { get; set; } = string.Empty;
+        public string PASSWORD { get; set; } = string.Empty;
+        public Rol oRol { get; set; } = new Rol();
+        public DateTime? FECHACREACION { get; set; } = null;
+        public string ESTADO { get; set; } = "Activo"; // Nueva propiedad con valor por defecto
     }
+
 
 
 

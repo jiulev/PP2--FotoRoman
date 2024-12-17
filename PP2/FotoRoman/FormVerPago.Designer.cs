@@ -27,16 +27,16 @@
             buttonImprimir = new Button();
             buttonCerrar = new Button();
             groupBoxCliente = new GroupBox();
+            textBox1 = new TextBox();
+            label4 = new Label();
+            label3 = new Label();
+            label2 = new Label();
+            label1 = new Label();
+            textBoxLocalidad = new TextBox();
+            textBoxCorreo = new TextBox();
             textBoxDatosCliente = new TextBox();
             groupBoxPagos = new GroupBox();
             dataGridViewPagos = new DataGridView();
-            textBoxCorreo = new TextBox();
-            textBoxLocalidad = new TextBox();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
-            textBox1 = new TextBox();
             groupBoxCliente.SuspendLayout();
             groupBoxPagos.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPagos).BeginInit();
@@ -71,10 +71,13 @@
             // 
             comboBoxClientes.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             comboBoxClientes.AutoCompleteSource = AutoCompleteSource.ListItems;
+            comboBoxClientes.DropDownHeight = 300;
+            comboBoxClientes.IntegralHeight = false;
             comboBoxClientes.Location = new Point(180, 60);
             comboBoxClientes.Name = "comboBoxClientes";
             comboBoxClientes.Size = new Size(200, 23);
             comboBoxClientes.TabIndex = 3;
+            comboBoxClientes.SelectedIndexChanged += comboBoxClientes_SelectedIndexChanged;
             // 
             // buttonBuscar
             // 
@@ -133,6 +136,74 @@
             groupBoxCliente.TabStop = false;
             groupBoxCliente.Text = "Datos del Cliente";
             // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(217, 140);
+            textBox1.Multiline = true;
+            textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
+            textBox1.ScrollBars = ScrollBars.Vertical;
+            textBox1.Size = new Size(238, 24);
+            textBox1.TabIndex = 7;
+            // 
+            // label4
+            // 
+            label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Location = new Point(86, 137);
+            label4.Name = "label4";
+            label4.Size = new Size(68, 23);
+            label4.TabIndex = 6;
+            label4.Text = "Provincia";
+            label4.Click += label4_Click;
+            // 
+            // label3
+            // 
+            label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(86, 99);
+            label3.Name = "label3";
+            label3.Size = new Size(68, 23);
+            label3.TabIndex = 5;
+            label3.Text = "Localidad ";
+            label3.Click += label3_Click;
+            // 
+            // label2
+            // 
+            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(86, 61);
+            label2.Name = "label2";
+            label2.Size = new Size(51, 23);
+            label2.TabIndex = 4;
+            label2.Text = "Correo";
+            // 
+            // label1
+            // 
+            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(86, 23);
+            label1.Name = "label1";
+            label1.Size = new Size(125, 23);
+            label1.TabIndex = 3;
+            label1.Text = "Apellido y Nombre";
+            // 
+            // textBoxLocalidad
+            // 
+            textBoxLocalidad.Location = new Point(217, 108);
+            textBoxLocalidad.Multiline = true;
+            textBoxLocalidad.Name = "textBoxLocalidad";
+            textBoxLocalidad.ReadOnly = true;
+            textBoxLocalidad.ScrollBars = ScrollBars.Vertical;
+            textBoxLocalidad.Size = new Size(238, 24);
+            textBoxLocalidad.TabIndex = 2;
+            // 
+            // textBoxCorreo
+            // 
+            textBoxCorreo.Location = new Point(217, 65);
+            textBoxCorreo.Multiline = true;
+            textBoxCorreo.Name = "textBoxCorreo";
+            textBoxCorreo.ReadOnly = true;
+            textBoxCorreo.ScrollBars = ScrollBars.Vertical;
+            textBoxCorreo.Size = new Size(238, 24);
+            textBoxCorreo.TabIndex = 1;
+            // 
             // textBoxDatosCliente
             // 
             textBoxDatosCliente.Location = new Point(217, 22);
@@ -162,74 +233,6 @@
             dataGridViewPagos.Name = "dataGridViewPagos";
             dataGridViewPagos.Size = new Size(564, 280);
             dataGridViewPagos.TabIndex = 0;
-            // 
-            // textBoxCorreo
-            // 
-            textBoxCorreo.Location = new Point(217, 65);
-            textBoxCorreo.Multiline = true;
-            textBoxCorreo.Name = "textBoxCorreo";
-            textBoxCorreo.ReadOnly = true;
-            textBoxCorreo.ScrollBars = ScrollBars.Vertical;
-            textBoxCorreo.Size = new Size(238, 24);
-            textBoxCorreo.TabIndex = 1;
-            // 
-            // textBoxLocalidad
-            // 
-            textBoxLocalidad.Location = new Point(217, 108);
-            textBoxLocalidad.Multiline = true;
-            textBoxLocalidad.Name = "textBoxLocalidad";
-            textBoxLocalidad.ReadOnly = true;
-            textBoxLocalidad.ScrollBars = ScrollBars.Vertical;
-            textBoxLocalidad.Size = new Size(238, 24);
-            textBoxLocalidad.TabIndex = 2;
-            // 
-            // label1
-            // 
-            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(86, 23);
-            label1.Name = "label1";
-            label1.Size = new Size(125, 23);
-            label1.TabIndex = 3;
-            label1.Text = "Apellido y Nombre";
-            // 
-            // label2
-            // 
-            label2.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(86, 61);
-            label2.Name = "label2";
-            label2.Size = new Size(51, 23);
-            label2.TabIndex = 4;
-            label2.Text = "Correo";
-            // 
-            // label3
-            // 
-            label3.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(86, 99);
-            label3.Name = "label3";
-            label3.Size = new Size(68, 23);
-            label3.TabIndex = 5;
-            label3.Text = "Localidad ";
-            label3.Click += label3_Click;
-            // 
-            // label4
-            // 
-            label4.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(86, 137);
-            label4.Name = "label4";
-            label4.Size = new Size(68, 23);
-            label4.TabIndex = 6;
-            label4.Text = "Provincia";
-            label4.Click += label4_Click;
-            // 
-            // textBox1
-            // 
-            textBox1.Location = new Point(217, 140);
-            textBox1.Multiline = true;
-            textBox1.Name = "textBox1";
-            textBox1.ReadOnly = true;
-            textBox1.ScrollBars = ScrollBars.Vertical;
-            textBox1.Size = new Size(238, 24);
-            textBox1.TabIndex = 7;
             // 
             // FormVerPago
             // 
