@@ -239,7 +239,7 @@ namespace FotoRoman
 
                     // Agregar estadísticas de ventas
                     Paragraph estadisticas = new Paragraph($"\nEstadísticas de Ventas:\n" +
-                                                          $"Total Ventas (Global): {totalVentas:C2}\n" +
+                                                          $"Total Ventas (100%): {totalVentas:C2}\n" +
                                                           $"Ventas del Vendedor: {ventasUsuario:C2}\n" +
                                                           $"Porcentaje de Ventas: {porcentaje:F2}%",
                                                           FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 12));
@@ -247,12 +247,19 @@ namespace FotoRoman
                     estadisticas.SpacingBefore = 20;
                     documento.Add(estadisticas);
 
-                    // Agregar el gráfico de torta al reporte
+                    // Agregar título sobre el gráfico
+                    Paragraph tituloGrafico = new Paragraph("Gráfico de Tortas", FontFactory.GetFont(FontFactory.HELVETICA_BOLD, 14));
+                    tituloGrafico.Alignment = Element.ALIGN_CENTER;
+                    tituloGrafico.SpacingAfter = 10; // Espaciado hacia abajo
+                    documento.Add(tituloGrafico);
+
+                    // Agregar gráfico al reporte
                     iTextSharp.text.Image grafico = iTextSharp.text.Image.GetInstance(rutaGrafico);
                     grafico.ScaleToFit(300, 200);
                     grafico.Alignment = Element.ALIGN_CENTER;
-                    grafico.SpacingBefore = 20;
+                    grafico.SpacingBefore = 10; // Espaciado hacia arriba
                     documento.Add(grafico);
+
 
                     documento.Close();
                     writer.Close();
@@ -289,8 +296,10 @@ namespace FotoRoman
                 using (Graphics g = Graphics.FromImage(bitmap))
                 {
                     // Colores para las partes del gráfico
-                    Brush brushUsuario = Brushes.Red;
-                    Brush brushRestante = Brushes.Gray;
+                    // Definir colores personalizados
+                    Brush brushUsuario = new SolidBrush(Color.FromArgb(200, 255, 99, 71)); // Tonalidad suave de rojo
+                    Brush brushRestante = new SolidBrush(Color.FromArgb(200, 169, 169, 169)); // Tonalidad suave de gris
+
 
                     // Fondo blanco
                     g.Clear(Color.White);
@@ -305,8 +314,12 @@ namespace FotoRoman
                     g.FillPie(brushRestante, rect, porcentajeUsuario, porcentajeRestante);
 
                     // Dibujar leyenda
-                    g.DrawString("Vendedor", new System.Drawing.Font("Arial", 12), brushUsuario, 270, 70);
-                    g.DrawString("Resto", new System.Drawing.Font("Arial", 12), brushRestante, 270, 100);
+                    // Dibujar leyenda con porcentaje
+                    g.DrawString($"Vendedor Consultado ({(ventasUsuario / totalVentas * 100):F2}%)",
+                                 new System.Drawing.Font("Arial", 12), brushUsuario, 270, 70);
+                    g.DrawString("Total Otros Vendedores",
+                                 new System.Drawing.Font("Arial", 12), brushRestante, 270, 100);
+
                 }
 
                 // Guardar la imagen

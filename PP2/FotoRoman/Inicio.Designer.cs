@@ -51,13 +51,13 @@
             verCategoriaToolStripMenuItem = new ToolStripMenuItem();
             menureportes = new FontAwesome.Sharp.IconMenuItem();
             iconMenuItem22 = new FontAwesome.Sharp.IconMenuItem();
+            reporteProducto = new ToolStripMenuItem();
             menuacercade = new FontAwesome.Sharp.IconMenuItem();
             toolStripMenuItem2 = new ToolStripMenuItem();
             menutitulo = new MenuStrip();
             label1 = new Label();
             contenedor = new Panel();
             buttonCerrarSesion = new Button();
-            reporteProducto = new ToolStripMenuItem();
             menu.SuspendLayout();
             SuspendLayout();
             // 
@@ -177,7 +177,7 @@
             iconMenuItem5.IconColor = Color.Black;
             iconMenuItem5.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem5.Name = "iconMenuItem5";
-            iconMenuItem5.Size = new Size(180, 22);
+            iconMenuItem5.Size = new Size(155, 22);
             iconMenuItem5.Text = "Registrar Pago";
             // 
             // iconMenuItem6
@@ -186,7 +186,7 @@
             iconMenuItem6.IconColor = Color.Black;
             iconMenuItem6.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem6.Name = "iconMenuItem6";
-            iconMenuItem6.Size = new Size(180, 22);
+            iconMenuItem6.Size = new Size(155, 22);
             iconMenuItem6.Text = "Editar Pago";
             iconMenuItem6.Click += iconMenuItem6_Click;
             // 
@@ -196,7 +196,7 @@
             iconMenuItem7.IconColor = Color.Black;
             iconMenuItem7.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem7.Name = "iconMenuItem7";
-            iconMenuItem7.Size = new Size(180, 22);
+            iconMenuItem7.Size = new Size(155, 22);
             iconMenuItem7.Text = "Consultar Pago";
             iconMenuItem7.Click += iconMenuItem7_Click;
             // 
@@ -251,14 +251,14 @@
             // toolStripMenuItem1
             // 
             toolStripMenuItem1.Name = "toolStripMenuItem1";
-            toolStripMenuItem1.Size = new Size(174, 22);
+            toolStripMenuItem1.Size = new Size(180, 22);
             toolStripMenuItem1.Text = "Registrar producto";
             toolStripMenuItem1.Click += toolStripMenuItem1_Click;
             // 
             // toolStripMenuItem5
             // 
             toolStripMenuItem5.Name = "toolStripMenuItem5";
-            toolStripMenuItem5.Size = new Size(174, 22);
+            toolStripMenuItem5.Size = new Size(180, 22);
             toolStripMenuItem5.Text = "Ver Producto";
             // 
             // iconMenuItem15
@@ -267,15 +267,16 @@
             iconMenuItem15.IconColor = Color.Black;
             iconMenuItem15.IconFont = FontAwesome.Sharp.IconFont.Auto;
             iconMenuItem15.Name = "iconMenuItem15";
-            iconMenuItem15.Size = new Size(174, 22);
+            iconMenuItem15.Size = new Size(180, 22);
             iconMenuItem15.Text = "Registrar Categoria";
             iconMenuItem15.Click += iconMenuItem15_Click;
             // 
             // verCategoriaToolStripMenuItem
             // 
             verCategoriaToolStripMenuItem.Name = "verCategoriaToolStripMenuItem";
-            verCategoriaToolStripMenuItem.Size = new Size(174, 22);
+            verCategoriaToolStripMenuItem.Size = new Size(180, 22);
             verCategoriaToolStripMenuItem.Text = "Ver Categoria";
+            verCategoriaToolStripMenuItem.Click += verCategoriaToolStripMenuItem_Click;
             // 
             // menureportes
             // 
@@ -300,6 +301,13 @@
             iconMenuItem22.Size = new Size(207, 22);
             iconMenuItem22.Text = "Emitir Reportes de Ventas";
             iconMenuItem22.Click += iconMenuItem22_Click;
+            // 
+            // reporteProducto
+            // 
+            reporteProducto.Name = "reporteProducto";
+            reporteProducto.Size = new Size(207, 22);
+            reporteProducto.Text = "Productos Más Vendidos";
+            reporteProducto.Click += reporteProducto_Click;
             // 
             // menuacercade
             // 
@@ -363,13 +371,6 @@
             buttonCerrarSesion.Text = "Cerrar Sesión ";
             buttonCerrarSesion.UseVisualStyleBackColor = true;
             buttonCerrarSesion.Click += btnCerrarSesion_Click;
-            // 
-            // reporteProducto
-            // 
-            reporteProducto.Name = "reporteProducto";
-            reporteProducto.Size = new Size(207, 22);
-            reporteProducto.Text = "Productos Más Vendidos";
-            reporteProducto.Click += reporteProducto_Click;
             // 
             // Inicio
             // 

@@ -58,10 +58,11 @@
             // comboBoxLocalidad
             // 
             comboBoxLocalidad.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxLocalidad.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBoxLocalidad.FormattingEnabled = true;
-            comboBoxLocalidad.Location = new Point(180, 209);
+            comboBoxLocalidad.Location = new Point(180, 205);
             comboBoxLocalidad.Name = "comboBoxLocalidad";
-            comboBoxLocalidad.Size = new Size(280, 29);
+            comboBoxLocalidad.Size = new Size(280, 26);
             comboBoxLocalidad.TabIndex = 13;
             comboBoxLocalidad.SelectedIndexChanged += comboBoxLocalidad_SelectedIndexChanged;
             // 
@@ -71,10 +72,11 @@
             comboBoxProvincia.AutoCompleteSource = AutoCompleteSource.ListItems;
             comboBoxProvincia.DisplayMember = "Nombre";
             comboBoxProvincia.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxProvincia.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBoxProvincia.FormattingEnabled = true;
-            comboBoxProvincia.Location = new Point(180, 160);
+            comboBoxProvincia.Location = new Point(180, 163);
             comboBoxProvincia.Name = "comboBoxProvincia";
-            comboBoxProvincia.Size = new Size(280, 29);
+            comboBoxProvincia.Size = new Size(280, 26);
             comboBoxProvincia.TabIndex = 12;
             comboBoxProvincia.ValueMember = "IDProvincia";
             comboBoxProvincia.SelectedIndexChanged += comboBoxProvincia_SelectedIndexChanged;
@@ -82,9 +84,9 @@
             // labelNombre
             // 
             labelNombre.Font = new Font("Segoe UI", 10F);
-            labelNombre.Location = new Point(20, 40);
+            labelNombre.Location = new Point(45, 40);
             labelNombre.Name = "labelNombre";
-            labelNombre.Size = new Size(150, 25);
+            labelNombre.Size = new Size(129, 25);
             labelNombre.TabIndex = 0;
             labelNombre.Text = "Apellido y Nombre:";
             // 
@@ -99,16 +101,16 @@
             // labelDocumento
             // 
             labelDocumento.Font = new Font("Segoe UI", 10F);
-            labelDocumento.Location = new Point(20, 80);
+            labelDocumento.Location = new Point(85, 82);
             labelDocumento.Name = "labelDocumento";
-            labelDocumento.Size = new Size(150, 25);
+            labelDocumento.Size = new Size(89, 25);
             labelDocumento.TabIndex = 2;
             labelDocumento.Text = "Documento:";
             // 
             // textDocumento
             // 
             textDocumento.Font = new Font("Segoe UI", 10F);
-            textDocumento.Location = new Point(180, 80);
+            textDocumento.Location = new Point(180, 81);
             textDocumento.Name = "textDocumento";
             textDocumento.Size = new Size(280, 25);
             textDocumento.TabIndex = 3;
@@ -116,16 +118,16 @@
             // labelCorreo
             // 
             labelCorreo.Font = new Font("Segoe UI", 10F);
-            labelCorreo.Location = new Point(20, 120);
+            labelCorreo.Location = new Point(45, 124);
             labelCorreo.Name = "labelCorreo";
-            labelCorreo.Size = new Size(150, 25);
+            labelCorreo.Size = new Size(129, 25);
             labelCorreo.TabIndex = 4;
             labelCorreo.Text = "Correo Electrónico:";
             // 
             // textCorreo
             // 
             textCorreo.Font = new Font("Segoe UI", 10F);
-            textCorreo.Location = new Point(180, 120);
+            textCorreo.Location = new Point(180, 122);
             textCorreo.Name = "textCorreo";
             textCorreo.Size = new Size(280, 25);
             textCorreo.TabIndex = 5;
@@ -133,18 +135,18 @@
             // labelLocalidad
             // 
             labelLocalidad.Font = new Font("Segoe UI", 10F);
-            labelLocalidad.Location = new Point(20, 215);
+            labelLocalidad.Location = new Point(101, 208);
             labelLocalidad.Name = "labelLocalidad";
-            labelLocalidad.Size = new Size(150, 25);
+            labelLocalidad.Size = new Size(73, 25);
             labelLocalidad.TabIndex = 6;
             labelLocalidad.Text = "Localidad:";
             // 
             // labelProvincia
             // 
             labelProvincia.Font = new Font("Segoe UI", 10F);
-            labelProvincia.Location = new Point(20, 175);
+            labelProvincia.Location = new Point(101, 166);
             labelProvincia.Name = "labelProvincia";
-            labelProvincia.Size = new Size(150, 25);
+            labelProvincia.Size = new Size(73, 25);
             labelProvincia.TabIndex = 8;
             labelProvincia.Text = "Provincia:";
             // 

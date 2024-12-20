@@ -33,7 +33,7 @@ namespace FotoRoman
             if (idRol == 2) // Vendedor
             {
                 // Ocultar el menú de reportes
-                iconMenuItem22.Visible = false;
+                menureportes.Visible = false;
 
                 // Ocultar el menú de usuarios
                 menuusuario.Visible = false;
@@ -236,5 +236,11 @@ namespace FotoRoman
                                 // formReporte.ShowDialog(); // Usa ShowDialog() si quieres que sea modal (bloquea otros formularios)
         }
 
+        private void verCategoriaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FormVerCategoria formCategoria = new FormVerCategoria();
+            formCategoria.ShowDialog();
+
+        }
     }
 }

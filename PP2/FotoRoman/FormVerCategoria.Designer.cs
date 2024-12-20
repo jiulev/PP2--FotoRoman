@@ -35,6 +35,7 @@
             dataGridViewCategorias = new DataGridView();
             buttonEditar = new Button();
             labelBuscar = new Label();
+            buttonEliminar = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridViewCategorias).BeginInit();
             SuspendLayout();
             // 
@@ -52,6 +53,8 @@
             dataGridViewCategorias.AllowUserToAddRows = false;
             dataGridViewCategorias.AllowUserToDeleteRows = false;
             dataGridViewCategorias.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCategorias.BackgroundColor = SystemColors.Control;
+            dataGridViewCategorias.BorderStyle = BorderStyle.None;
             dataGridViewCategorias.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCategorias.Location = new Point(20, 70);
             dataGridViewCategorias.MultiSelect = false;
@@ -82,11 +85,23 @@
             labelBuscar.TabIndex = 4;
             labelBuscar.Text = "Buscar:";
             // 
+            // buttonEliminar
+            // 
+            buttonEliminar.Font = new Font("Segoe UI", 12F);
+            buttonEliminar.Location = new Point(282, 339);
+            buttonEliminar.Name = "buttonEliminar";
+            buttonEliminar.Size = new Size(150, 40);
+            buttonEliminar.TabIndex = 5;
+            buttonEliminar.Text = "Eliminar";
+            buttonEliminar.UseVisualStyleBackColor = true;
+            buttonEliminar.Click += buttonEliminar_Click_1;
+            // 
             // FormVerCategoria
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(640, 400);
+            Controls.Add(buttonEliminar);
             Controls.Add(labelBuscar);
             Controls.Add(buttonEditar);
             Controls.Add(dataGridViewCategorias);
@@ -101,5 +116,7 @@
         }
 
         #endregion
+
+        private Button buttonEliminar;
     }
 }

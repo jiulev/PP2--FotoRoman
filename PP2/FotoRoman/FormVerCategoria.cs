@@ -164,5 +164,57 @@ namespace FotoRoman
                 MessageBox.Show("Seleccione una categoría para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void buttonEliminar_Click_1(object sender, EventArgs e)
+        {
+            if (dataGridViewCategorias.SelectedRows.Count > 0)
+            {
+                // Obtener la categoría seleccionada
+                var categoriaSeleccionada = (Categoria)dataGridViewCategorias.SelectedRows[0].DataBoundItem;
+
+                // Confirmación antes de proceder con la eliminación
+                var confirmacion = MessageBox.Show(
+                    $"¿Está seguro de eliminar la categoría '{categoriaSeleccionada.DESCRIPCION}'?",
+                    "Confirmar Eliminación",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (confirmacion == DialogResult.Yes)
+                {
+                    try
+                    {
+                        // Validar si existen productos asociados a la categoría
+                        bool tieneProductos = CNProducto.VerificarProductosPorCategoria(categoriaSeleccionada.IDCATEGORIA);
+
+                        if (tieneProductos)
+                        {
+                            MessageBox.Show(
+                                $"No se puede eliminar la categoría '{categoriaSeleccionada.DESCRIPCION}' porque tiene productos asociados.",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        // Eliminar la categoría si no tiene productos asociados
+                        CNCategoria.EliminarCategoria(categoriaSeleccionada.IDCATEGORIA);
+
+                        MessageBox.Show("Categoría eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Recargar las categorías en el DataGridView
+                        CargarCategorias();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al eliminar la categoría: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Seleccione una categoría para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
     }
 }

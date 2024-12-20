@@ -56,6 +56,37 @@ namespace FotoRoman
         {
             try
             {
+                // Validar que los campos no estén vacíos
+                if (string.IsNullOrWhiteSpace(txtdocumento.Text))
+                {
+                    MessageBox.Show("El documento no puede estar vacío.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtdocumento.Focus();
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(txtclave.Text))
+                {
+                    MessageBox.Show("La clave no puede estar vacía.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtclave.Focus();
+                    return;
+                }
+
+                // Validar el formato del documento (7 a 10 dígitos)
+                if (!System.Text.RegularExpressions.Regex.IsMatch(txtdocumento.Text, @"^\d{7,10}$"))
+                {
+                    MessageBox.Show("El documento debe tener entre 7 y 10 dígitos.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtdocumento.Focus();
+                    return;
+                }
+
+                // Validar la longitud de la clave (3 a 10 caracteres)
+                if (txtclave.Text.Length < 3 || txtclave.Text.Length > 10)
+                {
+                    MessageBox.Show("La clave debe tener entre 3 y 10 caracteres.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtclave.Focus();
+                    return;
+                }
+
                 // Obtener la lista de usuarios
                 List<Usuario> usuarios = new CNUsuario().Listar();
 

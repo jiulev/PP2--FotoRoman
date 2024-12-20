@@ -52,7 +52,7 @@ namespace CapaDatos
             {
                 connection.Open();
                 using var command = new SqlCommand("SELECT DESCRIPCION FROM CATEGORIA", connection);
-                
+
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -65,6 +65,29 @@ namespace CapaDatos
             }
 
             return categorias;
+        }
+        public static bool ExistenProductosPorCategoria(int idCategoria)
+        {
+            using (SqlConnection connection = new SqlConnection(Conexion.ObtenerCadenaConexion()))
+            {
+                try
+                {
+                    connection.Open();
+                    string query = "SELECT COUNT(*) FROM PRODUCTO WHERE IDCATEGORIA = @IdCategoria";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@IdCategoria", idCategoria);
+
+                        int count = Convert.ToInt32(command.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception("Error al verificar los productos por categoría: " + ex.Message);
+                }
+            }
         }
 
         public static List<Producto> ListarPorCategoria(int idCategoria)
@@ -106,7 +129,7 @@ namespace CapaDatos
         }
 
         // Método para obtener el Top 10 de productos más vendidos por mes
-        public static List<(string NombreProducto, int CantidadVendida)> ObtenerTop10ProductosPorMes(int mes)
+        public static List<(string NombreProducto, int CantidadVendida)> ObtenerTop10ProductosPorMes(int mes, int anio)
         {
             List<(string NombreProducto, int CantidadVendida)> lista = new List<(string, int)>();
 
@@ -116,17 +139,18 @@ namespace CapaDatos
                 {
                     connection.Open();
                     string query = @"
-                        SELECT TOP 10 p.Nombre AS NombreProducto, SUM(d.CANTIDAD) AS CantidadVendida
-                        FROM DETALLE_PEDIDO d
-                        INNER JOIN PRODUCTO p ON d.IDPRODUCTO = p.IDPRODUCTO
-                        INNER JOIN PEDIDO pe ON d.IDPEDIDO = pe.IDPEDIDO
-                        WHERE MONTH(pe.FECHAPEDIDO) = @Mes
-                        GROUP BY p.Nombre
-                        ORDER BY CantidadVendida DESC";
+                SELECT TOP 10 p.Nombre AS NombreProducto, SUM(d.CANTIDAD) AS CantidadVendida
+                FROM DETALLE_PEDIDO d
+                INNER JOIN PRODUCTO p ON d.IDPRODUCTO = p.IDPRODUCTO
+                INNER JOIN PEDIDO pe ON d.IDPEDIDO = pe.IDPEDIDO
+                WHERE MONTH(pe.FECHAPEDIDO) = @Mes AND YEAR(pe.FECHAPEDIDO) = @Anio
+                GROUP BY p.Nombre
+                ORDER BY CantidadVendida DESC";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@Mes", mes);
+                        command.Parameters.AddWithValue("@Anio", anio);
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -147,9 +171,9 @@ namespace CapaDatos
 
             return lista;
         }
+
     }
 
 
 
 }
-

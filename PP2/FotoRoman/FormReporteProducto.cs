@@ -18,11 +18,7 @@ namespace FotoRoman
 
         private void FormReporteProducto_Load(object sender, EventArgs e)
         {
-            int mesActual = DateTime.Now.Month; // Obtener el mes actual
-            CargarDatos(mesActual);
-
-            this.Invalidate(); // Redibujar el formulario
-                               // Llenar el ComboBox con los nombres de los meses
+            // Llenar el ComboBox de meses
             cmbMeses.Items.AddRange(new string[]
             {
         "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
@@ -30,17 +26,30 @@ namespace FotoRoman
             });
 
             cmbMeses.SelectedIndex = DateTime.Now.Month - 1; // Selecciona el mes actual por defecto
+
+            // Llenar el ComboBox de años
+            int anioActual = DateTime.Now.Year;
+            for (int i = anioActual - 5; i <= anioActual; i++) // Últimos 5 años
+            {
+                comboBoxAnio.Items.Add(i);
+            }
+            comboBoxAnio.SelectedItem = anioActual; // Selecciona el año actual por defecto
+
+            // Cargar datos iniciales
+            CargarDatos(DateTime.Now.Month, anioActual);
         }
-        private void CargarDatos(int mes)
+
+        private void CargarDatos(int mes, int anio)
         {
             try
             {
                 // Obtener datos desde la Capa de Negocio
-                datosProductos = CNProducto.ObtenerTop10ProductosPorMes(mes);
+                datosProductos = CNProducto.ObtenerTop10ProductosPorMes(mes, anio);
 
                 if (datosProductos == null || datosProductos.Count == 0)
                 {
-                    MessageBox.Show("No se encontraron productos más vendidos.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("No se encontraron productos más vendidos para el mes y año seleccionados.",
+                                    "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -53,16 +62,20 @@ namespace FotoRoman
             }
         }
 
+
         private void CargarGraficoProductos(int mes)
         {
             try
             {
-                // Obtener los datos desde la Capa de Negocio
-                datosProductos = CNProducto.ObtenerTop10ProductosPorMes(mes);
+                // Obtener el año seleccionado del ComboBox de años
+                int anioSeleccionado = int.Parse(comboBoxAnio.SelectedItem.ToString());
+
+                // Obtener los datos desde la Capa de Negocio con mes y año
+                datosProductos = CNProducto.ObtenerTop10ProductosPorMes(mes, anioSeleccionado);
 
                 if (datosProductos == null || datosProductos.Count == 0)
                 {
-                    MessageBox.Show("No se encontraron productos más vendidos para el mes seleccionado.",
+                    MessageBox.Show("No se encontraron productos más vendidos para el mes y año seleccionados.",
                                     "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
@@ -81,9 +94,28 @@ namespace FotoRoman
 
         private void comboBoxMes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int mesSeleccionado = cmbMeses.SelectedIndex + 1; // Índice empieza en 0
-            CargarGraficoProductos(mesSeleccionado);
+            if (cmbMeses.SelectedIndex >= 0 && comboBoxAnio.SelectedItem != null)
+            {
+                int mesSeleccionado = cmbMeses.SelectedIndex + 1; // Índice del mes (0 = Enero)
+                int anioSeleccionado;
+
+                // Validar que el año sea válido
+                if (int.TryParse(comboBoxAnio.SelectedItem.ToString(), out anioSeleccionado))
+                {
+                    CargarDatos(mesSeleccionado, anioSeleccionado); // Llama a CargarDatos con mes y año
+                }
+                else
+                {
+                    MessageBox.Show("Por favor, selecciona un año válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                // MessageBox.Show("Selecciona un mes y un año antes de continuar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
+
 
 
         private void FormReporteProducto_Paint(object sender, PaintEventArgs e)
@@ -94,7 +126,7 @@ namespace FotoRoman
 
             // Configuración inicial
             int margenIzquierdo = 50;
-            int margenInferior = 50;
+            int margenInferior = 100;
             int alturaMaxima = 300;
             int anchoBarra = 50;
             int espacioEntreBarras = 20;
@@ -135,7 +167,7 @@ namespace FotoRoman
 
 
             // Título del gráfico
-            g.DrawString("Top Productos Más Vendidos", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, margenIzquierdo + 300, 10);
+            g.DrawString("Productos Más Vendidos", new Font("Arial", 12, FontStyle.Bold), Brushes.Black, margenIzquierdo + 350, 10);
 
 
 
@@ -144,6 +176,17 @@ namespace FotoRoman
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void comboBoxAnio_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int mesSeleccionado = cmbMeses.SelectedIndex + 1; // Índice del mes
+            int anioSeleccionado = int.Parse(comboBoxAnio.SelectedItem.ToString()); // Año seleccionado
+
+            if (mesSeleccionado > 0 && mesSeleccionado <= 12)
+            {
+                CargarDatos(mesSeleccionado, anioSeleccionado); // Actualiza los datos
+            }
         }
     }
 }
