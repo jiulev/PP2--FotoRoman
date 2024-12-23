@@ -30,11 +30,15 @@
             labelProvincia = new Label();
             RegistrarCliente = new Button();
             CancelarCliente = new Button();
+            label1 = new Label();
+            textTelefono = new TextBox();
             groupBoxCliente.SuspendLayout();
             SuspendLayout();
             // 
             // groupBoxCliente
             // 
+            groupBoxCliente.Controls.Add(textTelefono);
+            groupBoxCliente.Controls.Add(label1);
             groupBoxCliente.Controls.Add(comboBoxLocalidad);
             groupBoxCliente.Controls.Add(comboBoxProvincia);
             groupBoxCliente.Controls.Add(labelNombre);
@@ -60,7 +64,7 @@
             comboBoxLocalidad.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxLocalidad.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBoxLocalidad.FormattingEnabled = true;
-            comboBoxLocalidad.Location = new Point(180, 205);
+            comboBoxLocalidad.Location = new Point(180, 236);
             comboBoxLocalidad.Name = "comboBoxLocalidad";
             comboBoxLocalidad.Size = new Size(280, 26);
             comboBoxLocalidad.TabIndex = 13;
@@ -74,7 +78,7 @@
             comboBoxProvincia.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxProvincia.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             comboBoxProvincia.FormattingEnabled = true;
-            comboBoxProvincia.Location = new Point(180, 163);
+            comboBoxProvincia.Location = new Point(180, 195);
             comboBoxProvincia.Name = "comboBoxProvincia";
             comboBoxProvincia.Size = new Size(280, 26);
             comboBoxProvincia.TabIndex = 12;
@@ -135,7 +139,7 @@
             // labelLocalidad
             // 
             labelLocalidad.Font = new Font("Segoe UI", 10F);
-            labelLocalidad.Location = new Point(101, 208);
+            labelLocalidad.Location = new Point(101, 237);
             labelLocalidad.Name = "labelLocalidad";
             labelLocalidad.Size = new Size(73, 25);
             labelLocalidad.TabIndex = 6;
@@ -144,7 +148,7 @@
             // labelProvincia
             // 
             labelProvincia.Font = new Font("Segoe UI", 10F);
-            labelProvincia.Location = new Point(101, 166);
+            labelProvincia.Location = new Point(101, 195);
             labelProvincia.Name = "labelProvincia";
             labelProvincia.Size = new Size(73, 25);
             labelProvincia.TabIndex = 8;
@@ -154,7 +158,7 @@
             // 
             RegistrarCliente.BackColor = Color.LightGray;
             RegistrarCliente.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            RegistrarCliente.Location = new Point(180, 250);
+            RegistrarCliente.Location = new Point(180, 274);
             RegistrarCliente.Name = "RegistrarCliente";
             RegistrarCliente.Size = new Size(120, 40);
             RegistrarCliente.TabIndex = 10;
@@ -166,13 +170,30 @@
             // 
             CancelarCliente.BackColor = Color.LightGray;
             CancelarCliente.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            CancelarCliente.Location = new Point(340, 250);
+            CancelarCliente.Location = new Point(340, 274);
             CancelarCliente.Name = "CancelarCliente";
             CancelarCliente.Size = new Size(120, 40);
             CancelarCliente.TabIndex = 11;
             CancelarCliente.Text = "Cancelar";
             CancelarCliente.UseVisualStyleBackColor = false;
             CancelarCliente.Click += CancelarCliente_Click;
+            // 
+            // label1
+            // 
+            label1.Font = new Font("Segoe UI", 10F);
+            label1.Location = new Point(101, 158);
+            label1.Name = "label1";
+            label1.Size = new Size(67, 25);
+            label1.TabIndex = 14;
+            label1.Text = "Teléfono";
+            // 
+            // textTelefono
+            // 
+            textTelefono.Font = new Font("Segoe UI", 10F);
+            textTelefono.Location = new Point(180, 158);
+            textTelefono.Name = "textTelefono";
+            textTelefono.Size = new Size(280, 25);
+            textTelefono.TabIndex = 15;
             // 
             // FmCliente
             // 
@@ -204,5 +225,7 @@
         private Label labelProvincia;
         private ComboBox comboBoxLocalidad;
         private ComboBox comboBoxProvincia;
+        private TextBox textTelefono;
+        private Label label1;
     }
 }

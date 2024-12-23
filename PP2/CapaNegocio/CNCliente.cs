@@ -45,6 +45,13 @@ namespace CapaNegocio
                 return false;
             }
 
+            // Validación del teléfono
+            if (cliente.TELEFONO <= 0)
+            {
+                mensaje = "El teléfono debe ser un número válido.";
+                return false;
+            }
+
             try
             {
                 CD_Cliente.Insertar(cliente);
@@ -57,6 +64,7 @@ namespace CapaNegocio
                 return false;
             }
         }
+
 
         public static bool ActualizarCliente(Cliente cliente, out string mensaje)
         {
@@ -85,6 +93,12 @@ namespace CapaNegocio
             if (string.IsNullOrWhiteSpace(cliente.LOCALIDAD))
             {
                 mensaje = "La localidad es obligatoria.";
+                return false;
+            }
+
+            if (cliente.TELEFONO <= 0)
+            {
+                mensaje = "El teléfono debe ser un número válido.";
                 return false;
             }
 

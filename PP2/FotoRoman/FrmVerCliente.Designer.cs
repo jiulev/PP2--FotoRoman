@@ -47,7 +47,7 @@
             dataGridViewClientes.Location = new Point(10, 10);
             dataGridViewClientes.Name = "dataGridViewClientes";
             dataGridViewClientes.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewClientes.Size = new Size(780, 300);
+            dataGridViewClientes.Size = new Size(802, 300);
             dataGridViewClientes.TabIndex = 0;
             // 
             // txtBuscar
@@ -83,7 +83,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 400);
+            ClientSize = new Size(822, 400);
             Controls.Add(button1);
             Controls.Add(dataGridViewClientes);
             Controls.Add(txtBuscar);

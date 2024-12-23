@@ -29,6 +29,7 @@
             buttonCancelar = new Button();
             comboBoxLocalidad = new ComboBox();
             comboBoxprovincia = new ComboBox();
+            textBoxTelefono = new TextBox();
             SuspendLayout();
             // 
             // textBoxNombre
@@ -52,14 +53,14 @@
             comboBoxEstado.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxEstado.FormattingEnabled = true;
             comboBoxEstado.Items.AddRange(new object[] { "Activo", "Inactivo" });
-            comboBoxEstado.Location = new Point(50, 110);
+            comboBoxEstado.Location = new Point(50, 151);
             comboBoxEstado.Name = "comboBoxEstado";
             comboBoxEstado.Size = new Size(300, 23);
             comboBoxEstado.TabIndex = 2;
             // 
             // textBoxDocumento
             // 
-            textBoxDocumento.Location = new Point(50, 230);
+            textBoxDocumento.Location = new Point(50, 273);
             textBoxDocumento.Name = "textBoxDocumento";
             textBoxDocumento.ReadOnly = true;
             textBoxDocumento.Size = new Size(300, 23);
@@ -67,7 +68,7 @@
             // 
             // buttonGuardar
             // 
-            buttonGuardar.Location = new Point(50, 280);
+            buttonGuardar.Location = new Point(50, 311);
             buttonGuardar.Name = "buttonGuardar";
             buttonGuardar.Size = new Size(120, 40);
             buttonGuardar.TabIndex = 6;
@@ -77,7 +78,7 @@
             // 
             // buttonCancelar
             // 
-            buttonCancelar.Location = new Point(230, 280);
+            buttonCancelar.Location = new Point(219, 311);
             buttonCancelar.Name = "buttonCancelar";
             buttonCancelar.Size = new Size(120, 40);
             buttonCancelar.TabIndex = 7;
@@ -89,7 +90,7 @@
             // 
             comboBoxLocalidad.ForeColor = SystemColors.ControlDark;
             comboBoxLocalidad.FormattingEnabled = true;
-            comboBoxLocalidad.Location = new Point(50, 191);
+            comboBoxLocalidad.Location = new Point(50, 232);
             comboBoxLocalidad.Name = "comboBoxLocalidad";
             comboBoxLocalidad.Size = new Size(300, 23);
             comboBoxLocalidad.TabIndex = 8;
@@ -99,17 +100,26 @@
             // 
             comboBoxprovincia.ForeColor = SystemColors.ControlDark;
             comboBoxprovincia.FormattingEnabled = true;
-            comboBoxprovincia.Location = new Point(50, 153);
+            comboBoxprovincia.Location = new Point(50, 192);
             comboBoxprovincia.Name = "comboBoxprovincia";
             comboBoxprovincia.Size = new Size(300, 23);
             comboBoxprovincia.TabIndex = 9;
             comboBoxprovincia.Text = "Provincia";
             // 
+            // textBoxTelefono
+            // 
+            textBoxTelefono.Location = new Point(50, 110);
+            textBoxTelefono.Name = "textBoxTelefono";
+            textBoxTelefono.PlaceholderText = "Telefono";
+            textBoxTelefono.Size = new Size(300, 23);
+            textBoxTelefono.TabIndex = 10;
+            // 
             // FormEditarCliente
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(400, 350);
+            ClientSize = new Size(400, 380);
+            Controls.Add(textBoxTelefono);
             Controls.Add(comboBoxprovincia);
             Controls.Add(comboBoxLocalidad);
             Controls.Add(textBoxNombre);
@@ -136,5 +146,6 @@
         private System.Windows.Forms.Button buttonCancelar;
         private ComboBox comboBoxLocalidad;
         private ComboBox comboBoxprovincia;
+        private TextBox textBoxTelefono;
     }
 }

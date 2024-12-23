@@ -20,6 +20,8 @@ namespace FotoRoman
             textBoxCorreo.Text = cliente.CORREO;
             comboBoxEstado.Text = cliente.ESTADO;
             textBoxDocumento.Text = cliente.DOCUMENTO.ToString();
+            textBoxTelefono.Text = cliente.TELEFONO.ToString();
+
 
             // Configurar el ComboBox para las provincias y localidades
             CargarProvincias(); // Llenar las provincias
@@ -157,11 +159,23 @@ namespace FotoRoman
             clienteActual.PROVINCIA = comboBoxprovincia.Text;
             clienteActual.LOCALIDAD = comboBoxLocalidad.Text;
 
+            // Captura el valor del teléfono
+            if (int.TryParse(textBoxTelefono.Text, out int telefono))
+            {
+                clienteActual.TELEFONO = telefono;
+            }
+            else
+            {
+                MessageBox.Show("Ingrese un teléfono válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Llamar a la capa de negocio para actualizar
             string mensaje;
             if (CNCliente.ActualizarCliente(clienteActual, out mensaje))
             {
                 MessageBox.Show(mensaje, "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.DialogResult = DialogResult.OK; // Indicar que los cambios se guardaron
+                this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else
@@ -169,6 +183,7 @@ namespace FotoRoman
                 MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void buttonCancelar_Click(object sender, EventArgs e)
         {

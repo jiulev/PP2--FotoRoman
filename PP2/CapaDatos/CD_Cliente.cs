@@ -19,17 +19,18 @@ namespace CapaDatos
                     oconexion.Open();
 
                     string query = @"
-                SELECT 
-                   IDCLIENTE,
-                   FECHACREACION,
-                   DOCUMENTO,
-                   NOMBRE,
-                   CORREO,
-                   ESTADO,
-                   LOCALIDAD,
-                   PROVINCIA
-                FROM CLIENTE
-                WHERE ESTADO = 'Activo'"; // Filtro para clientes activos
+            SELECT 
+               IDCLIENTE,
+               FECHACREACION,
+               DOCUMENTO,
+               NOMBRE,
+               CORREO,
+               TELEFONO,  -- Añadido
+               ESTADO,
+               LOCALIDAD,
+               PROVINCIA
+            FROM CLIENTE
+            WHERE ESTADO = 'Activo'";
 
                     using (SqlCommand command = new SqlCommand(query, oconexion))
                     {
@@ -42,6 +43,7 @@ namespace CapaDatos
                                 DOCUMENTO = reader["DOCUMENTO"] != DBNull.Value ? Convert.ToInt32(reader["DOCUMENTO"]) : 0,
                                 NOMBRE = reader["NOMBRE"].ToString() ?? string.Empty,
                                 CORREO = reader["CORREO"].ToString() ?? string.Empty,
+                                TELEFONO = reader["TELEFONO"] != DBNull.Value ? Convert.ToInt32(reader["TELEFONO"]) : 0,  // Asignación del teléfono
                                 ESTADO = reader["ESTADO"].ToString() ?? string.Empty,
                                 LOCALIDAD = reader["LOCALIDAD"].ToString() ?? string.Empty,
                                 PROVINCIA = reader["PROVINCIA"].ToString() ?? string.Empty,
@@ -62,6 +64,7 @@ namespace CapaDatos
         }
 
 
+
         // Método para insertar un nuevo cliente usando el procedimiento almacenado
         public static void Insertar(Cliente cliente)
         {
@@ -79,6 +82,7 @@ namespace CapaDatos
                         command.Parameters.AddWithValue("@NOMBRE", cliente.NOMBRE ?? string.Empty);
                         command.Parameters.AddWithValue("@DOCUMENTO", cliente.DOCUMENTO);
                         command.Parameters.AddWithValue("@CORREO", cliente.CORREO ?? string.Empty);
+                        command.Parameters.AddWithValue("@TELEFONO", cliente.TELEFONO);  // Nuevo campo
                         command.Parameters.AddWithValue("@ESTADO", cliente.ESTADO ?? "Activo");
                         command.Parameters.AddWithValue("@LOCALIDAD", cliente.LOCALIDAD ?? string.Empty);
                         command.Parameters.AddWithValue("@PROVINCIA", cliente.PROVINCIA ?? string.Empty);
@@ -104,6 +108,7 @@ namespace CapaDatos
                 }
             }
         }
+
 
         // Método para obtener los nombres de los clientes para el ComboBox
         public static List<string> ObtenerNombresClientes()
@@ -145,13 +150,14 @@ namespace CapaDatos
                 {
                     oconexion.Open();
                     string query = @"
-                UPDATE CLIENTE
-                SET NOMBRE = @NOMBRE,
-                    CORREO = @CORREO,
-                    ESTADO = @ESTADO,
-                    LOCALIDAD = @LOCALIDAD,
-                    PROVINCIA = @PROVINCIA
-                WHERE IDCLIENTE = @IDCLIENTE";
+            UPDATE CLIENTE
+            SET NOMBRE = @NOMBRE,
+                CORREO = @CORREO,
+                ESTADO = @ESTADO,
+                LOCALIDAD = @LOCALIDAD,
+                PROVINCIA = @PROVINCIA,
+                TELEFONO = @TELEFONO  -- NUEVO CAMPO
+            WHERE IDCLIENTE = @IDCLIENTE";
 
                     using (SqlCommand command = new SqlCommand(query, oconexion))
                     {
@@ -160,6 +166,7 @@ namespace CapaDatos
                         command.Parameters.AddWithValue("@ESTADO", cliente.ESTADO);
                         command.Parameters.AddWithValue("@LOCALIDAD", cliente.LOCALIDAD);
                         command.Parameters.AddWithValue("@PROVINCIA", cliente.PROVINCIA);
+                        command.Parameters.AddWithValue("@TELEFONO", cliente.TELEFONO);  // NUEVO
                         command.Parameters.AddWithValue("@IDCLIENTE", cliente.IDCliente);
 
                         command.ExecuteNonQuery();
@@ -171,6 +178,8 @@ namespace CapaDatos
                 }
             }
         }
+
+
 
 
         public static void Eliminar(int idCliente)

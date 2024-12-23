@@ -22,6 +22,7 @@ namespace FotoRoman
                 Documento = c.DOCUMENTO,
                 Nombre = c.NOMBRE,
                 Correo = c.CORREO,
+                Telefono = c.TELEFONO,  // Agregado
                 Estado = c.ESTADO,
                 Localidad = c.LOCALIDAD,
                 Provincia = c.PROVINCIA,
@@ -30,6 +31,7 @@ namespace FotoRoman
 
             dataGridViewClientes.DataSource = clientes;
         }
+
 
         // Método para buscar clientes por nombre
         private void txtBuscar_TextChanged(object sender, EventArgs e)
@@ -44,6 +46,7 @@ namespace FotoRoman
                     Documento = c.DOCUMENTO,
                     Nombre = c.NOMBRE,
                     Correo = c.CORREO,
+                    Telefono = c.TELEFONO,  // Agregado
                     Estado = c.ESTADO,
                     Localidad = c.LOCALIDAD,
                     Provincia = c.PROVINCIA,
@@ -53,6 +56,7 @@ namespace FotoRoman
 
             dataGridViewClientes.DataSource = clientesFiltrados;
         }
+
 
         // Método para eliminar un cliente
         private void btnEliminar_Click(object sender, EventArgs e)

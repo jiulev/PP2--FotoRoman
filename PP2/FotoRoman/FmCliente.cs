@@ -172,6 +172,7 @@ namespace FotoRoman
                     DOCUMENTO = int.Parse(textDocumento.Text.Trim()),
                     NOMBRE = textNombre.Text.Trim(),
                     CORREO = textCorreo.Text.Trim(),
+                    TELEFONO = int.Parse(textTelefono.Text.Trim()),  // Captura el teléfono
                     ESTADO = "Activo",
                     LOCALIDAD = comboBoxLocalidad.Text,
                     PROVINCIA = comboBoxProvincia.Text,
@@ -183,7 +184,6 @@ namespace FotoRoman
 
                 MessageBox.Show(mensaje, exito ? "Éxito" : "Error", MessageBoxButtons.OK, exito ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
-                // Limpia los campos después de registrar
                 if (exito)
                 {
                     LimpiarCampos();
@@ -191,7 +191,7 @@ namespace FotoRoman
             }
             catch (FormatException)
             {
-                MessageBox.Show("Por favor, ingrese un número válido para el documento.", "Error de Formato", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Por favor, ingrese un número válido para el documento o teléfono.", "Error de Formato", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -320,10 +320,9 @@ namespace FotoRoman
                 textNombre.Clear();
                 textDocumento.Clear();
                 textCorreo.Clear();
-
-                // Resetea los ComboBox
-                comboBoxProvincia.SelectedIndex = -1; // Limpia la selección de provincia
-                comboBoxLocalidad.DataSource = null; // Limpia localidades
+                textTelefono.Clear();  // Limpia el campo teléfono
+                comboBoxProvincia.SelectedIndex = -1;
+                comboBoxLocalidad.DataSource = null;
                 comboBoxLocalidad.Items.Clear();
                 comboBoxLocalidad.SelectedIndex = -1;
 
